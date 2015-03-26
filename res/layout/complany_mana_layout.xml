@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_bg" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/layout_complany_meeting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@drawable/listview_bg"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/img_company_meeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tv_company_meetion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="会议信息"
+                android:textSize="20sp" />
+        </LinearLayout>
+        
+        <View 
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            />
+        
+        <LinearLayout
+            android:id="@+id/layout_complany_contacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@drawable/listview_bg"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/img_company_contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tv_company_contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="企业通讯录"
+                android:textSize="20sp" />
+        </LinearLayout>
+        
+        <View 
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            />
+        
+        <LinearLayout
+            android:id="@+id/layout_complany_noticts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@drawable/listview_bg"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/img_company_notices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tv_company_notices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="企业公告"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
