@@ -17,6 +17,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,8 @@ import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -139,7 +142,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			//找回密码
 		case R.id.tv_backpass:
-			popupWindow();
+			getPopupWindowInstance();
+			mPopupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 50);
 			break;
 
 			//注册点击事件
@@ -169,7 +173,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void popupWindow(){
+	/*public void popupWindow(){
 		View popupView = getLayoutInflater().inflate(R.layout.popup_window, null);
 
 		mPopupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true);
@@ -192,6 +196,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				return false;
 			}
 		});
+		if (mPopupWindow == null && !mPopupWindow.isShowing()) {
+			mPopupWindow.showAtLocation(findViewById(R.id.action_settings), Gravity.CENTER, 0, 0);
+		}
 	}
 
 	@Override
@@ -203,5 +210,33 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}*/
+	
+	/*
+	 * 获取PopupWindow实例
+	 */
+	private void getPopupWindowInstance() {
+		if (null != mPopupWindow) {
+			mPopupWindow.dismiss();
+			return;
+		} else {
+			initPopuptWindow();
+		}
+	}
+
+	/*
+	 * 创建PopupWindow
+	 */
+	private void initPopuptWindow() {
+		LayoutInflater layoutInflater = LayoutInflater.from(this);
+		
+		View popupView = getLayoutInflater().inflate(R.layout.popup_window, null);
+		// 创建一个PopupWindow
+		// 参数1：contentView 指定PopupWindow的内容
+		// 参数2：width 指定PopupWindow的width
+		// 参数3：height 指定PopupWindow的height
+		mPopupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true);
+
+		
 	}
 }
