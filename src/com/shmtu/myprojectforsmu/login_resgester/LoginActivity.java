@@ -1,45 +1,37 @@
 package com.shmtu.myprojectforsmu.login_resgester;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.MainActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
-import com.shmtu.myprojectforsmu.utils.HttpUtils;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
-	private Handler handler;
 	private EditText username;
 	private EditText password;
 	private Button btn_login;
@@ -48,42 +40,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private PopupWindow mPopupWindow;
 	private String url = Constant.URL + "login.php";
 	private String url1 = Constant.URL + "json_array.php";
+	private RequestQueue mQueue = null;
+	private JSONObject json = new JSONObject();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-
-		handler = new Handler(){
-			@Override
-			public void handleMessage(Message msg) {
-				// TODO Auto-generated method stub
-				super.handleMessage(msg);
-				switch (msg.what) {
-				case 0:
-					try {
-						String res = msg.getData().getString("res");
-						JSONObject result = new JSONObject(res);
-						int success = Integer.parseInt(result.getString("success"));
-						Toast.makeText(LoginActivity.this, res + ":\n" +result.toString(), Toast.LENGTH_LONG).show();
-						// TODO Auto-generated catch block
-						if(success == 0){
-							Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-							startActivity(intent);
-						}else{
-							Toast.makeText(LoginActivity.this, "输入的用户名或密码有错", Toast.LENGTH_LONG).show();
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					break;
-
-				default:
-					break;
-				}
-			}
-		};
 
 		Bundle bundle = this.getIntent().getExtras();
 
@@ -111,33 +74,47 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			/*//test
 			Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
 			startActivity(intent1);*/
-			new Thread(){
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					super.run();
+			//将数据封装成json格式
+			try {
+				json.put("UserName", username.getText().toString().trim());
+				json.put("PassWord", password.getText().toString().trim());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+			//创建一个RequestQueue队列
+			mQueue = Volley.newRequestQueue(getApplicationContext());
+			//向服务端发送请求
+			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, url, json,  
+					new Response.Listener<JSONObject>() {  
+				@Override  
+				public void onResponse(JSONObject response) {  
+					Log.d("TAG", response.toString());  
+					Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+					int success = 0;
 					try {
-						JSONObject json = new JSONObject();
-						json.put("UserName", username.getText().toString().trim());
-						json.put("PassWord", password.getText().toString().trim());
-						//						httpPostMethod(json);
-						HttpUtils.httpPostMethod(url, json, handler);
+						success = Integer.parseInt(response.getString("success"));
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						Log.d("json", "解析JSON出错");
-						e.printStackTrace();
-					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClientProtocolException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
-			}.start();
+					if(success == 0){
+						Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+						startActivity(intent);
+					}else{
+						Toast.makeText(LoginActivity.this, "输入的用户名或密码有错", Toast.LENGTH_LONG).show();
+					}
+				}  
+			}, new Response.ErrorListener() {  
+				@Override  
+				public void onErrorResponse(VolleyError error) {  
+					Log.e("TAG", error.getMessage(), error);  
+					Toast.makeText(LoginActivity.this, "输入的用户名或密码有错", Toast.LENGTH_LONG).show();
+				}  
+			});  
+
+			mQueue.add(jsonObjectRequest);
 			break;
 
 			//找回密码
@@ -211,7 +188,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 		return super.onKeyDown(keyCode, event);
 	}*/
-	
+
 	/*
 	 * 获取PopupWindow实例
 	 */
@@ -229,7 +206,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	 */
 	private void initPopuptWindow() {
 		LayoutInflater layoutInflater = LayoutInflater.from(this);
-		
+
 		View popupView = getLayoutInflater().inflate(R.layout.popup_window, null);
 		// 创建一个PopupWindow
 		// 参数1：contentView 指定PopupWindow的内容
@@ -237,6 +214,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		// 参数3：height 指定PopupWindow的height
 		mPopupWindow = new PopupWindow(popupView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true);
 
-		
+
 	}
 }
