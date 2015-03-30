@@ -53,20 +53,6 @@ public class CustomerInfoFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		lv = (ListView) getActivity().findViewById(R.id.listView);/*定义一个动态数组*/ 
-		et_search = (AutoCompleteTextView) getActivity().findViewById(R.id.et_search);
-		
-		et_search.setOnFocusChangeListener(new OnFocusChangeListener() {
-			
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				// TODO Auto-generated method stub
-				if(hasFocus){
-					Toast.makeText(getActivity(), "得到edittext焦点", Toast.LENGTH_SHORT).show();
-				}else{
-					Toast.makeText(getActivity(), "失去edittext焦点", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
 		/*
 		 * 用于在非UI线程中更新UI
 		 */
