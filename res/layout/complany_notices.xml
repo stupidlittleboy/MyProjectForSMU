@@ -7,11 +7,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
     
-	<ListView 
-	    android:id="@+id/lv_notices_info"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    >
-	</ListView>
+	<ListView
+        android:id="@+id/lv_notices_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/gray_listitem"
+        android:dividerHeight="5dp" />
     
 </RelativeLayout>
