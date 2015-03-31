@@ -47,7 +47,6 @@ public class ComplanyNotices extends Activity implements OnItemClickListener {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.complany_notices);
 		
@@ -121,7 +120,6 @@ public class ComplanyNotices extends Activity implements OnItemClickListener {
 					viewHolder.tvNoticesDate.setText(jObj.getString("notice_date"));
 					viewHolder.tvNoticesContent.setText(jObj.getString("notice_content"));
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -135,7 +133,6 @@ public class ComplanyNotices extends Activity implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		// TODO Auto-generated method stub
 		
 	}
 	

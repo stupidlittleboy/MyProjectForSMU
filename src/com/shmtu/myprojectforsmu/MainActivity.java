@@ -1,6 +1,5 @@
 package com.shmtu.myprojectforsmu;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;

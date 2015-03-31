@@ -82,7 +82,6 @@ public class SMSVerifyUtil {
 		
 		public CountDown(long millisInFuture, long countDownInterval) {
 			super(millisInFuture, countDownInterval);
-			// TODO Auto-generated constructor stub
 		}
 
 		/**
@@ -100,7 +99,6 @@ public class SMSVerifyUtil {
 
 		@Override
 		public void onTick(long millisUntilFinished) {
-			// TODO Auto-generated method stub
 			textView.setText(millisUntilFinished/1000 + "秒后重新获取验证码");
 			textView.setClickable(false);
 			textView.setBackgroundColor(Color.GRAY);
@@ -109,7 +107,6 @@ public class SMSVerifyUtil {
 		@SuppressLint("NewApi")
 		@Override
 		public void onFinish() {
-			// TODO Auto-generated method stub
 			textView.setText("重新获取验证码");
 			textView.setBackground(bg);
 			textView.setClickable(true);

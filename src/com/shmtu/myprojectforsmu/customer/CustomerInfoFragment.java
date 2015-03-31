@@ -18,7 +18,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -50,7 +49,6 @@ public class CustomerInfoFragment extends Fragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		lv = (ListView) getActivity().findViewById(R.id.listView);/*定义一个动态数组*/ 
 		/*
@@ -59,7 +57,6 @@ public class CustomerInfoFragment extends Fragment {
 		handler = new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
-				// TODO Auto-generated method stub
 				super.handleMessage(msg);
 				switch (msg.what) {
 				case 0:
@@ -70,7 +67,6 @@ public class CustomerInfoFragment extends Fragment {
 						jsonArray = new JSONArray(res);
 						Toast.makeText(getActivity(), jsonArray.toString(), Toast.LENGTH_LONG).show();
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
@@ -100,7 +96,6 @@ public class CustomerInfoFragment extends Fragment {
 						@Override
 						public void onItemClick(AdapterView<?> parent, View view,
 								int position, long id) {
-							// TODO Auto-generated method stub
 							@SuppressWarnings("unchecked")
 							HashMap<string, Object> map = (HashMap<string, Object>) lv.getItemAtPosition(position);
 							Intent intent = new Intent(getActivity(), CustomerDetailActivity.class);
@@ -135,19 +130,15 @@ public class CustomerInfoFragment extends Fragment {
 		new Thread(){
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				super.run();
 				json = new JSONObject();
 				try {
 					HttpUtils.httpPostMethod(Constant.URL + "cus_info.php", json, handler);
 				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ClientProtocolException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				

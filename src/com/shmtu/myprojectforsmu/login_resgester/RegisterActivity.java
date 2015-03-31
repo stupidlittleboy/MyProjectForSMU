@@ -67,7 +67,6 @@ OnClickListener, OnCheckedChangeListener{
 		handler = new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
-				// TODO Auto-generated method stub
 				super.handleMessage(msg);
 				switch (msg.what) {
 				case 0:
@@ -87,7 +86,6 @@ OnClickListener, OnCheckedChangeListener{
 							Toast.makeText(RegisterActivity.this, "输入的用户名或密码有错", Toast.LENGTH_LONG).show();
 						}
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					break;
@@ -161,7 +159,6 @@ OnClickListener, OnCheckedChangeListener{
 			json.put("entrytime", et_entrytime.getText().toString());
 			json.put("status", status);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -188,7 +185,6 @@ OnClickListener, OnCheckedChangeListener{
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		int id = v.getId();
 		switch(id){
 		case R.id.et_borthdate:
@@ -207,13 +203,10 @@ OnClickListener, OnCheckedChangeListener{
 					try {
 						HttpUtils.httpPostMethod(url, json, handler);
 					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (ClientProtocolException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				};
@@ -230,7 +223,6 @@ OnClickListener, OnCheckedChangeListener{
 
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		// TODO Auto-generated method stub
 		if (checkedId == R.id.radio_male) {
 			// 把mRadio1的内容传到mTextView1
 			sex = radio_male.getText().toString();

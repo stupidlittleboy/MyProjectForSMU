@@ -25,7 +25,6 @@ public class DateUtil {
 				try {
 					dateFormat = new SimpleDateFormat("yyyy-MM-dd").parse(date.toString());
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
 				editText.setText(new SimpleDateFormat("yyyy-MM-dd").format(dateFormat));

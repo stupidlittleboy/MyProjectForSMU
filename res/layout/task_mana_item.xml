@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_task_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="标题"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv_task_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:hint="2015-03-31"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_notices_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="我们接受委托，对潍坊北大青鸟华光科技股份有限公司（以下简称青鸟华光公司）2014年12月31日的财务报告内部控制进行审汁。我们接受委托，对潍坊北大青鸟华光科技股份有限公司（以下简称青鸟华光公司）2014年12月31日的财务报告内部控制进行审汁。我们接受委托，对潍坊北大青鸟华光科技股份有限公司（以下简称青鸟华光公司）2014年12月31日的财务报告内部控制进行审汁。"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/tv_task_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#ffff0000"
+        android:gravity="center"
+        android:text="未领取"
+        android:textSize="19sp" />
+
+</LinearLayout>
