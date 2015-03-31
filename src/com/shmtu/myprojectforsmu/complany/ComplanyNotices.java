@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,17 +39,21 @@ public class ComplanyNotices extends Activity implements OnItemClickListener {
 	private RequestQueue mQueue = null;
 	private JSONArray jsonArray = null;
 	private ArrayList<HashMap<String, Object>> listNotice;
-	
+
 	public static void startComplanyNotices(Context context){
 		Intent intent = new Intent(context, ComplanyNotices.class);
 		context.startActivity(intent);
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.complany_notices);
 		
+		lvNoticesInfo = (ListView) findViewById(R.id.lv_notices_info);
+		noticeAdapter = new NoticesInfoAdapter(this, listNotice);
+		lvNoticesInfo.setOnItemClickListener(this);
+
 		/*
 		 * 想服务端发出请求
 		 */
@@ -58,49 +62,74 @@ public class ComplanyNotices extends Activity implements OnItemClickListener {
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(NOTICE_URL, 
 				new Listener<JSONArray>() {
 
-					@Override
-					public void onResponse(JSONArray response) {
-						jsonArray = response;
-						Toast.makeText(ComplanyNotices.this, jsonArray.toString(), Toast.LENGTH_SHORT).show();
-						Log.e("TAG", jsonArray.toString());
-					}
-				}, new ErrorListener() {
+			@Override
+			public void onResponse(JSONArray response) {
+				/**
+				 * 设置数据
+				 */
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				for (int i = 0; i < 10; i++) {
+					try {
+						JSONObject jObj = (JSONObject) response.get(i);
+						/*map.put("notice_theme", jObj.get("notice_theme"));
+								map.put("notice_date", jObj.get("notice_date"));
+								map.put("notice_content", jObj.get("notice_content"));*/
 
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						Toast.makeText(ComplanyNotices.this, "获取数据失败", Toast.LENGTH_SHORT).show();
+						map.put("notice_theme", "这是主题"+i);
+						map.put("notice_date", "2015-03-31");
+						map.put("notice_content", "这是内容"+i);
+
+						listNotice.add(map);
+						//								map.clear();
+					} catch (JSONException e) {
+						e.printStackTrace();
 					}
-				});
+				}
+				
+				lvNoticesInfo.setAdapter(noticeAdapter);
+				Toast.makeText(ComplanyNotices.this, response.toString(), Toast.LENGTH_SHORT).show();
+				Log.e("TAG", response.toString());
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Toast.makeText(ComplanyNotices.this, "获取数据失败", Toast.LENGTH_SHORT).show();
+			}
+		});
 		mQueue.add(jsonArrayRequest);
-		
-		lvNoticesInfo = (ListView) findViewById(R.id.lv_notices_info);
-		lvNoticesInfo.setOnItemClickListener(this);
 	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		noticeAdapter = new NoticesInfoAdapter(getApplicationContext(), R.layout.complany_notices_item, jsonArray);
-		lvNoticesInfo.setAdapter(noticeAdapter);
-	}
-	
-	
-	class NoticesInfoAdapter extends ArrayAdapter<Object>{
 
-		private JSONArray jsonNotice;
-		private int textViewResourceId;
-		public NoticesInfoAdapter(Context context, int textViewResourceId,
-				JSONArray jsonNotice) {
-			super(context, textViewResourceId);
-			this.textViewResourceId = textViewResourceId;
-			this.jsonNotice = jsonNotice;
+	class NoticesInfoAdapter extends BaseAdapter{
+
+		private LayoutInflater mLayoutInflater;
+		private ArrayList<HashMap<String, Object>> listNotice;
+
+		public NoticesInfoAdapter(Context context, ArrayList<HashMap<String, Object>> listNotice){
+			mLayoutInflater = LayoutInflater.from(context);
+			this.listNotice = listNotice;
+		}
+
+		@Override
+		public int getCount() {
+			return 0;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return null;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return 0;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder viewHolder;
 			if (convertView == null){
-				convertView = LayoutInflater.from(getApplicationContext()).inflate(textViewResourceId, null);
+				convertView = mLayoutInflater.inflate(R.layout.complany_notices_item, null);
 				viewHolder = new ViewHolder();
 				viewHolder.tvNoticesTitle = (TextView) convertView.findViewById(R.id.tv_notices_title);
 				viewHolder.tvNoticesDate = (TextView) convertView.findViewById(R.id.tv_notices_date);
@@ -109,37 +138,25 @@ public class ComplanyNotices extends Activity implements OnItemClickListener {
 			} else {
 				viewHolder = (ViewHolder) convertView.getTag();
 			}
-			
-			/**
-			 * 设置数据
-			 */
-			for (int i = 0; i < jsonNotice.length(); i++) {
-				try {
-					JSONObject jObj = (JSONObject) jsonNotice.get(i);
-					viewHolder.tvNoticesTitle.setText(jObj.getString("notice_theme"));
-					viewHolder.tvNoticesDate.setText(jObj.getString("notice_date"));
-					viewHolder.tvNoticesContent.setText(jObj.getString("notice_content"));
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-			
+			viewHolder.tvNoticesTitle.setText(listNotice.get(position).get("notice_theme").toString());
+			viewHolder.tvNoticesDate.setText(listNotice.get(position).get("notice_date").toString());
+			viewHolder.tvNoticesContent.setText(listNotice.get(position).get("notice_content").toString());
 			return convertView;
 		}
-		
+
 	}
 
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		
+
 	}
-	
-	class ViewHolder{
+
+	public final class ViewHolder{
 		TextView tvNoticesTitle;
 		TextView tvNoticesDate;
 		TextView tvNoticesContent;
 	}
-	
+
 }
