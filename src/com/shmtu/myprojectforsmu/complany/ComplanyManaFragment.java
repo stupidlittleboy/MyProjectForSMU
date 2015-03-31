@@ -1,9 +1,5 @@
 package com.shmtu.myprojectforsmu.complany;
 
-import com.shmtu.myprojectforsmu.R;
-import com.shmtu.myprojectforsmu.R.id;
-import com.shmtu.myprojectforsmu.R.layout;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +8,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.shmtu.myprojectforsmu.R;
 
 public class ComplanyManaFragment extends Fragment implements OnClickListener {
 
@@ -29,7 +27,6 @@ public class ComplanyManaFragment extends Fragment implements OnClickListener {
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		init();
 		

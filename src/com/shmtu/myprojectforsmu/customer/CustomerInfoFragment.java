@@ -84,7 +84,6 @@ public class CustomerInfoFragment extends Fragment {
 							map.put(Preferences.CUS_DATE, jObj.getString("description"));
 							listItem.add(map);
 						} catch (JSONException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}

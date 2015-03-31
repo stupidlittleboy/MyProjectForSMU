@@ -32,14 +32,14 @@ import com.shmtu.myprojectforsmu.commons.Constant;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
+	private final static String LOGIN_URL = Constant.URL + "login.php";
+	
 	private EditText username;
 	private EditText password;
 	private Button btn_login;
 	private TextView tvBackpass;
 	private TextView tvNewuser;
 	private PopupWindow mPopupWindow;
-	private String url = Constant.URL + "login.php";
-	private String url1 = Constant.URL + "json_array.php";
 	private RequestQueue mQueue = null;
 	private JSONObject json = new JSONObject();
 
@@ -85,7 +85,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			//创建一个RequestQueue队列
 			mQueue = Volley.newRequestQueue(getApplicationContext());
 			//向服务端发送请求
-			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, url, json,  
+			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, LOGIN_URL, json,  
 					new Response.Listener<JSONObject>() {  
 				@Override  
 				public void onResponse(JSONObject response) {  
