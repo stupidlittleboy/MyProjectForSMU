@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/tv_contacts_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="姓名" />
+
+    <View 
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray_bg"
+        />
+    
+    <TextView
+        android:id="@+id/tv_contacts_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="员工号" />
+    
+    <View 
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray_bg"
+        />
+
+    <TextView
+        android:id="@+id/tv_contacts_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="联系方式" />
+
+</LinearLayout>

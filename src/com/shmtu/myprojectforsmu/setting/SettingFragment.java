@@ -1,12 +1,15 @@
 package com.shmtu.myprojectforsmu.setting;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shmtu.myprojectforsmu.R;
@@ -18,6 +21,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 	private LinearLayout settingMap;
 	private LinearLayout settingAbout;
 	private LinearLayout settingExit;
+	private TextView tvPerdetail;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +44,11 @@ public class SettingFragment extends Fragment implements OnClickListener{
 		settingMap = (LinearLayout) getActivity().findViewById(R.id.layout_map);
 		settingAbout = (LinearLayout) getActivity().findViewById(R.id.layout_about);
 		settingExit = (LinearLayout) getActivity().findViewById(R.id.layout_exit);
+		tvPerdetail = (TextView) getActivity().findViewById(R.id.tv_perdetail);
+		
+		SharedPreferences sp = getActivity().getSharedPreferences("myProjectForSMU", 0);
+		String name = sp.getString("userName", null);
+		tvPerdetail.setHint(name);
 		
 		settingPerinfo.setOnClickListener(this);
 		settingTaskinfo.setOnClickListener(this);

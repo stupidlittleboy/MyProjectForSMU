@@ -21,7 +21,6 @@
                 android:id="@+id/img_perinfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:src="@drawable/news_selected" />
 
             <LinearLayout
@@ -41,9 +40,8 @@
                     android:id="@+id/tv_perdetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="detail"
-                    android:textSize="10sp" />
+                    android:layout_marginLeft="30dp"
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
