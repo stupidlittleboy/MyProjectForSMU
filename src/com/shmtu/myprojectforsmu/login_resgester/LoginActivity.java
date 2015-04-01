@@ -89,12 +89,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			spu.saveSharedPreferences("userName", userName);
 			spu.saveSharedPreferences("passWord", passWord);*/
 			
-			/*//将用户名，密码信息保存
+			//将用户名，密码信息保存
 			SharedPreferences sp = getSharedPreferences("myProjectForSMU", MODE_PRIVATE);
 			SharedPreferences.Editor editor = sp.edit();
 			editor.putString("userName", userName);
 			editor.putString("passWord", passWord);
-			editor.commit();*/
+			editor.commit();
 			
 			//创建一个RequestQueue队列
 			mQueue = Volley.newRequestQueue(getApplicationContext());
