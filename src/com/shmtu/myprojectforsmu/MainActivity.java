@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shmtu.myprojectforsmu.complany.ComplanyManaFragment;
 import com.shmtu.myprojectforsmu.customer.CustomerInfoFragment;
@@ -112,6 +113,11 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		/*SharePreferenceUtil spu = new SharePreferenceUtil(this, "login");
+		String userName = spu.loadStringSharedPreference("userName");
+		String passWord = spu.loadStringSharedPreference("passWord");
+		Toast.makeText(MainActivity.this, userName + "\n" + passWord, Toast.LENGTH_SHORT).show();*/
 		// 初始化布局元素
 		initViews();
 		fragmentManager = getFragmentManager();

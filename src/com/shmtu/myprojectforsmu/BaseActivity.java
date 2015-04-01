@@ -13,6 +13,6 @@ public class BaseActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d("BaseActivity", getApplication().getClass().getSimpleName());
+		Log.d("BaseActivity", getClass().getSimpleName());
 	}
 }

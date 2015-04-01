@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shmtu.myprojectforsmu"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0.1" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -61,6 +61,10 @@
             android:name=".complany.ComplanyNotices"
             android:label="@string/title_activity_customer_detail" >
         </activity>
+        <activity
+            android:name=".complany.ComplanyNoticesDetial"
+            android:label="@string/title_activity_customer_detail" >
+        </activity>
 
         <!-- 设置 -->
         <activity
@@ -77,6 +81,14 @@
         </activity>
         <activity
             android:name=".setting.SettingAbout"
+            android:label="@string/title_activity_customer_detail" >
+        </activity>
+        <activity
+            android:name=".setting.SettingAboutTeam"
+            android:label="@string/title_activity_customer_detail" >
+        </activity>
+        <activity
+            android:name=".setting.SettingAboutRecommend"
             android:label="@string/title_activity_customer_detail" >
         </activity>
     </application>

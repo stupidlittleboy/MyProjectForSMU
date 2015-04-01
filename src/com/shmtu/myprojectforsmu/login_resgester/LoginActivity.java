@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -75,12 +76,25 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
 			startActivity(intent1);*/
 			//将数据封装成json格式
+			String userName = username.getText().toString().trim();
+			String passWord = password.getText().toString().trim();
 			try {
-				json.put("UserName", username.getText().toString().trim());
-				json.put("PassWord", password.getText().toString().trim());
+				json.put("UserName", userName);
+				json.put("PassWord", passWord);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+			
+			/*SharePreferenceUtil spu = new SharePreferenceUtil(this, "login");
+			spu.saveSharedPreferences("userName", userName);
+			spu.saveSharedPreferences("passWord", passWord);*/
+			
+			/*//将用户名，密码信息保存
+			SharedPreferences sp = getSharedPreferences("myProjectForSMU", MODE_PRIVATE);
+			SharedPreferences.Editor editor = sp.edit();
+			editor.putString("userName", userName);
+			editor.putString("passWord", passWord);
+			editor.commit();*/
 			
 			//创建一个RequestQueue队列
 			mQueue = Volley.newRequestQueue(getApplicationContext());
@@ -90,27 +104,26 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				@Override  
 				public void onResponse(JSONObject response) {  
 					Log.d("TAG", response.toString());  
-					Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
-					int success = 0;
+//					Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
 					try {
-						success = Integer.parseInt(response.getString("success"));
+						int success = Integer.parseInt(response.getString("success"));
+						if(success == 0){
+							Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+							startActivity(intent);
+						}else{
+							Toast.makeText(LoginActivity.this, "输入的用户名或密码有错", Toast.LENGTH_LONG).show();
+						}
 					} catch (NumberFormatException e) {
 						e.printStackTrace();
 					} catch (JSONException e) {
 						e.printStackTrace();
-					}
-					if(success == 0){
-						Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-						startActivity(intent);
-					}else{
-						Toast.makeText(LoginActivity.this, "输入的用户名或密码有错", Toast.LENGTH_LONG).show();
 					}
 				}  
 			}, new Response.ErrorListener() {  
 				@Override  
 				public void onErrorResponse(VolleyError error) {  
 					Log.e("TAG", error.getMessage(), error);  
-					Toast.makeText(LoginActivity.this, "输入的用户名或密码有错", Toast.LENGTH_LONG).show();
+					Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
 				}  
 			});  
 

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -31,14 +32,14 @@ import com.android.volley.toolbox.Volley;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
 
-public class ComplanyNotices extends Activity implements OnItemClickListener {
+public class ComplanyNotices extends Activity {
 
 	private final static String NOTICE_URL = Constant.URL + "company_notice.php";
 	private ListView lvNoticesInfo;
 	private NoticesInfoAdapter noticeAdapter;
 	private RequestQueue mQueue = null;
 	private JSONArray jsonArray = null;
-	private ArrayList<HashMap<String, Object>> listNotice;
+	private ArrayList<HashMap<String, Object>> listNotice = new ArrayList<HashMap<String,Object>>();
 
 	public static void startComplanyNotices(Context context){
 		Intent intent = new Intent(context, ComplanyNotices.class);
@@ -49,10 +50,20 @@ public class ComplanyNotices extends Activity implements OnItemClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.complany_notices);
-		
+
 		lvNoticesInfo = (ListView) findViewById(R.id.lv_notices_info);
 		noticeAdapter = new NoticesInfoAdapter(this, listNotice);
-		lvNoticesInfo.setOnItemClickListener(this);
+		lvNoticesInfo.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				@SuppressWarnings("unchecked")
+				HashMap<String, Object> map = (HashMap<String, Object>) lvNoticesInfo.getItemAtPosition(position);
+				JSONObject jsonObj = new JSONObject(map);
+				Toast.makeText(ComplanyNotices.this, jsonObj.toString(), 0).show();
+			}
+		});
 
 		/*
 		 * 想服务端发出请求
@@ -67,27 +78,27 @@ public class ComplanyNotices extends Activity implements OnItemClickListener {
 				/**
 				 * 设置数据
 				 */
-				HashMap<String, Object> map = new HashMap<String, Object>();
 				for (int i = 0; i < 10; i++) {
+					HashMap<String, Object> map = new HashMap<String, Object>();
 					try {
 						JSONObject jObj = (JSONObject) response.get(i);
-						/*map.put("notice_theme", jObj.get("notice_theme"));
-								map.put("notice_date", jObj.get("notice_date"));
-								map.put("notice_content", jObj.get("notice_content"));*/
+						map.put("notice_theme", jObj.get("notice_theme"));
+						map.put("notice_date", jObj.get("notice_date"));
+						map.put("notice_content", jObj.get("notice_content"));
+						map.put("notice_emp_no", jObj.get("notice_emp_no"));
 
-						map.put("notice_theme", "这是主题"+i);
+						/*map.put("notice_theme", "这是主题"+i);
 						map.put("notice_date", "2015-03-31");
 						map.put("notice_content", "这是内容"+i);
-
+						 */
 						listNotice.add(map);
-						//								map.clear();
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 				}
-				
+
 				lvNoticesInfo.setAdapter(noticeAdapter);
-				Toast.makeText(ComplanyNotices.this, response.toString(), Toast.LENGTH_SHORT).show();
+//				Toast.makeText(ComplanyNotices.this, response.toString(), Toast.LENGTH_SHORT).show();
 				Log.e("TAG", response.toString());
 			}
 		}, new ErrorListener() {
@@ -112,7 +123,7 @@ public class ComplanyNotices extends Activity implements OnItemClickListener {
 
 		@Override
 		public int getCount() {
-			return 0;
+			return listNotice.size();
 		}
 
 		@Override
@@ -126,7 +137,8 @@ public class ComplanyNotices extends Activity implements OnItemClickListener {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
+			
 			ViewHolder viewHolder;
 			if (convertView == null){
 				convertView = mLayoutInflater.inflate(R.layout.complany_notices_item, null);
@@ -141,15 +153,20 @@ public class ComplanyNotices extends Activity implements OnItemClickListener {
 			viewHolder.tvNoticesTitle.setText(listNotice.get(position).get("notice_theme").toString());
 			viewHolder.tvNoticesDate.setText(listNotice.get(position).get("notice_date").toString());
 			viewHolder.tvNoticesContent.setText(listNotice.get(position).get("notice_content").toString());
+			//给ListView的Item点击事件
+			convertView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					String noticeTheme = listNotice.get(position).get("notice_theme").toString();
+					String noticeDate = listNotice.get(position).get("notice_date").toString();
+					String noticeContent = listNotice.get(position).get("notice_content").toString();
+					String noticeEmpNo = listNotice.get(position).get("notice_emp_no").toString();
+					ComplanyNoticesDetial.startComplanyNoticesDetial(ComplanyNotices.this, noticeTheme, noticeDate, noticeContent, noticeEmpNo);
+				}
+			});
 			return convertView;
 		}
-
-	}
-
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
 
 	}
 
