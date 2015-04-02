@@ -34,8 +34,8 @@ public class TaskDetail extends Activity implements OnClickListener {
 		tvTaskTitle = (TextView) findViewById(R.id.tv_task_title);
 		tvTaskDate = (TextView) findViewById(R.id.tv_task_date);
 		tvTaskContent = (TextView) findViewById(R.id.tv_task_content);
-		layoutTaskFlag = (LinearLayout) findViewById(R.id.layout_task_flag);
-		btnTaskFlag = (Button) findViewById(R.id.btn_task_flag);
+		layoutTaskFlag = (LinearLayout) findViewById(R.id.layout_task_detail_flag);
+		btnTaskFlag = (Button) findViewById(R.id.btn_task_detail_flag);
 		
 		layoutTaskFlag.setOnClickListener(this);
 		btnTaskFlag.setOnClickListener(this);
@@ -52,11 +52,11 @@ public class TaskDetail extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.layout_task_flag:
+		case R.id.layout_task_detail_flag:
 			Toast.makeText(TaskDetail.this, "显示详细信息", 0).show();
 			break;
 			
-		case R.id.btn_task_flag:
+		case R.id.btn_task_detail_flag:
 			Toast.makeText(TaskDetail.this, "任务领取成功", 0).show();
 			break;
 

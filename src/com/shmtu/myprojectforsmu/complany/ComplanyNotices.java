@@ -53,18 +53,6 @@ public class ComplanyNotices extends Activity {
 
 		lvNoticesInfo = (ListView) findViewById(R.id.lv_notices_info);
 		noticeAdapter = new NoticesInfoAdapter(this, listNotice);
-		lvNoticesInfo.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				@SuppressWarnings("unchecked")
-				HashMap<String, Object> map = (HashMap<String, Object>) lvNoticesInfo.getItemAtPosition(position);
-				JSONObject jsonObj = new JSONObject(map);
-				Toast.makeText(ComplanyNotices.this, jsonObj.toString(), 0).show();
-			}
-		});
-
 		/*
 		 * 想服务端发出请求
 		 */
