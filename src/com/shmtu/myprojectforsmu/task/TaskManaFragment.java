@@ -8,39 +8,38 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
-import com.shmtu.myprojectforsmu.complany.ComplanyNotices;
-import com.shmtu.myprojectforsmu.complany.ComplanyNoticesDetial;
-import com.shmtu.myprojectforsmu.complany.ComplanyNotices.ViewHolder;
 
 public class TaskManaFragment extends Fragment {
 
-	private final static String NOTICE_URL = Constant.URL + "company_notice.php";
+	private final static String NOTICE_URL = Constant.URL + "task_info.php";
 	
 	private ListView lvTaskInfo;
 	
 	private RequestQueue mQueue = null;
-	private ArrayList<HashMap<String, Object>> listTask = new ArrayList<HashMap<String,Object>>();
+//	private ArrayList<HashMap<String, Object>> listTask = new ArrayList<HashMap<String,Object>>();
+	public TaskManaAdapter taskManaAdapter = null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +53,12 @@ public class TaskManaFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		init();
-		sendToServer(getActivity(), listTask);
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		sendToServer(getActivity());
 	}
 	
 	/**
@@ -62,11 +66,12 @@ public class TaskManaFragment extends Fragment {
 	 */
 	private void init(){
 		lvTaskInfo = (ListView) getActivity().findViewById(R.id.lv_task_info);
+		taskManaAdapter = new TaskManaAdapter(getActivity());
 	}
 	
-	private void sendToServer(Context context, final ArrayList<HashMap<String, Object>> listTask){
+	private void sendToServer(Context context){
 		
-		final TaskManaAdapter taskManaAdapter = new TaskManaAdapter(context, listTask);
+		final ArrayList<HashMap<String, Object>> listTask = new ArrayList<HashMap<String,Object>>();
 		/*
 		 * 想服务端发出请求
 		 */
@@ -84,21 +89,19 @@ public class TaskManaFragment extends Fragment {
 					HashMap<String, Object> map = new HashMap<String, Object>();
 					try {
 						JSONObject jObj = (JSONObject) response.get(i);
-						map.put("notice_theme", jObj.get("notice_theme"));
-						map.put("notice_date", jObj.get("notice_date"));
-						map.put("notice_content", jObj.get("notice_content"));
-						map.put("notice_emp_no", jObj.get("notice_emp_no"));
-
-						/*map.put("notice_theme", "这是主题"+i);
-						map.put("notice_date", "2015-03-31");
-						map.put("notice_content", "这是内容"+i);
-						 */
+						map.put("task_no", jObj.get("task_no"));
+						map.put("task_title", jObj.get("task_title"));
+						map.put("task_content", jObj.get("task_content"));
+						map.put("task_customer_no", jObj.get("task_customer_no"));
+						map.put("task_flag", jObj.get("task_flag"));
+						map.put("task_emp_no", jObj.get("task_emp_no"));
+						map.put("task_date", jObj.get("task_date"));
 						listTask.add(map);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 				}
-
+				taskManaAdapter.setItemList(listTask);
 				lvTaskInfo.setAdapter(taskManaAdapter);
 //				Toast.makeText(ComplanyNotices.this, response.toString(), Toast.LENGTH_SHORT).show();
 				Log.e("TAG", response.toString());
@@ -118,11 +121,15 @@ public class TaskManaFragment extends Fragment {
 		private LayoutInflater mLayoutInflater;
 		private ArrayList<HashMap<String, Object>> listTask;
 
-		public TaskManaAdapter(Context context, ArrayList<HashMap<String, Object>> listTask){
+		public TaskManaAdapter(Context context){
 			mLayoutInflater = LayoutInflater.from(context);
-			this.listTask = listTask;
+//			taskManaAdapter.
 		}
 
+		public void setItemList(ArrayList<HashMap<String, Object>> listTask){
+			this.listTask = listTask;
+		}
+		
 		@Override
 		public int getCount() {
 			return listTask.size();
@@ -138,6 +145,7 @@ public class TaskManaFragment extends Fragment {
 			return 0;
 		}
 
+		@SuppressLint("ResourceAsColor")
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			
@@ -153,21 +161,33 @@ public class TaskManaFragment extends Fragment {
 			} else {
 				viewHolder = (ViewHolder) convertView.getTag();
 			}
-			viewHolder.tvTaskTitle.setText(listTask.get(position).get("notice_theme").toString());
-			viewHolder.tvTaskDate.setText(listTask.get(position).get("notice_date").toString());
-			viewHolder.tvTaskContent.setText(listTask.get(position).get("notice_content").toString());
+			viewHolder.tvTaskTitle.setText(listTask.get(position).get("task_title").toString());
+			viewHolder.tvTaskDate.setText(listTask.get(position).get("task_date").toString());
+			viewHolder.tvTaskContent.setText(listTask.get(position).get("task_content").toString());
+			if ("0".equals(listTask.get(position).get("task_flag").toString().trim())){
+				viewHolder.tvTaskFlag.setText("可领取");
+			} else {
+				viewHolder.tvTaskFlag.setText("任务已被" + listTask.get(position).get("task_emp_no").toString().trim() + "领取，点击查看详情");
+//				viewHolder.tvTaskFlag.setBackgroundColor(R.color.gray_bg);
+			}
 			
 			//给ListView的Item点击事件
-			/*convertView.setOnClickListener(new OnClickListener() {
+			convertView.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					String noticeTheme = listTask.get(position).get("notice_theme").toString();
-					String noticeDate = listTask.get(position).get("notice_date").toString();
-					String noticeContent = listTask.get(position).get("notice_content").toString();
-					String noticeEmpNo = listTask.get(position).get("notice_emp_no").toString();
+					
+					String taskNo = listTask.get(position).get("task_no").toString();
+					String taskTitle = listTask.get(position).get("task_title").toString();
+					String taskContent = listTask.get(position).get("task_content").toString();
+					String taskCustomerNo = listTask.get(position).get("task_customer_no").toString();
+					String taskFlag = listTask.get(position).get("task_flag").toString();
+					String taskEmpNo = listTask.get(position).get("task_emp_no").toString();
+					String taskDate = listTask.get(position).get("task_date").toString();
+					TaskDetail.startTaskDetail(getActivity(), taskNo, taskTitle, taskContent, taskCustomerNo, taskFlag, taskEmpNo, taskDate);
+					
 				}
-			});*/
+			});
 			return convertView;
 		}
 

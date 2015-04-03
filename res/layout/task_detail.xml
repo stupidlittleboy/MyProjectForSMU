@@ -20,18 +20,39 @@
             android:text="标题"
             android:textSize="20sp" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_task_detail_no"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="2015-03-31"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_task_detail_customer_no"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="2015-03-31"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tv_task_detail_date"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:hint="2015-03-31"
                 android:textSize="15sp" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_task_detail_content"
@@ -45,8 +66,8 @@
             android:id="@+id/layout_task_detail_flag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/textview_bg"
             android:layout_marginTop="10dp"
+            android:background="@drawable/textview_bg"
             android:orientation="vertical" >
 
             <TextView
@@ -59,27 +80,15 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                >
+                android:layout_height="wrap_content" >
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_task_detail_emp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="张三"
                     android:layout_alignParentRight="true"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="领取人信息："
-                        android:textSize="19sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="张三"
-                        android:textSize="19sp" />
-                </LinearLayout>
+                    android:textSize="19sp" />
             </RelativeLayout>
         </LinearLayout>
 

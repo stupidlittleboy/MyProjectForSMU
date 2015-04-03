@@ -48,8 +48,8 @@ public class ComplanyManaFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.layout_complany_meeting:
-//			ComplanyMeeting.startComplanyMeeting(getActivity());
-			TaskDetail.startTaskDetail(getActivity());
+			ComplanyMeeting.startComplanyMeeting(getActivity());
+//			TaskDetail.startTaskDetail(getActivity());
 			Toast.makeText(getActivity(), "会议信息", Toast.LENGTH_SHORT).show();
 			break;
 			

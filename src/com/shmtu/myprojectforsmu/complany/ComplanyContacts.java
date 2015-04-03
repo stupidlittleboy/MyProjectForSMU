@@ -72,9 +72,9 @@ public class ComplanyContacts extends Activity {
 			}
 		});
 		mQueue.add(jsonArrayRequest);
-		lvCompanyContacts = (ListView) findViewById(R.id.lv_company_contacts);
+		/*lvCompanyContacts = (ListView) findViewById(R.id.lv_company_contacts);
 		CompanyContactAdapter companyContactAdapter = new CompanyContactAdapter(this, listContacts);
-		lvCompanyContacts.setAdapter(companyContactAdapter);
+		lvCompanyContacts.setAdapter(companyContactAdapter);*/
 
 	}
 

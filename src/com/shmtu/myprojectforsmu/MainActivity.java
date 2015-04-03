@@ -196,6 +196,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				transaction.add(R.id.content, taskManaFragment);
 			} else {
 				// 如果taskManaFragment不为空，则直接将它显示出来
+				taskManaFragment.onResume();
 				transaction.show(taskManaFragment);
 			}
 			break;

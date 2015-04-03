@@ -1,7 +1,7 @@
 package com.shmtu.myprojectforsmu.adapter;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,14 +11,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
 
 public class CompanyContactsAdapter extends BaseExpandableListAdapter {
@@ -31,14 +36,13 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 	private LayoutInflater son_Inflater=null;
 	private RequestQueue mQueue = null;
 
-	private ArrayList<String> father_array;//父层
-	private ArrayList<List<String>> son_array;//子层
+	private ArrayList<HashMap<String, Object>> father_array;//父层
+	private ArrayList<HashMap<String, Object>> son_array;//子层
 
 	public CompanyContactsAdapter(Context context){
 		this.context = context;
 		father_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		son_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
 	}
 
 	//获取父层的大小
@@ -84,15 +88,40 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
-		return null;
+		GroupViewHolder groupViewHolder;
+		if (convertView == null) {
+			convertView = father_Inflater.inflate(R.layout.contacts_group_item, null);
+			groupViewHolder  = new GroupViewHolder();
+			groupViewHolder.ivContactsHead = (ImageView) convertView.findViewById(R.id.iv_contacts_head);
+			groupViewHolder.tvContactsFatherDepartment = (TextView) convertView.findViewById(R.id.tv_contacts_father_department);
+			convertView.setTag(groupViewHolder);
+		} else {
+			groupViewHolder = (GroupViewHolder) convertView.getTag();
+		}
+		groupViewHolder.ivContactsHead.setImageResource(R.drawable.ic_launcher);
+		groupViewHolder.tvContactsFatherDepartment.setText(father_array.get(groupPosition).get("contactsDepartment").toString().trim());
+		return convertView;
 	}
 
 	//获取子层视图
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-
-		return null;
+		ChildViewHolder childViewHolder;
+		if (convertView == null) {
+			convertView = son_Inflater.inflate(R.layout.contacts_child_item, null);
+			childViewHolder = new ChildViewHolder();
+			childViewHolder.tvContactsChildName = (TextView) convertView.findViewById(R.id.tv_contacts_child_name);
+			childViewHolder.tvContactsChildEmpNo = (TextView) convertView.findViewById(R.id.tv_contacts_child_emp_no);
+			childViewHolder.tvContactsChildPhoneNo = (TextView) convertView.findViewById(R.id.tv_contacts_child_phone_no);
+			convertView.setTag(childViewHolder);
+		} else {
+			childViewHolder = (ChildViewHolder) convertView.getTag(); 
+		}
+		childViewHolder.tvContactsChildName.setText(son_array.get(childPosition).get("contactsChildName").toString().trim());
+		childViewHolder.tvContactsChildEmpNo.setText(son_array.get(childPosition).get("contactsChildEmpNo").toString().trim());
+		childViewHolder.tvContactsChildPhoneNo.setText(son_array.get(childPosition).get("contactsChildPhoneNo").toString().trim());
+		return convertView;
 	}
 
 	@Override
@@ -100,9 +129,9 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 		return false;
 	}
 
-	private void init(){
-		father_array=new ArrayList<String>();
-		son_array=new ArrayList<List<String>>();
+	//获取父节点的值
+	private void getFatherArrry(){
+		father_array=new ArrayList<HashMap<String,Object>>();
 
 		//创建一个RequestQueue队列
 		mQueue = Volley.newRequestQueue(context);
@@ -115,7 +144,9 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 				for (int i = 0; i < response.length(); i++) {
 					try {
 						JSONObject jsonObj = response.getJSONObject(i);
-						father_array.add(jsonObj.getString("contacts_department"));
+						HashMap<String, Object> map = new HashMap<String, Object>();
+						map.put("contactsDepartment", jsonObj.getString("contacts_department"));
+						father_array.add(map);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -131,6 +162,47 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 		});  
 
 		mQueue.add(jsonArrayRequest);
+	}
+	
+	private void getChildArray(){
+		son_array=new ArrayList<HashMap<String,Object>>();
+		mQueue = Volley.newRequestQueue(context);
+		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(CONTACTS_URL, 
+				new Listener<JSONArray>() {
+
+					@Override
+					public void onResponse(JSONArray response) {
+						for (int i = 0; i < response.length(); i++) {
+							try {
+								JSONObject jsonObj = response.getJSONObject(i);
+								HashMap<String, Object> map = new HashMap<String, Object>();
+								map.put("contactsChildName", jsonObj.getString("contacts_name"));
+								map.put("contactsChildEmpNo", jsonObj.getString("contacts_emp_no"));
+								map.put("contactsChildPhoneNo", jsonObj.getString("contacts_phone_no"));
+								son_array.add(map);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}, new ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						
+					}
+				});
+	}
+	
+	class GroupViewHolder {
+		ImageView ivContactsHead;
+		TextView tvContactsFatherDepartment;
+	}
+	
+	class ChildViewHolder {
+		TextView tvContactsChildName;
+		TextView tvContactsChildEmpNo;
+		TextView tvContactsChildPhoneNo;
 	}
 
 }
