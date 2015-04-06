@@ -1,6 +1,5 @@
 package com.shmtu.myprojectforsmu.setting;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,13 +13,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
@@ -75,12 +73,13 @@ public class SettingPerInfo extends Activity implements OnClickListener {
 		tvPerInfoBirthday = (TextView) findViewById(R.id.tv_per_info_birthday);
 		tvPerInfoNation = (TextView) findViewById(R.id.tv_per_info_nation);
 		tvPerInfoAddress = (TextView) findViewById(R.id.tv_per_info_address);
-		
+
 		tvPerInfoPhoneNum.setOnClickListener(this);
 		tvPerInfoEmail.setOnClickListener(this);
 
 		SharedPreferences sp = getSharedPreferences("myProjectForSMU", 0);
 		String userName = sp.getString("userName", null);
+		Log.e("userName", userName);
 		if (userName != null && !"".equals(userName)){
 			try {
 				JSONObject json = new JSONObject();
@@ -88,43 +87,39 @@ public class SettingPerInfo extends Activity implements OnClickListener {
 				//创建一个RequestQueue队列
 				mQueue = Volley.newRequestQueue(getApplicationContext());
 				//向服务端发送请求
-				JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(PER_INFO_URL,
-						new Listener<JSONArray>() {
+				JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(PER_INFO_URL, json, 
+						new Listener<JSONObject>() {
 
 					@Override
-					public void onResponse(JSONArray response) {
-						for (int i = 0; i < response.length(); i++) {
-							try {
-								JSONObject jObj = response.getJSONObject(i);
-								tvPerInfoNickname.setText(jObj.getString("login_nickname"));
-								tvPerInfoName.setText(jObj.getString("emp_name"));
-								tvPerInfoSex.setText(jObj.getString("emp_sex"));
-								tvPerInfoAge.setText(jObj.getString("emp_age"));
-								tvPerInfoPhoneNum.setText(jObj.getString("login_emp_phone_no"));
-								tvPerInfoEmail.setText(jObj.getString("emp_email"));
+					public void onResponse(JSONObject response) {
+						try {
+							tvPerInfoNickname.setText(response.getString("login_nickname"));
+							tvPerInfoName.setText(response.getString("emp_name"));
+							tvPerInfoSex.setText(response.getString("emp_sex"));
+							tvPerInfoAge.setText(response.getString("emp_age"));
+							tvPerInfoPhoneNum.setText(response.getString("login_emp_phone_no"));
+							tvPerInfoEmail.setText(response.getString("emp_email"));
 
-								tvPerInfoEmpNo.setText(jObj.getString("login_emp_no"));
-								tvPerInfoDepartment.setText(jObj.getString("base_emp_department"));
-								tvPerInfoPosition.setText(jObj.getString("base_emp_position"));
-								tvPerInfoEntryDate.setText(jObj.getString("base_emp_entrydate"));
+							tvPerInfoEmpNo.setText(response.getString("login_emp_no"));
+							tvPerInfoDepartment.setText(response.getString("base_emp_department"));
+							tvPerInfoPosition.setText(response.getString("base_emp_position"));
+							tvPerInfoEntryDate.setText(response.getString("base_emp_entrydate"));
 
-								tvPerInfoBirthday.setText(jObj.getString("emp_borthday"));
-								tvPerInfoNation.setText(jObj.getString("emp_nation"));
-								tvPerInfoAddress.setText(jObj.getString("emp_address"));
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
+							tvPerInfoBirthday.setText(response.getString("emp_borthday"));
+							tvPerInfoNation.setText(response.getString("emp_nation"));
+							tvPerInfoAddress.setText(response.getString("emp_address"));
+						} catch (JSONException e) {
+							e.printStackTrace();
 						}
 					}
 				}, new ErrorListener() {
 
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						Log.e("TAG", error.getMessage(), error);  
-						Toast.makeText(SettingPerInfo.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
+
 					}
 				});
-				mQueue.add(jsonArrayRequest);
+				mQueue.add(jsonObjectRequest);
 
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -143,13 +138,13 @@ public class SettingPerInfo extends Activity implements OnClickListener {
 			Intent intent = new Intent(Intent.ACTION_DIAL, uri);
 			startActivity(intent);
 			break;
-		//打开邮件界面
+			//打开邮件界面
 		case R.id.tv_per_info_email:
 			Uri uri1 = Uri.parse("mailto:" + tvPerInfoEmail.getText().toString().trim());   
 			Intent it = new Intent(Intent.ACTION_SENDTO, uri1);   
 			startActivity(it); 
 			break;
-			
+
 		default:
 			break;
 		}
