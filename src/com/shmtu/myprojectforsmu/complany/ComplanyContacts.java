@@ -123,7 +123,7 @@ public class ComplanyContacts extends Activity {
 		}
 	}
 
-	public final class ViewHolder{
+	private final class ViewHolder{
 		TextView tvNoticesTitle;
 		TextView tvNoticesDate;
 		TextView tvNoticesContent;
