@@ -2,9 +2,9 @@ package com.shmtu.myprojectforsmu.complany;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -12,13 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,7 +27,7 @@ import com.shmtu.myprojectforsmu.commons.Constant;
 
 public class ComplanyContacts extends Activity {
 
-//	private final static String DEPARTMENT_URL = Constant.URL + "get_department.php";
+	private final static String DEPARTMENT_URL = Constant.URL + "get_department.php";
 	private final static String CONTACTS_URL = Constant.URL + "get_contacts.php";
 
 	//	private final static String CONTACTS_URL = Constant.URL + "company_contacts.php"; 
@@ -41,6 +35,7 @@ public class ComplanyContacts extends Activity {
 	private RequestQueue mQueueFather = null;
 	private RequestQueue mQueueSon = null;
 	private CompanyContactsAdapter companyContactsAdapter;
+	private List<ArrayList<HashMap<String, Object>>> listChildItem;
 	
 	public static void startComplanyContacts(Context context){
 		Intent intent = new Intent(context, ComplanyContacts.class);
@@ -66,7 +61,7 @@ public class ComplanyContacts extends Activity {
 //		elvCompanyContacts.setAdapter(companyContactsAdapter);
 	}
 	
-	/*//获取父节点的值
+	//获取父节点的值
 	private void getFatherArrry(){
 		final ArrayList<HashMap<String,Object>> father_array=new ArrayList<HashMap<String,Object>>();
 
@@ -103,7 +98,7 @@ public class ComplanyContacts extends Activity {
 
 		mQueueFather.add(jsonArrayRequestFather);
 	}
-*/
+
 	private void getCompanyContacts(){
 		final ArrayList<HashMap<String,Object>> son_array=new ArrayList<HashMap<String,Object>>();
 		mQueueSon = Volley.newRequestQueue(getApplicationContext());

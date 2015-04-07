@@ -1,38 +1,78 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:ht="http://schemas.android.com/apk/res/com.example.mainprojectforsmu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/hello_world" />
-
-    <com.shmtu.myprojectforsmu.ui.ClearEditText
-        android:layout_below="@id/tv_content"
-        android:id="@+id/edit_user"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="7dp"
-        android:layout_margin="20dp"
-        android:hint="账号/邮箱/手机号码"
-        android:inputType="textPersonName"
-        android:maxLength="30"
-        android:singleLine="true"/>
-    
-    <com.shmtu.myprojectforsmu.ui.ClearEditText
-        android:layout_below="@id/edit_user"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:hint="输入"
-        android:padding="7dp"
-        android:singleLine="true" />
+        android:orientation="vertical" >
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_customer_detail_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客户编号："
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/tv_customer_detail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="客户名称："
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_customer_detail_phone_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/listview_bg"
+            android:text="联系方式："
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_customer_detail_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/listview_bg"
+            android:text="电子邮件："
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_customer_detail_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="日期："
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="客户等级："
+                android:textSize="20sp" />
+
+            <RatingBar
+                android:id="@+id/rb_customer_datail_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5" 
+                style="?android:attr/ratingBarStyleIndicator"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

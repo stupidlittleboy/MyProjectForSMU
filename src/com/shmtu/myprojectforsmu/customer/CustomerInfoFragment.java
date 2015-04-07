@@ -79,6 +79,7 @@ public class CustomerInfoFragment extends Fragment {
 						map.put("customer_no", json.get("customer_no"));
 						map.put("customer_name", json.get("customer_name"));
 						map.put("customer_phone_no", json.get("customer_phone_no"));
+						map.put("customer_email", json.get("customer_email"));
 						map.put("customer_date", json.get("customer_date"));
 						map.put("customer_level", json.get("customer_level"));
 						listCustomerInfo.add(map);
@@ -134,7 +135,7 @@ public class CustomerInfoFragment extends Fragment {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			ViewHolder viewHolder;
 			Log.e("size", listCustomerInfo.size()+"");
 			if (convertView == null) {
@@ -156,7 +157,15 @@ public class CustomerInfoFragment extends Fragment {
 
 					@Override
 					public void onClick(View v) {
-						Toast.makeText(getActivity(), "点击查看明细", 0).show();
+//						Toast.makeText(getActivity(), "点击查看明细", 0).show();
+						String customerNo = listCustomerInfo.get(position).get("customer_no").toString();
+						String customerName = listCustomerInfo.get(position).get("customer_name").toString();
+						String customerPhoneNo = listCustomerInfo.get(position).get("customer_phone_no").toString();
+						String customerEmail = listCustomerInfo.get(position).get("customer_email").toString();
+						String customerDate = listCustomerInfo.get(position).get("customer_date").toString();
+						int customerLevel = Integer.parseInt(listCustomerInfo.get(position).get("customer_level").toString());
+						
+						CustomerDetailActivity.startCustomerDetailActivity(getActivity(), customerNo, customerName, customerPhoneNo, customerEmail, customerDate, customerLevel);
 					}
 				});
 			} else {
