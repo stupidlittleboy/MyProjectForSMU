@@ -105,7 +105,6 @@ public class TaskDetail extends Activity implements OnClickListener {
 			break;
 
 		case R.id.btn_task_detail_flag:
-//			Log.e("json", json.toString());
 			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(TASK_DETAIL_URL, 
 					json, new Listener<JSONObject>() {
 
@@ -116,7 +115,7 @@ public class TaskDetail extends Activity implements OnClickListener {
 							Toast.makeText(TaskDetail.this, "你已成功领取任务", 0).show();
 							btnTaskFlag.setVisibility(View.GONE);
 							layoutTaskFlag.setVisibility(View.VISIBLE);
-							tvTaskDetailEmp.setText("任务领取人：" + json.getString("taskNo"));
+							tvTaskDetailEmp.setText("任务领取人：" + response.getString("emp_no"));
 						} else {
 							Toast.makeText(TaskDetail.this, "领取任务失败，请耐心等待5秒后再尝试！", 0).show();
 						}

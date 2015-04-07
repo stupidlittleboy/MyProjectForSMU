@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/listview_bg"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_meeting_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="主题"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/tv_meeting_starttime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:hint="开始时间"
+            android:textSize="17sp" />
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/tv_meeting_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="我们接受委托，对潍坊北大青鸟华光科技股份有限公司（以下简称青鸟华光公司）2014年12月31日的财务报告内部控制进行审汁。我们接受委托，对潍坊北大青鸟华光科技股份有限公司（以下简称青鸟华光公司）2014年12月31日的财务报告内部控制进行审汁。我们接受委托，对潍坊北大青鸟华光科技股份有限公司（以下简称青鸟华光公司）2014年12月31日的财务报告内部控制进行审汁。"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:textSize="17sp" />
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/tv_meeting_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:hint="会议地址"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+</LinearLayout>

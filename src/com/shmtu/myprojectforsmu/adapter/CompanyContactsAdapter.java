@@ -28,23 +28,25 @@ import com.shmtu.myprojectforsmu.commons.Constant;
 
 public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 
-	private final static String DEPARTMENT_URL = Constant.URL + "get_department.php";
-	private final static String CONTACTS_URL = Constant.URL + "get_contacts.php";
-
-	private Context context;
 	private LayoutInflater father_Inflater=null;
 	private LayoutInflater son_Inflater=null;
-	private RequestQueue mQueue = null;
 
 	private ArrayList<HashMap<String, Object>> father_array;//父层
 	private ArrayList<HashMap<String, Object>> son_array;//子层
 
 	public CompanyContactsAdapter(Context context){
-		this.context = context;
 		father_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		son_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
+	public void setItemFatherArray(ArrayList<HashMap<String, Object>> father_array) {
+		this.father_array = father_array;
+	}
+	
+	public void setItemSonArray(ArrayList<HashMap<String, Object>> son_array) {
+		this.son_array = son_array;
+	}
+	
 	//获取父层的大小
 	@Override
 	public int getGroupCount() {
@@ -129,70 +131,6 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 		return false;
 	}
 
-	//获取父节点的值
-	private void getFatherArrry(){
-		father_array=new ArrayList<HashMap<String,Object>>();
-
-		//创建一个RequestQueue队列
-		mQueue = Volley.newRequestQueue(context);
-		//向服务端发送请求
-		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(DEPARTMENT_URL, 
-				new Listener<JSONArray>() {
-
-			@Override
-			public void onResponse(JSONArray response) {
-				for (int i = 0; i < response.length(); i++) {
-					try {
-						JSONObject jsonObj = response.getJSONObject(i);
-						HashMap<String, Object> map = new HashMap<String, Object>();
-						map.put("contactsDepartment", jsonObj.getString("contacts_department"));
-						father_array.add(map);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		},  
-		new Response.ErrorListener() {  
-			@Override  
-			public void onErrorResponse(VolleyError error) {  
-				Log.e("TAG", error.getMessage(), error);  
-				//				Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
-			}  
-		});  
-
-		mQueue.add(jsonArrayRequest);
-	}
-	
-	private void getChildArray(){
-		son_array=new ArrayList<HashMap<String,Object>>();
-		mQueue = Volley.newRequestQueue(context);
-		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(CONTACTS_URL, 
-				new Listener<JSONArray>() {
-
-					@Override
-					public void onResponse(JSONArray response) {
-						for (int i = 0; i < response.length(); i++) {
-							try {
-								JSONObject jsonObj = response.getJSONObject(i);
-								HashMap<String, Object> map = new HashMap<String, Object>();
-								map.put("contactsChildName", jsonObj.getString("contacts_name"));
-								map.put("contactsChildEmpNo", jsonObj.getString("contacts_emp_no"));
-								map.put("contactsChildPhoneNo", jsonObj.getString("contacts_phone_no"));
-								son_array.add(map);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				}, new ErrorListener() {
-
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						
-					}
-				});
-	}
 	
 	class GroupViewHolder {
 		ImageView ivContactsHead;

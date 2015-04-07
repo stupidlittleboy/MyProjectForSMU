@@ -34,7 +34,6 @@ public class CustomerInfoFragment extends Fragment {
 	private final static String CUSTOMER_INFO_URL = Constant.URL + "customer_info.php";
 
 	private ListView lvCustomerInfo;
-	private ArrayList<HashMap<String, Object>> listCustomerInfo;
 	private RequestQueue mQueue = null;
 	private CustomerInfoAdapter customerInfoAdapter;
 
@@ -48,10 +47,24 @@ public class CustomerInfoFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		listCustomerInfo = new ArrayList<HashMap<String,Object>>();
+		init();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		getCustomerInfo();
+	}
+
+	//初始化ListView控件
+	private void init() {
 		lvCustomerInfo = (ListView) getActivity().findViewById(R.id.lv_customer_info);
 		customerInfoAdapter = new CustomerInfoAdapter(getActivity());
+	}
 
+	//从服务器获取信息
+	private void getCustomerInfo() {
+		final ArrayList<HashMap<String, Object>> listCustomerInfo = new ArrayList<HashMap<String,Object>>();
 		mQueue = Volley.newRequestQueue(getActivity());
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(CUSTOMER_INFO_URL, 
 				new Listener<JSONArray>() {
@@ -74,6 +87,7 @@ public class CustomerInfoFragment extends Fragment {
 					}
 				}
 				Log.e("list", listCustomerInfo.toString());
+				//将list集合中的数据传入到自定义的adapter中
 				customerInfoAdapter.setItemList(listCustomerInfo);
 				lvCustomerInfo.setAdapter(customerInfoAdapter);
 			}
@@ -85,103 +99,9 @@ public class CustomerInfoFragment extends Fragment {
 			}
 		});
 		mQueue.add(jsonArrayRequest);
-		/*
-		 * 用于在非UI线程中更新UI
-		 */
-		/*handler = new Handler(){
-			@Override
-			public void handleMessage(Message msg) {
-				super.handleMessage(msg);
-				switch (msg.what) {
-				case 0:
-
-					String res = msg.getData().getString("res");
-					listItem = new ArrayList<HashMap<String,Object>>();
-					try {
-						jsonArray = new JSONArray(res);
-						Toast.makeText(getActivity(), jsonArray.toString(), Toast.LENGTH_LONG).show();
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-
-					for(int i = 0; i < jsonArray.length(); i++){
-						try {
-							JSONObject jObj = (JSONObject) jsonArray.get(i);
-							HashMap<String, Object> map = new HashMap<String, Object>();
-//							Toast.makeText(getActivity(), jObj.toString(), Toast.LENGTH_SHORT).show();
-							map.put(Preferences.CUS_NAME, jObj.getString("name"));
-							map.put(Preferences.CUS_PHONE, jObj.getString("email"));
-							map.put(Preferences.CUS_DATE, jObj.getString("description"));
-							listItem.add(map);
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}
-
-					SimpleAdapter mSimpleAdapter = new SimpleAdapter(getActivity(), listItem, 
-							R.layout.customer_list_item, 
-							new String[] {Preferences.CUS_NAME,Preferences.CUS_PHONE,Preferences.CUS_DATE}, 
-							new int[] {R.id.customer_name, R.id.customer_phone, R.id.customer_date});
-
-					lv.setAdapter(mSimpleAdapter);
-
-					lv.setOnItemClickListener(new OnItemClickListener() {
-
-						@Override
-						public void onItemClick(AdapterView<?> parent, View view,
-								int position, long id) {
-							@SuppressWarnings("unchecked")
-							HashMap<string, Object> map = (HashMap<string, Object>) lv.getItemAtPosition(position);
-							Intent intent = new Intent(getActivity(), CustomerDetailActivity.class);
-							Bundle bundle = new Bundle();
-							bundle.putString(Preferences.CUS_NAME, map.get(Preferences.CUS_NAME) + "");
-							bundle.putString(Preferences.CUS_PHONE, map.get(Preferences.CUS_PHONE) + "");
-							bundle.putString(Preferences.CUS_DATE, map.get(Preferences.CUS_DATE) + "");
-							intent.putExtras(bundle);
-							startActivity(intent);
-							String name = map.get(Preferences.CUS_NAME) + "";
-							String phone = map.get(Preferences.CUS_PHONE) + "";
-							String date = map.get(Preferences.CUS_DATE) + "";
-							Toast.makeText(getActivity(), "姓名：" + name + "\n手机：" + phone + "\n日期：" + date, Toast.LENGTH_SHORT).show();
-						}
-					});
-
-					Toast.makeText(getActivity(), listItem.toString(), Toast.LENGTH_SHORT).show();
-					for(int i = 0; i < listItem.size(); i++){
-						Toast.makeText(getActivity(), listItem.get(i).toString(), Toast.LENGTH_SHORT).show();
-					}
-					break;
-
-				default:
-					break;
-				}
-			}
-		};
-
-		 *//**
-		 * 从服务端获取用户基本信息
-		 *//*
-		new Thread(){
-			@Override
-			public void run() {
-				super.run();
-				json = new JSONObject();
-				try {
-					HttpUtils.httpPostMethod(Constant.URL + "cus_info.php", json, handler);
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				} catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-			}
-		}.start();*/
-
-		Log.d("list", listCustomerInfo.toString());
 	}
 
+	//自定义adapter，优化ListView
 	class CustomerInfoAdapter extends BaseAdapter{
 
 		private LayoutInflater mLayoutInflater;
@@ -191,6 +111,7 @@ public class CustomerInfoFragment extends Fragment {
 			mLayoutInflater = LayoutInflater.from(context);
 		}
 
+		//传入list内的数据
 		public void setItemList(ArrayList<HashMap<String, Object>> listCustomerInfo){
 			this.listCustomerInfo = listCustomerInfo;
 			Log.e("list2", this.listCustomerInfo.toString());
@@ -198,6 +119,7 @@ public class CustomerInfoFragment extends Fragment {
 
 		@Override
 		public int getCount() {
+			Log.e("list2", this.listCustomerInfo.size()+"");
 			return listCustomerInfo.size();
 		}
 
@@ -214,17 +136,18 @@ public class CustomerInfoFragment extends Fragment {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder viewHolder;
+			Log.e("size", listCustomerInfo.size()+"");
 			if (convertView == null) {
 				convertView = mLayoutInflater.inflate(R.layout.customer_list_item, null);
 				viewHolder = new ViewHolder();
-				viewHolder.tvCustomerName = (TextView) getActivity().findViewById(R.id.tv_customer_name);
-				viewHolder.tvCustomerPhoneNo = (TextView) getActivity().findViewById(R.id.tv_customer_phone_no);
-				viewHolder.tvCustomerDate = (TextView) getActivity().findViewById(R.id.tv_customer_date);
+				viewHolder.tvCustomerName = (TextView) convertView.findViewById(R.id.tv_customer_name);
+				viewHolder.tvCustomerPhoneNo = (TextView) convertView.findViewById(R.id.tv_customer_phone_no);
+				viewHolder.tvCustomerDate = (TextView) convertView.findViewById(R.id.tv_customer_date);
 				convertView.setTag(viewHolder);
 			} else {
 				viewHolder = (ViewHolder) convertView.getTag();
 			}
-			if (listCustomerInfo.size() == 0){
+			if (listCustomerInfo.size() > 0){
 				viewHolder.tvCustomerName.setText(listCustomerInfo.get(position).get("customer_name").toString());
 				viewHolder.tvCustomerPhoneNo.setText(listCustomerInfo.get(position).get("customer_phone_no").toString());
 				viewHolder.tvCustomerDate.setText(listCustomerInfo.get(position).get("customer_date").toString());
@@ -242,6 +165,7 @@ public class CustomerInfoFragment extends Fragment {
 			return convertView;
 		}
 
+		//辅助类，优化ListView性能
 		private class ViewHolder {
 			TextView tvCustomerName;
 			TextView tvCustomerPhoneNo;

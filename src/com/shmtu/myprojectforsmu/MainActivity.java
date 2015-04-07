@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shmtu.myprojectforsmu.complany.ComplanyManaFragment;
 import com.shmtu.myprojectforsmu.customer.CustomerInfoFragment;
@@ -212,6 +211,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				transaction.show(customerInfoFragment);
 			} else {
 				// 如果customerInfoFragment不为空，则直接将它显示出来
+				customerInfoFragment.onResume();
 				transaction.show(customerInfoFragment);
 			}
 			
@@ -226,6 +226,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				transaction.add(R.id.content, complanyManaFragment);
 			} else {
 				// 如果complanyManaFragment不为空，则直接将它显示出来
+				complanyManaFragment.onResume();
 				transaction.show(complanyManaFragment);
 			}
 			break;
@@ -241,6 +242,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				transaction.add(R.id.content, settingFragment);
 			} else {
 				// 如果SettingFragment不为空，则直接将它显示出来
+				settingFragment.onResume();
 				transaction.show(settingFragment);
 			}
 			break;

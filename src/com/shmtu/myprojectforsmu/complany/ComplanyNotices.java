@@ -16,8 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,8 +36,6 @@ public class ComplanyNotices extends Activity {
 	private ListView lvNoticesInfo;
 	private NoticesInfoAdapter noticeAdapter;
 	private RequestQueue mQueue = null;
-	private JSONArray jsonArray = null;
-	private ArrayList<HashMap<String, Object>> listNotice = new ArrayList<HashMap<String,Object>>();
 
 	public static void startComplanyNotices(Context context){
 		Intent intent = new Intent(context, ComplanyNotices.class);
@@ -51,12 +47,27 @@ public class ComplanyNotices extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.complany_notices);
 
+		init();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getCompanyNotices();
+	}
+	
+	//初始化控件
+	private void init() {
 		lvNoticesInfo = (ListView) findViewById(R.id.lv_notices_info);
-		noticeAdapter = new NoticesInfoAdapter(this, listNotice);
+		noticeAdapter = new NoticesInfoAdapter(this);
+	}
+
+	private void getCompanyNotices() {
 		/*
 		 * 想服务端发出请求
 		 */
 		//创建一个RequestQueue队列
+		final ArrayList<HashMap<String, Object>> listNotice = new ArrayList<HashMap<String,Object>>();
 		mQueue = Volley.newRequestQueue(getApplicationContext());
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(NOTICE_URL, 
 				new Listener<JSONArray>() {
@@ -66,7 +77,7 @@ public class ComplanyNotices extends Activity {
 				/**
 				 * 设置数据
 				 */
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < response.length(); i++) {
 					HashMap<String, Object> map = new HashMap<String, Object>();
 					try {
 						JSONObject jObj = (JSONObject) response.get(i);
@@ -74,19 +85,13 @@ public class ComplanyNotices extends Activity {
 						map.put("notice_date", jObj.get("notice_date"));
 						map.put("notice_content", jObj.get("notice_content"));
 						map.put("notice_emp_no", jObj.get("notice_emp_no"));
-
-						/*map.put("notice_theme", "这是主题"+i);
-						map.put("notice_date", "2015-03-31");
-						map.put("notice_content", "这是内容"+i);
-						 */
 						listNotice.add(map);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 				}
-
+				noticeAdapter.setItemList(listNotice);
 				lvNoticesInfo.setAdapter(noticeAdapter);
-//				Toast.makeText(ComplanyNotices.this, response.toString(), Toast.LENGTH_SHORT).show();
 				Log.e("TAG", response.toString());
 			}
 		}, new ErrorListener() {
@@ -104,9 +109,13 @@ public class ComplanyNotices extends Activity {
 		private LayoutInflater mLayoutInflater;
 		private ArrayList<HashMap<String, Object>> listNotice;
 
-		public NoticesInfoAdapter(Context context, ArrayList<HashMap<String, Object>> listNotice){
+		public NoticesInfoAdapter(Context context){
 			mLayoutInflater = LayoutInflater.from(context);
+		}
+
+		public void setItemList(ArrayList<HashMap<String, Object>> listNotice){
 			this.listNotice = listNotice;
+			Log.e("list2", this.listNotice.toString());
 		}
 
 		@Override
@@ -126,7 +135,7 @@ public class ComplanyNotices extends Activity {
 
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			
+
 			ViewHolder viewHolder;
 			if (convertView == null){
 				convertView = mLayoutInflater.inflate(R.layout.complany_notices_item, null);
@@ -143,7 +152,7 @@ public class ComplanyNotices extends Activity {
 			viewHolder.tvNoticesContent.setText(listNotice.get(position).get("notice_content").toString());
 			//给ListView的Item点击事件
 			convertView.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					String noticeTheme = listNotice.get(position).get("notice_theme").toString();

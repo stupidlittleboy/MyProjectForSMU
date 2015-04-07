@@ -65,6 +65,10 @@
             android:name=".complany.ComplanyNoticesDetial"
             android:label="@string/title_activity_customer_detail" >
         </activity>
+        <activity
+            android:name=".complany.ComplanyMeetingDetail"
+            android:label="@string/title_activity_customer_detail" >
+        </activity>
 
         <!-- 设置 -->
         <activity
