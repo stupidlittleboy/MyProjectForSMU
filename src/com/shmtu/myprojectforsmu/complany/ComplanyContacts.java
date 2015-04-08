@@ -36,6 +36,8 @@ public class ComplanyContacts extends Activity {
 	private RequestQueue mQueueSon = null;
 	private CompanyContactsAdapter companyContactsAdapter;
 	private List<ArrayList<HashMap<String, Object>>> listChildItem;
+	private ArrayList<HashMap<String,Object>> father_array;
+	private ArrayList<HashMap<String,Object>> son_array;
 	
 	public static void startComplanyContacts(Context context){
 		Intent intent = new Intent(context, ComplanyContacts.class);
@@ -51,19 +53,21 @@ public class ComplanyContacts extends Activity {
 
 	private void init() {
 		elvCompanyContacts = (ExpandableListView) findViewById(R.id.elv_company_contacts);
-//		companyContactsAdapter = new CompanyContactsAdapter(this);
+		
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		getFatherArrry();
 		getCompanyContacts();
-//		elvCompanyContacts.setAdapter(companyContactsAdapter);
+		companyContactsAdapter = new CompanyContactsAdapter(this, father_array, son_array);
+		elvCompanyContacts.setAdapter(companyContactsAdapter);
 	}
 	
 	//获取父节点的值
 	private void getFatherArrry(){
-		final ArrayList<HashMap<String,Object>> father_array=new ArrayList<HashMap<String,Object>>();
+		father_array = new ArrayList<HashMap<String,Object>>();
 
 		//创建一个RequestQueue队列
 		mQueueFather = Volley.newRequestQueue(getApplicationContext());
@@ -78,14 +82,14 @@ public class ComplanyContacts extends Activity {
 					try {
 						JSONObject jsonObj = response.getJSONObject(i);
 						HashMap<String, Object> map = new HashMap<String, Object>();
-						map.put("contactsDepartment", jsonObj.getString("contacts_department"));
+						map.put("contactsDepartment", jsonObj.getString("contact_department"));
 						father_array.add(map);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 				Log.e("father", father_array.toString());
-//				companyContactsAdapter.setItemFatherArray(father_array);
+				companyContactsAdapter.setItemFatherArray(father_array);
 			}
 		},  
 		new Response.ErrorListener() {  
@@ -100,7 +104,7 @@ public class ComplanyContacts extends Activity {
 	}
 
 	private void getCompanyContacts(){
-		final ArrayList<HashMap<String,Object>> son_array=new ArrayList<HashMap<String,Object>>();
+		son_array = new ArrayList<HashMap<String,Object>>();
 		mQueueSon = Volley.newRequestQueue(getApplicationContext());
 		JsonArrayRequest jsonArrayRequestSon = new JsonArrayRequest(CONTACTS_URL, 
 				new Listener<JSONArray>() {
@@ -121,7 +125,7 @@ public class ComplanyContacts extends Activity {
 					}
 				}
 				Log.e("son", son_array.toString());
-//				companyContactsAdapter.set+ItemSonArray(son_array);
+				companyContactsAdapter.setItemSonArray(son_array);
 			}
 		}, new ErrorListener() {
 

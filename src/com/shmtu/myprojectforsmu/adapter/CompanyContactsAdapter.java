@@ -34,9 +34,12 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 	private ArrayList<HashMap<String, Object>> father_array;//父层
 	private ArrayList<HashMap<String, Object>> son_array;//子层
 
-	public CompanyContactsAdapter(Context context){
+	public CompanyContactsAdapter(Context context, ArrayList<HashMap<String, Object>> father_array,
+			ArrayList<HashMap<String, Object>> son_array){
 		father_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		son_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.father_array = father_array;
+		this.son_array = son_array;
 	}
 
 	public void setItemFatherArray(ArrayList<HashMap<String, Object>> father_array) {
@@ -119,6 +122,11 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 			convertView.setTag(childViewHolder);
 		} else {
 			childViewHolder = (ChildViewHolder) convertView.getTag(); 
+		}
+		for (int i = 0; i < son_array.size(); i++) {
+			/*if (son_array.get(i).get("contactsDepartment").equals(father_array.get\) {
+				
+			}*/
 		}
 		childViewHolder.tvContactsChildName.setText(son_array.get(childPosition).get("contactsChildName").toString().trim());
 		childViewHolder.tvContactsChildEmpNo.setText(son_array.get(childPosition).get("contactsChildEmpNo").toString().trim());
