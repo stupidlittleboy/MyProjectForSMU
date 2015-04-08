@@ -2,9 +2,8 @@ package com.shmtu.myprojectforsmu.customer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RatingBar;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
+import com.shmtu.myprojectforsmu.setting.SettingMap;
 
 public class CustomerDetailActivity extends BaseActivity implements OnClickListener {
 
@@ -20,10 +20,13 @@ public class CustomerDetailActivity extends BaseActivity implements OnClickListe
 	private TextView tvCustomerDetailPhoneNo;
 	private TextView tvCustomerDetailEmail;
 	private TextView tvCustomerDetailDate;
-	private RatingBar tbCustomerDetailLevel;
+	private RatingBar rbCustomerDetailLevel;
+	private TextView tvCustomerDetailAddress;
+	private TextView tvCustomerDetailCity;
 	
-	public static void startCustomerDetailActivity(Context context, String customerNo, String customerName, 
-			String customerPhoneNo, String customerEmail, String customerDate, int customerLevel) {
+	public static void startCustomerDetailActivity(Context context, String customerNo, 
+			String customerName, String customerPhoneNo, String customerEmail, 
+			String customerDate, int customerLevel, String customerCity, String customerAddress) {
 		Intent intent = new Intent(context, CustomerDetailActivity.class);
 		intent.putExtra("customerNo", customerNo);
 		intent.putExtra("customerName", customerName);
@@ -31,6 +34,8 @@ public class CustomerDetailActivity extends BaseActivity implements OnClickListe
 		intent.putExtra("customerEmail", customerEmail);
 		intent.putExtra("customerDate", customerDate);
 		intent.putExtra("customerLevel", customerLevel);
+		intent.putExtra("customerCity", customerCity);
+		intent.putExtra("customerAddress", customerAddress);
 		context.startActivity(intent);
 	}
 	
@@ -48,7 +53,9 @@ public class CustomerDetailActivity extends BaseActivity implements OnClickListe
 		tvCustomerDetailPhoneNo = (TextView) findViewById(R.id.tv_customer_detail_phone_no);
 		tvCustomerDetailEmail = (TextView) findViewById(R.id.tv_customer_detail_email);
 		tvCustomerDetailDate = (TextView) findViewById(R.id.tv_customer_detail_date);
-		tbCustomerDetailLevel = (RatingBar) findViewById(R.id.rb_customer_datail_level);
+		rbCustomerDetailLevel = (RatingBar) findViewById(R.id.rb_customer_datail_level);
+		tvCustomerDetailCity = (TextView) findViewById(R.id.tv_customer_detail_city);
+		tvCustomerDetailAddress = (TextView) findViewById(R.id.tv_customer_detail_address);
 		
 		Intent intent = getIntent();
 		tvCustomerDetailNo.setText("客户编号：" + intent.getStringExtra("customerNo"));
@@ -56,14 +63,39 @@ public class CustomerDetailActivity extends BaseActivity implements OnClickListe
 		tvCustomerDetailPhoneNo.setText("联系方式：" + intent.getStringExtra("customerPhoneNo"));
 		tvCustomerDetailEmail.setText("电子邮件：" + intent.getStringExtra("customerEmail"));
 		tvCustomerDetailDate.setText("日期：" + intent.getStringExtra("customerDate"));
-		tbCustomerDetailLevel.setRating(intent.getIntExtra("customerLevel", 0));
+		rbCustomerDetailLevel.setRating(intent.getIntExtra("customerLevel", 0));
+		tvCustomerDetailCity.setText("所在城市：" + intent.getStringExtra("customerCity"));
+		tvCustomerDetailAddress.setText("详细地址：" + intent.getStringExtra("customerAddress"));
 		
 		tvCustomerDetailPhoneNo.setOnClickListener(this);
 		tvCustomerDetailEmail.setOnClickListener(this);
+		tvCustomerDetailAddress.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
 		
+		switch (v.getId()) {
+		case R.id.tv_customer_detail_phone_no:
+			Uri uri = Uri.parse("tel:" + tvCustomerDetailPhoneNo.getText().toString().trim());
+			Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+			startActivity(intent);
+			break;
+
+		case R.id.tv_customer_detail_email:
+			Uri uri1 = Uri.parse("mailto:" + tvCustomerDetailEmail.getText().toString().trim());   
+			Intent it = new Intent(Intent.ACTION_SENDTO, uri1);   
+			startActivity(it);
+			break;
+			
+		case R.id.tv_customer_detail_address:
+			String city = tvCustomerDetailCity.getText().toString().trim();
+			String address = tvCustomerDetailAddress.getText().toString().trim();
+			SettingMap.startSettingMapSearch(CustomerDetailActivity.this, city, address);
+			break;
+			
+		default:
+			break;
+		}
 	}
 }

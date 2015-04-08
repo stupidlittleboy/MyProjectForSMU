@@ -71,7 +71,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 			break;
 			
 		case R.id.layout_map:
-			SettingMap.startSettingMap(getActivity());
+			SettingMap.startSettingMapLocation(getActivity());
 			Toast.makeText(getActivity(), "地图", Toast.LENGTH_SHORT).show();
 			break;
 			

@@ -82,6 +82,8 @@ public class CustomerInfoFragment extends Fragment {
 						map.put("customer_email", json.get("customer_email"));
 						map.put("customer_date", json.get("customer_date"));
 						map.put("customer_level", json.get("customer_level"));
+						map.put("customer_city", json.get("customer_city"));
+						map.put("customer_address", json.get("customer_address"));
 						listCustomerInfo.add(map);
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -163,9 +165,13 @@ public class CustomerInfoFragment extends Fragment {
 						String customerPhoneNo = listCustomerInfo.get(position).get("customer_phone_no").toString();
 						String customerEmail = listCustomerInfo.get(position).get("customer_email").toString();
 						String customerDate = listCustomerInfo.get(position).get("customer_date").toString();
+						String customerCity = listCustomerInfo.get(position).get("customer_city").toString();
+						String customerAddress = listCustomerInfo.get(position).get("customer_address").toString();
 						int customerLevel = Integer.parseInt(listCustomerInfo.get(position).get("customer_level").toString());
 						
-						CustomerDetailActivity.startCustomerDetailActivity(getActivity(), customerNo, customerName, customerPhoneNo, customerEmail, customerDate, customerLevel);
+						CustomerDetailActivity.startCustomerDetailActivity(getActivity(), 
+								customerNo, customerName, customerPhoneNo, customerEmail, 
+								customerDate, customerLevel, customerCity, customerAddress);
 					}
 				});
 			} else {
