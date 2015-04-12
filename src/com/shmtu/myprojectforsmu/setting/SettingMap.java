@@ -41,8 +41,8 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.shmtu.myprojectforsmu.R;
 
-public class SettingMap extends Activity implements
-OnGetGeoCoderResultListener{
+public class SettingMap extends Activity /*implements
+OnGetGeoCoderResultListener*/{
 
 	private MapView mMapView = null;
 	private BaiduMap mBaiduMap = null;
@@ -54,7 +54,7 @@ OnGetGeoCoderResultListener{
 	private LatLng ll = null;
 	GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
 	private boolean flag;
-	private MyLocationListenner myListener = new MyLocationListenner();
+//	private MyLocationListenner myListener = new MyLocationListenner();
 	private String city;
 	private String address;
 
@@ -77,7 +77,7 @@ OnGetGeoCoderResultListener{
 		//注意该方法要再setContentView方法之前实现  
 		SDKInitializer.initialize(getApplicationContext());
 		setContentView(R.layout.setting_map);
-		//获取地图控件引用  
+		/*//获取地图控件引用  
 		mMapView = (MapView) findViewById(R.id.setting_mapview);
 		mMarkerInfo = (RelativeLayout) findViewById(R.id.id_marker_info);
 		mBaiduMap = mMapView.getMap();
@@ -130,7 +130,7 @@ OnGetGeoCoderResultListener{
 			mLocClient.start();
 
 			//构建MarkerOption，用于在地图上添加Marker  
-			/*OverlayOptions options = new MarkerOptions()
+			OverlayOptions options = new MarkerOptions()
 			.position(point)  //设置marker的位置
 			.icon(bitmap)  //设置marker图标
 			.zIndex(15)  //设置marker所在层级
@@ -138,7 +138,7 @@ OnGetGeoCoderResultListener{
 			//将marker添加到地图上
 			marker = (Marker) (mBaiduMap.addOverlay(options));
 			//在地图上添加Marker，并显示  
-			mBaiduMap.addOverlay(options);*/
+			mBaiduMap.addOverlay(options);
 		}
 
 		mBaiduMap.setOnMapClickListener(new OnMapClickListener() {
@@ -167,11 +167,11 @@ OnGetGeoCoderResultListener{
 
 				return false;
 			}
-		});
+		});*/
 
 	}
 
-	@Override  
+	/*@Override  
 	protected void onDestroy() {  
 		super.onDestroy();  
 		//在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理  
@@ -202,8 +202,8 @@ OnGetGeoCoderResultListener{
 						.fromResource(R.drawable.icon_marka)));
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(result
 				.getLocation()));
-		/*String strInfo = String.format("纬度：%f 经度：%f",
-				result.getLocation().latitude, result.getLocation().longitude);*/
+		String strInfo = String.format("纬度：%f 经度：%f",
+				result.getLocation().latitude, result.getLocation().longitude);
 	}
 
 	@Override
@@ -281,9 +281,9 @@ OnGetGeoCoderResultListener{
 		Button btnCancel;
 	}
 
-	/**
+	*//**
 	 * 定位SDK监听函数
-	 */
+	 *//*
 	private class MyLocationListenner implements BDLocationListener {
 
 		@Override
@@ -309,13 +309,13 @@ OnGetGeoCoderResultListener{
 						.icon(BitmapDescriptorFactory
 								.fromResource(R.drawable.icon_marka)));
 				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ll));
-				/*// 反Geo搜索
+				// 反Geo搜索
 				mSearch.reverseGeoCode(new ReverseGeoCodeOption()
-				.location(ll));*/
-				/*mSearch.geocode(new GeoCodeOption()
+				.location(ll));
+				mSearch.geocode(new GeoCodeOption()
 					.city("上海")
-					.address("浦东新区浦建路725弄2号"));*/
+					.address("浦东新区浦建路725弄2号"));
 			}
 		}
-	}
+	}*/
 }

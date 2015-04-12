@@ -13,5 +13,7 @@ public class Constant {
 	 */
 	public final static String URL = "http://192.168.2.103/SMUProject_Server/";
 //	public final static String URL = "http://130.234.1.19/SMUProject_Server/";
+//	public final static String URL = "http://192.168.2.103/MyProjectForSMU/";
+//	public final static String URL = "http://130.234.1.19/MyProjectForSMU/";
 
 }

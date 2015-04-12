@@ -39,6 +39,7 @@ public class SettingPerInfo extends Activity implements OnClickListener {
 	private TextView tvPerInfoEntryDate;
 	private TextView tvPerInfoBirthday;
 	private TextView tvPerInfoNation;
+	private TextView tvPerInfoCity;
 	private TextView tvPerInfoAddress;
 
 	private RequestQueue mQueue = null;
@@ -72,6 +73,7 @@ public class SettingPerInfo extends Activity implements OnClickListener {
 
 		tvPerInfoBirthday = (TextView) findViewById(R.id.tv_per_info_birthday);
 		tvPerInfoNation = (TextView) findViewById(R.id.tv_per_info_nation);
+		tvPerInfoCity = (TextView) findViewById(R.id.tv_per_info_city);
 		tvPerInfoAddress = (TextView) findViewById(R.id.tv_per_info_address);
 
 		tvPerInfoPhoneNum.setOnClickListener(this);
@@ -93,20 +95,21 @@ public class SettingPerInfo extends Activity implements OnClickListener {
 					@Override
 					public void onResponse(JSONObject response) {
 						try {
-							tvPerInfoNickname.setText(response.getString("login_nickname"));
+							tvPerInfoNickname.setText(response.getString("emp_nickname"));
 							tvPerInfoName.setText(response.getString("emp_name"));
 							tvPerInfoSex.setText(response.getString("emp_sex"));
 							tvPerInfoAge.setText(response.getString("emp_age"));
-							tvPerInfoPhoneNum.setText(response.getString("login_emp_phone_no"));
+							tvPerInfoPhoneNum.setText(response.getString("emp_phone_no"));
 							tvPerInfoEmail.setText(response.getString("emp_email"));
 
-							tvPerInfoEmpNo.setText(response.getString("login_emp_no"));
-							tvPerInfoDepartment.setText(response.getString("base_emp_department"));
-							tvPerInfoPosition.setText(response.getString("base_emp_position"));
-							tvPerInfoEntryDate.setText(response.getString("base_emp_entrydate"));
+							tvPerInfoEmpNo.setText(response.getString("emp_no"));
+							tvPerInfoDepartment.setText(response.getString("emp_department"));
+							tvPerInfoPosition.setText(response.getString("emp_position"));
+							tvPerInfoEntryDate.setText(response.getString("emp_entry_date"));
 
 							tvPerInfoBirthday.setText(response.getString("emp_borthday"));
 							tvPerInfoNation.setText(response.getString("emp_nation"));
+							tvPerInfoCity.setText(response.getString("emp_city"));
 							tvPerInfoAddress.setText(response.getString("emp_address"));
 						} catch (JSONException e) {
 							e.printStackTrace();

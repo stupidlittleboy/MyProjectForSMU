@@ -34,13 +34,13 @@ import com.shmtu.myprojectforsmu.commons.Constant;
 public class TaskManaFragment extends Fragment {
 
 	private final static String NOTICE_URL = Constant.URL + "task_info.php";
-	
+
 	private ListView lvTaskInfo;
-	
+
 	private RequestQueue mQueue = null;
-//	private ArrayList<HashMap<String, Object>> listTask = new ArrayList<HashMap<String,Object>>();
+	//	private ArrayList<HashMap<String, Object>> listTask = new ArrayList<HashMap<String,Object>>();
 	public TaskManaAdapter taskManaAdapter = null;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -48,19 +48,19 @@ public class TaskManaFragment extends Fragment {
 				false);
 		return newsLayout;
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		init();
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		sendToServer(getActivity());
 	}
-	
+
 	/**
 	 * 初始化
 	 */
@@ -68,9 +68,9 @@ public class TaskManaFragment extends Fragment {
 		lvTaskInfo = (ListView) getActivity().findViewById(R.id.lv_task_info);
 		taskManaAdapter = new TaskManaAdapter(getActivity());
 	}
-	
+
 	private void sendToServer(Context context){
-		
+
 		final ArrayList<HashMap<String, Object>> listTask = new ArrayList<HashMap<String,Object>>();
 		/*
 		 * 想服务端发出请求
@@ -89,13 +89,15 @@ public class TaskManaFragment extends Fragment {
 					HashMap<String, Object> map = new HashMap<String, Object>();
 					try {
 						JSONObject jObj = (JSONObject) response.get(i);
-						map.put("task_no", jObj.get("task_no"));
-						map.put("task_title", jObj.get("task_title"));
-						map.put("task_content", jObj.get("task_content"));
-						map.put("task_customer_no", jObj.get("task_customer_no"));
-						map.put("task_flag", jObj.get("task_flag"));
-						map.put("task_emp_no", jObj.get("task_emp_no"));
-						map.put("task_date", jObj.get("task_date"));
+						map.put("roomer_no", jObj.get("roomer_no"));
+						map.put("roomer_name", jObj.get("roomer_name"));
+						map.put("roomer_sex", jObj.get("roomer_sex"));
+						map.put("roomer_phone_no", jObj.get("roomer_phone_no"));
+						map.put("roomer_house_no", jObj.get("roomer_house_no"));
+						map.put("roomer_date", jObj.get("roomer_date"));
+						map.put("roomer_period", jObj.get("roomer_period"));
+						map.put("roomer_emp_no", jObj.get("roomer_emp_no"));
+						map.put("roomer_rent", jObj.get("roomer_rent"));
 						listTask.add(map);
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -103,7 +105,7 @@ public class TaskManaFragment extends Fragment {
 				}
 				taskManaAdapter.setItemList(listTask);
 				lvTaskInfo.setAdapter(taskManaAdapter);
-//				Toast.makeText(ComplanyNotices.this, response.toString(), Toast.LENGTH_SHORT).show();
+				//				Toast.makeText(ComplanyNotices.this, response.toString(), Toast.LENGTH_SHORT).show();
 				Log.e("TAG", response.toString());
 			}
 		}, new ErrorListener() {
@@ -115,7 +117,7 @@ public class TaskManaFragment extends Fragment {
 		});
 		mQueue.add(jsonArrayRequest);
 	}
-	
+
 	class TaskManaAdapter extends BaseAdapter{
 
 		private LayoutInflater mLayoutInflater;
@@ -123,13 +125,13 @@ public class TaskManaFragment extends Fragment {
 
 		public TaskManaAdapter(Context context){
 			mLayoutInflater = LayoutInflater.from(context);
-//			taskManaAdapter.
+			//			taskManaAdapter.
 		}
 
 		public void setItemList(ArrayList<HashMap<String, Object>> listTask){
 			this.listTask = listTask;
 		}
-		
+
 		@Override
 		public int getCount() {
 			return listTask.size();
@@ -148,35 +150,57 @@ public class TaskManaFragment extends Fragment {
 		@SuppressLint("ResourceAsColor")
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			
+
 			ViewHolder viewHolder;
 			if (convertView == null){
 				convertView = mLayoutInflater.inflate(R.layout.task_mana_item, null);
 				viewHolder = new ViewHolder();
-				viewHolder.tvTaskTitle = (TextView) convertView.findViewById(R.id.tv_task_title);
+				viewHolder.tvTaskRent = (TextView) convertView.findViewById(R.id.tv_task_rent);
 				viewHolder.tvTaskDate = (TextView) convertView.findViewById(R.id.tv_task_date);
-				viewHolder.tvTaskContent = (TextView) convertView.findViewById(R.id.tv_task_content);
+				viewHolder.tvTaskPeriod = (TextView) convertView.findViewById(R.id.tv_task_period);
+				viewHolder.tvTaskAddress = (TextView) convertView.findViewById(R.id.tv_task_address);
 				viewHolder.tvTaskFlag = (TextView) convertView.findViewById(R.id.tv_task_flag);
 				convertView.setTag(viewHolder);
 			} else {
 				viewHolder = (ViewHolder) convertView.getTag();
 			}
-			viewHolder.tvTaskTitle.setText(listTask.get(position).get("task_title").toString());
-			viewHolder.tvTaskDate.setText(listTask.get(position).get("task_date").toString());
-			viewHolder.tvTaskContent.setText(listTask.get(position).get("task_content").toString());
-			if ("0".equals(listTask.get(position).get("task_flag").toString().trim())){
+			viewHolder.tvTaskRent.setText(listTask.get(position).get("roomer_rent").toString());
+			viewHolder.tvTaskDate.setText(listTask.get(position).get("roomer_date").toString());
+			Log.e("rent", listTask.get(position).get("roomer_rent").toString());
+			switch (Integer.parseInt(listTask.get(position).get("roomer_rent").toString())) {
+			case 1:
+				viewHolder.tvTaskPeriod.setHint("9:30~11:30");
+				break;
+
+			case 2:
+				viewHolder.tvTaskPeriod.setHint("13:30~15:30");
+				break;
+
+			case 3:
+				viewHolder.tvTaskPeriod.setHint("15:30~17:30");
+				break;
+
+			case 4:
+				viewHolder.tvTaskPeriod.setHint("18:30~20:30");
+				break;
+
+			default:
+				break;
+			}
+			viewHolder.tvTaskAddress.setText(listTask.get(position).get("roomer_house_no").toString());
+			if (listTask.get(position).get("roomer_emp_no") == null){
 				viewHolder.tvTaskFlag.setText("可领取");
 			} else {
-				viewHolder.tvTaskFlag.setText("任务已被" + listTask.get(position).get("task_emp_no").toString().trim() + "领取，点击查看详情");
-//				viewHolder.tvTaskFlag.setBackgroundColor(R.color.gray_bg);
+				viewHolder.tvTaskFlag.setText("任务已被" + listTask.get(position).get("roomer_emp_no").toString().trim() + "领取，点击查看详情");
+				//				viewHolder.tvTaskFlag.setBackgroundColor(R.color.gray_bg);
 			}
-			
+
 			//给ListView的Item点击事件
 			convertView.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
-					
+
 					String taskNo = listTask.get(position).get("task_no").toString();
 					String taskTitle = listTask.get(position).get("task_title").toString();
 					String taskContent = listTask.get(position).get("task_content").toString();
@@ -185,7 +209,7 @@ public class TaskManaFragment extends Fragment {
 					String taskEmpNo = listTask.get(position).get("task_emp_no").toString();
 					String taskDate = listTask.get(position).get("task_date").toString();
 					TaskDetail.startTaskDetail(getActivity(), taskNo, taskTitle, taskContent, taskCustomerNo, taskFlag, taskEmpNo, taskDate);
-					
+
 				}
 			});
 			return convertView;
@@ -194,9 +218,10 @@ public class TaskManaFragment extends Fragment {
 	}
 
 	public final class ViewHolder{
-		TextView tvTaskTitle;
+		TextView tvTaskRent;
 		TextView tvTaskDate;
-		TextView tvTaskContent;
+		TextView tvTaskPeriod;
+		TextView tvTaskAddress;
 		TextView tvTaskFlag;
 	}
 

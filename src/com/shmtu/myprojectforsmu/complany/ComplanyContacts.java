@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupExpandListener;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -36,8 +37,8 @@ public class ComplanyContacts extends Activity {
 	private RequestQueue mQueueSon = null;
 	private CompanyContactsAdapter companyContactsAdapter;
 	private List<ArrayList<HashMap<String, Object>>> listChildItem;
-	private ArrayList<HashMap<String,Object>> father_array;
-	private ArrayList<HashMap<String,Object>> son_array;
+	private ArrayList<HashMap<String,Object>> father_array = new ArrayList<HashMap<String,Object>>();
+	private ArrayList<HashMap<String,Object>> son_array = new ArrayList<HashMap<String,Object>>();
 	
 	public static void startComplanyContacts(Context context){
 		Intent intent = new Intent(context, ComplanyContacts.class);
@@ -53,21 +54,28 @@ public class ComplanyContacts extends Activity {
 
 	private void init() {
 		elvCompanyContacts = (ExpandableListView) findViewById(R.id.elv_company_contacts);
-		
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		companyContactsAdapter = new CompanyContactsAdapter(this, father_array, son_array, elvCompanyContacts);
 		getFatherArrry();
 		getCompanyContacts();
-		companyContactsAdapter = new CompanyContactsAdapter(this, father_array, son_array);
+		/*elvCompanyContacts.setOnGroupExpandListener(new OnGroupExpandListener() {
+			
+			@Override
+			public void onGroupExpand(int groupPosition) {
+				
+			}
+		});*/
+		Log.e("fatherSize1", father_array.toString());
 		elvCompanyContacts.setAdapter(companyContactsAdapter);
 	}
 	
 	//获取父节点的值
 	private void getFatherArrry(){
-		father_array = new ArrayList<HashMap<String,Object>>();
+//		father_array = new ArrayList<HashMap<String,Object>>();
 
 		//创建一个RequestQueue队列
 		mQueueFather = Volley.newRequestQueue(getApplicationContext());
@@ -82,12 +90,13 @@ public class ComplanyContacts extends Activity {
 					try {
 						JSONObject jsonObj = response.getJSONObject(i);
 						HashMap<String, Object> map = new HashMap<String, Object>();
-						map.put("contactsDepartment", jsonObj.getString("contact_department"));
+						map.put("contactsDepartment", jsonObj.getString("emp_department"));
 						father_array.add(map);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
+				Log.e("fatherSize", father_array.size() + "");
 				Log.e("father", father_array.toString());
 				companyContactsAdapter.setItemFatherArray(father_array);
 			}
@@ -101,10 +110,11 @@ public class ComplanyContacts extends Activity {
 		});  
 
 		mQueueFather.add(jsonArrayRequestFather);
+		Log.e("father22", father_array.toString());
 	}
 
 	private void getCompanyContacts(){
-		son_array = new ArrayList<HashMap<String,Object>>();
+//		son_array = new ArrayList<HashMap<String,Object>>();
 		mQueueSon = Volley.newRequestQueue(getApplicationContext());
 		JsonArrayRequest jsonArrayRequestSon = new JsonArrayRequest(CONTACTS_URL, 
 				new Listener<JSONArray>() {
@@ -116,9 +126,10 @@ public class ComplanyContacts extends Activity {
 					try {
 						JSONObject jsonObj = response.getJSONObject(i);
 						HashMap<String, Object> map = new HashMap<String, Object>();
-						map.put("contactsChildName", jsonObj.getString("contact_name"));
-						map.put("contactsChildEmpNo", jsonObj.getString("contact_emp_no"));
-						map.put("contactsChildPhoneNo", jsonObj.getString("contact_phone_no"));
+						map.put("contactsChildName", jsonObj.getString("emp_name"));
+						map.put("contactsChildEmpNo", jsonObj.getString("emp_no"));
+						map.put("contactsChildPhoneNo", jsonObj.getString("emp_phone_no"));
+						map.put("contactsDepartment", jsonObj.getString("emp_department"));
 						son_array.add(map);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -136,5 +147,13 @@ public class ComplanyContacts extends Activity {
 		});
 		mQueueSon.add(jsonArrayRequestSon);
 	}
+	
+	/*private void getContactList() {
+		for (int i = 0; i < father_array.size(); i++) {
+			for (int j = 0; j < son_array.size(); j++) {
+				if (son_array)
+			}
+		}
+	}*/
 
 }

@@ -22,7 +22,8 @@
                 android:id="@+id/img_company_meeting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/meeting" />
 
             <TextView
                 android:id="@+id/tv_company_meetion"
@@ -30,12 +31,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="会议信息"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
         </LinearLayout>
         
         <View 
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="50dp"
             />
         
         <LinearLayout
@@ -50,7 +51,8 @@
                 android:id="@+id/img_company_contacts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/contacts_book" />
 
             <TextView
                 android:id="@+id/tv_company_contacts"
@@ -58,12 +60,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="企业通讯录"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
         </LinearLayout>
         
         <View 
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="20dp"
             />
         
         <LinearLayout
@@ -78,7 +80,8 @@
                 android:id="@+id/img_company_notices"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/notices" />
 
             <TextView
                 android:id="@+id/tv_company_notices"
@@ -86,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="企业公告"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
         </LinearLayout>
     </LinearLayout>
 

@@ -3,28 +3,17 @@ package com.shmtu.myprojectforsmu.adapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.shmtu.myprojectforsmu.R;
-import com.shmtu.myprojectforsmu.commons.Constant;
 
 public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 
@@ -33,23 +22,43 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 
 	private ArrayList<HashMap<String, Object>> father_array;//父层
 	private ArrayList<HashMap<String, Object>> son_array;//子层
+	private ExpandableListView elvCompanyContacts;
 
 	public CompanyContactsAdapter(Context context, ArrayList<HashMap<String, Object>> father_array,
-			ArrayList<HashMap<String, Object>> son_array){
+			ArrayList<HashMap<String, Object>> son_array, ExpandableListView elvCompanyContacts){
 		father_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		son_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.father_array = father_array;
 		this.son_array = son_array;
+		this.elvCompanyContacts = elvCompanyContacts;
 	}
 
 	public void setItemFatherArray(ArrayList<HashMap<String, Object>> father_array) {
 		this.father_array = father_array;
+		Log.e("sizefat", father_array.size()+"");
 	}
-	
+
 	public void setItemSonArray(ArrayList<HashMap<String, Object>> son_array) {
 		this.son_array = son_array;
 	}
-	
+
+	public ArrayList<ArrayList<HashMap<String, Object>>> itjj(ArrayList<HashMap<String, Object>> father_array,
+			ArrayList<HashMap<String, Object>> son_array) {
+		Log.e("son_list12341", father_array.toString());
+		ArrayList<ArrayList<HashMap<String, Object>>> son_list = new ArrayList<ArrayList<HashMap<String,Object>>>();
+		for (int i = 0; i < father_array.size(); i++) {
+			ArrayList<HashMap<String, Object>> son = new ArrayList<HashMap<String,Object>>();
+			for (int j = 0; j < son_array.size(); j++) {
+				if (son_array.get(j).get("contactsDepartment").equals(father_array.get(i).get("contactsDepartment"))) {
+					son.add(son_array.get(j));
+				}
+			}
+			son_list.add(son);
+		}
+		Log.e("son_list11", son_list.toString());
+		return son_list;
+	}
+
 	//获取父层的大小
 	@Override
 	public int getGroupCount() {
@@ -59,7 +68,9 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 	//于获取父层中其中一层的子数目
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		return son_array.get(groupPosition).size();
+		ArrayList<ArrayList<HashMap<String, Object>>> list = itjj(father_array, son_array);
+		Log.e("son_", list.toString());
+		return list.get(groupPosition).size();
 	}
 
 	//获取父层中的一项，返回的是父层的字符串类型
@@ -103,7 +114,12 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 		} else {
 			groupViewHolder = (GroupViewHolder) convertView.getTag();
 		}
-		groupViewHolder.ivContactsHead.setImageResource(R.drawable.ic_launcher);
+		if(isExpanded == true){//展开状态
+			groupViewHolder.ivContactsHead.setImageResource(R.drawable.go_up);
+		}else{//收起状态
+			groupViewHolder.ivContactsHead.setImageResource(R.drawable.go_down);
+		}
+//		groupViewHolder.ivContactsHead.setImageResource(R.drawable.expandable_listview);
 		groupViewHolder.tvContactsFatherDepartment.setText(father_array.get(groupPosition).get("contactsDepartment").toString().trim());
 		return convertView;
 	}
@@ -123,14 +139,10 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 		} else {
 			childViewHolder = (ChildViewHolder) convertView.getTag(); 
 		}
-		for (int i = 0; i < son_array.size(); i++) {
-			/*if (son_array.get(i).get("contactsDepartment").equals(father_array.get\) {
-				
-			}*/
-		}
-		childViewHolder.tvContactsChildName.setText(son_array.get(childPosition).get("contactsChildName").toString().trim());
-		childViewHolder.tvContactsChildEmpNo.setText(son_array.get(childPosition).get("contactsChildEmpNo").toString().trim());
-		childViewHolder.tvContactsChildPhoneNo.setText(son_array.get(childPosition).get("contactsChildPhoneNo").toString().trim());
+		ArrayList<ArrayList<HashMap<String, Object>>> list = itjj(father_array, son_array);
+		childViewHolder.tvContactsChildName.setText(list.get(groupPosition).get(childPosition).get("contactsChildName").toString().trim());
+		childViewHolder.tvContactsChildEmpNo.setText(list.get(groupPosition).get(childPosition).get("contactsChildEmpNo").toString().trim());
+		childViewHolder.tvContactsChildPhoneNo.setText(list.get(groupPosition).get(childPosition).get("contactsChildPhoneNo").toString().trim());
 		return convertView;
 	}
 
@@ -139,12 +151,22 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 		return false;
 	}
 
-	
+	@Override
+	public void onGroupExpanded(int groupPosition) {
+		super.onGroupExpanded(groupPosition);
+		for (int i = 0; i < father_array.size(); i++) {    
+			if (groupPosition != i) {    
+				elvCompanyContacts.collapseGroup(i);    
+			}    
+		}    
+	}
+
+
 	class GroupViewHolder {
 		ImageView ivContactsHead;
 		TextView tvContactsFatherDepartment;
 	}
-	
+
 	class ChildViewHolder {
 		TextView tvContactsChildName;
 		TextView tvContactsChildEmpNo;

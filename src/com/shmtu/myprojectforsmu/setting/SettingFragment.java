@@ -1,5 +1,8 @@
 package com.shmtu.myprojectforsmu.setting;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,14 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.shmtu.myprojectforsmu.R;
+import com.shmtu.myprojectforsmu.commons.Constant;
 
 public class SettingFragment extends Fragment implements OnClickListener{
+
+	private final static String NICKNAME_URL = Constant.URL + "get_nickname.php";
 
 	private LinearLayout settingPerinfo;
 	private LinearLayout settingTaskinfo;
@@ -22,7 +33,8 @@ public class SettingFragment extends Fragment implements OnClickListener{
 	private LinearLayout settingAbout;
 	private LinearLayout settingExit;
 	private TextView tvPerdetail;
-	
+	private RequestQueue mQueue = null;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -30,14 +42,14 @@ public class SettingFragment extends Fragment implements OnClickListener{
 				container, false);
 		return settingLayout;
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
+
 		init();
 	}
-	
+
 	private void init(){
 		settingPerinfo = (LinearLayout) getActivity().findViewById(R.id.layout_perinfo);
 		settingTaskinfo = (LinearLayout) getActivity().findViewById(R.id.layout_taskinfo);
@@ -45,11 +57,39 @@ public class SettingFragment extends Fragment implements OnClickListener{
 		settingAbout = (LinearLayout) getActivity().findViewById(R.id.layout_about);
 		settingExit = (LinearLayout) getActivity().findViewById(R.id.layout_exit);
 		tvPerdetail = (TextView) getActivity().findViewById(R.id.tv_perdetail);
-		
+
 		SharedPreferences sp = getActivity().getSharedPreferences("myProjectForSMU", 0);
 		String name = sp.getString("userName", null);
+		JSONObject json = new JSONObject();
+		try {
+			json.put("userName", name);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		mQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+		JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(NICKNAME_URL, json, 
+				new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				try {
+					tvPerdetail.setText(response.getString("emp_nickname").toString().trim());
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+
+			}
+		});
+		mQueue.add(jsonObjectRequest);
+
 		tvPerdetail.setHint(name);
-		
+
 		settingPerinfo.setOnClickListener(this);
 		settingTaskinfo.setOnClickListener(this);
 		settingMap.setOnClickListener(this);
@@ -64,22 +104,22 @@ public class SettingFragment extends Fragment implements OnClickListener{
 			SettingPerInfo.startSettingPerInfo(getActivity());
 			Toast.makeText(getActivity(), "个人信息", Toast.LENGTH_SHORT).show();
 			break;
-			
+
 		case R.id.layout_taskinfo:
 			SettingTaskInfo.startSettingTaskInfo(getActivity());
 			Toast.makeText(getActivity(), "已领取任务", Toast.LENGTH_SHORT).show();
 			break;
-			
+
 		case R.id.layout_map:
 			SettingMap.startSettingMapLocation(getActivity());
 			Toast.makeText(getActivity(), "地图", Toast.LENGTH_SHORT).show();
 			break;
-			
+
 		case R.id.layout_about:
 			SettingAbout.startSettingAbout(getActivity());
 			Toast.makeText(getActivity(), "关于", Toast.LENGTH_SHORT).show();
 			break;
-			
+
 		case R.id.layout_exit:
 			getActivity().finish();
 			Toast.makeText(getActivity(), "退出", Toast.LENGTH_SHORT).show();
