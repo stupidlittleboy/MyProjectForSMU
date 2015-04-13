@@ -35,7 +35,6 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 
 	public void setItemFatherArray(ArrayList<HashMap<String, Object>> father_array) {
 		this.father_array = father_array;
-		Log.e("sizefat", father_array.size()+"");
 	}
 
 	public void setItemSonArray(ArrayList<HashMap<String, Object>> son_array) {
@@ -44,7 +43,6 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 
 	public ArrayList<ArrayList<HashMap<String, Object>>> itjj(ArrayList<HashMap<String, Object>> father_array,
 			ArrayList<HashMap<String, Object>> son_array) {
-		Log.e("son_list12341", father_array.toString());
 		ArrayList<ArrayList<HashMap<String, Object>>> son_list = new ArrayList<ArrayList<HashMap<String,Object>>>();
 		for (int i = 0; i < father_array.size(); i++) {
 			ArrayList<HashMap<String, Object>> son = new ArrayList<HashMap<String,Object>>();
@@ -55,7 +53,6 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 			}
 			son_list.add(son);
 		}
-		Log.e("son_list11", son_list.toString());
 		return son_list;
 	}
 
@@ -69,7 +66,6 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		ArrayList<ArrayList<HashMap<String, Object>>> list = itjj(father_array, son_array);
-		Log.e("son_", list.toString());
 		return list.get(groupPosition).size();
 	}
 

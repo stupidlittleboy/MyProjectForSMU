@@ -2,7 +2,6 @@ package com.shmtu.myprojectforsmu.complany;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnGroupExpandListener;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -36,7 +34,6 @@ public class ComplanyContacts extends Activity {
 	private RequestQueue mQueueFather = null;
 	private RequestQueue mQueueSon = null;
 	private CompanyContactsAdapter companyContactsAdapter;
-	private List<ArrayList<HashMap<String, Object>>> listChildItem;
 	private ArrayList<HashMap<String,Object>> father_array = new ArrayList<HashMap<String,Object>>();
 	private ArrayList<HashMap<String,Object>> son_array = new ArrayList<HashMap<String,Object>>();
 	
@@ -62,14 +59,6 @@ public class ComplanyContacts extends Activity {
 		companyContactsAdapter = new CompanyContactsAdapter(this, father_array, son_array, elvCompanyContacts);
 		getFatherArrry();
 		getCompanyContacts();
-		/*elvCompanyContacts.setOnGroupExpandListener(new OnGroupExpandListener() {
-			
-			@Override
-			public void onGroupExpand(int groupPosition) {
-				
-			}
-		});*/
-		Log.e("fatherSize1", father_array.toString());
 		elvCompanyContacts.setAdapter(companyContactsAdapter);
 	}
 	
@@ -85,7 +74,6 @@ public class ComplanyContacts extends Activity {
 
 			@Override
 			public void onResponse(JSONArray response) {
-				Log.e("father", response.toString());
 				for (int i = 0; i < response.length(); i++) {
 					try {
 						JSONObject jsonObj = response.getJSONObject(i);
@@ -96,21 +84,18 @@ public class ComplanyContacts extends Activity {
 						e.printStackTrace();
 					}
 				}
-				Log.e("fatherSize", father_array.size() + "");
-				Log.e("father", father_array.toString());
 				companyContactsAdapter.setItemFatherArray(father_array);
 			}
 		},  
 		new Response.ErrorListener() {  
 			@Override  
 			public void onErrorResponse(VolleyError error) {  
-				Log.e("TAG", error.getMessage(), error);  
+				Log.e("TAG111", error.getMessage(), error);  
 				//				Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
 			}  
 		});  
-
 		mQueueFather.add(jsonArrayRequestFather);
-		Log.e("father22", father_array.toString());
+		Log.e("father", father_array.toString());
 	}
 
 	private void getCompanyContacts(){
@@ -121,7 +106,6 @@ public class ComplanyContacts extends Activity {
 
 			@Override
 			public void onResponse(JSONArray response) {
-				Log.e("response", response.toString());
 				for (int i = 0; i < response.length(); i++) {
 					try {
 						JSONObject jsonObj = response.getJSONObject(i);
@@ -135,7 +119,6 @@ public class ComplanyContacts extends Activity {
 						e.printStackTrace();
 					}
 				}
-				Log.e("son", son_array.toString());
 				companyContactsAdapter.setItemSonArray(son_array);
 			}
 		}, new ErrorListener() {
@@ -146,14 +129,7 @@ public class ComplanyContacts extends Activity {
 			}
 		});
 		mQueueSon.add(jsonArrayRequestSon);
+		Log.e("son", son_array.toString());
 	}
 	
-	/*private void getContactList() {
-		for (int i = 0; i < father_array.size(); i++) {
-			for (int j = 0; j < son_array.size(); j++) {
-				if (son_array)
-			}
-		}
-	}*/
-
 }

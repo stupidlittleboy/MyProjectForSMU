@@ -96,8 +96,11 @@ public class TaskManaFragment extends Fragment {
 						map.put("roomer_house_no", jObj.get("roomer_house_no"));
 						map.put("roomer_date", jObj.get("roomer_date"));
 						map.put("roomer_period", jObj.get("roomer_period"));
-						map.put("roomer_emp_no", jObj.get("roomer_emp_no"));
 						map.put("roomer_rent", jObj.get("roomer_rent"));
+						map.put("roomer_complete", jObj.get("roomer_complete"));
+						map.put("roomer_emp_no", jObj.get("roomer_emp_no"));
+						map.put("house_city", jObj.get("house_city"));
+						map.put("house_address", jObj.get("house_address"));
 						listTask.add(map);
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -164,10 +167,15 @@ public class TaskManaFragment extends Fragment {
 			} else {
 				viewHolder = (ViewHolder) convertView.getTag();
 			}
-			viewHolder.tvTaskRent.setText(listTask.get(position).get("roomer_rent").toString());
-			viewHolder.tvTaskDate.setText(listTask.get(position).get("roomer_date").toString());
+			
+			if (Integer.parseInt(listTask.get(position).get("roomer_rent").toString()) == 0) {
+				viewHolder.tvTaskRent.setText("租房");
+			} else {
+				viewHolder.tvTaskRent.setText("买房");
+			}
+			viewHolder.tvTaskDate.setText("看房日期：" + listTask.get(position).get("roomer_date").toString());
 			Log.e("rent", listTask.get(position).get("roomer_rent").toString());
-			switch (Integer.parseInt(listTask.get(position).get("roomer_rent").toString())) {
+			switch (Integer.parseInt(listTask.get(position).get("roomer_period").toString())) {
 			case 1:
 				viewHolder.tvTaskPeriod.setHint("9:30~11:30");
 				break;
@@ -187,8 +195,8 @@ public class TaskManaFragment extends Fragment {
 			default:
 				break;
 			}
-			viewHolder.tvTaskAddress.setText(listTask.get(position).get("roomer_house_no").toString());
-			if (listTask.get(position).get("roomer_emp_no") == null){
+			viewHolder.tvTaskAddress.setText(listTask.get(position).get("house_address").toString());
+			if ("".equals(listTask.get(position).get("roomer_emp_no"))){
 				viewHolder.tvTaskFlag.setText("可领取");
 			} else {
 				viewHolder.tvTaskFlag.setText("任务已被" + listTask.get(position).get("roomer_emp_no").toString().trim() + "领取，点击查看详情");
@@ -201,14 +209,21 @@ public class TaskManaFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 
-					String taskNo = listTask.get(position).get("task_no").toString();
-					String taskTitle = listTask.get(position).get("task_title").toString();
-					String taskContent = listTask.get(position).get("task_content").toString();
-					String taskCustomerNo = listTask.get(position).get("task_customer_no").toString();
-					String taskFlag = listTask.get(position).get("task_flag").toString();
-					String taskEmpNo = listTask.get(position).get("task_emp_no").toString();
-					String taskDate = listTask.get(position).get("task_date").toString();
-					TaskDetail.startTaskDetail(getActivity(), taskNo, taskTitle, taskContent, taskCustomerNo, taskFlag, taskEmpNo, taskDate);
+					String roomerNo = listTask.get(position).get("roomer_no").toString();
+					String roomerName = listTask.get(position).get("roomer_name").toString();
+					String roomerSex = listTask.get(position).get("roomer_sex").toString();
+					String roomerPhoneNo = listTask.get(position).get("roomer_phone_no").toString();
+					String roomerHouseNo = listTask.get(position).get("roomer_house_no").toString();
+					String roomerDate = listTask.get(position).get("roomer_date").toString();
+					String roomerPeriod = listTask.get(position).get("roomer_period").toString();
+					String roomerRent = listTask.get(position).get("roomer_rent").toString();
+					String roomerComplete = listTask.get(position).get("roomer_complete").toString();
+					String roomerEmpNo = listTask.get(position).get("roomer_emp_no").toString();
+					String roomerHouseCity = listTask.get(position).get("house_city").toString();
+					String roomerHouseAddress = listTask.get(position).get("house_address").toString();
+					TaskDetail.startTaskDetail(getActivity(), roomerNo, roomerName, roomerSex, 
+							roomerPhoneNo, roomerHouseNo, roomerDate, roomerPeriod, roomerRent, 
+							roomerComplete, roomerEmpNo, roomerHouseCity, roomerHouseAddress);
 
 				}
 			});

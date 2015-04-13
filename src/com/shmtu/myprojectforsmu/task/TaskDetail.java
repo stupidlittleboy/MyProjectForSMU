@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,29 +27,54 @@ import com.shmtu.myprojectforsmu.commons.Constant;
 public class TaskDetail extends Activity implements OnClickListener {
 
 	private final static String TASK_DETAIL_URL = Constant.URL + "get_task.php";
+	private final static String CANCEL_TASK_URL = Constant.URL + "cancel_task.php";
 
-	private TextView tvTaskDetailTitle;	//标题
-	private TextView tvTaskDetailDate;	//时间
-	private TextView tvTaskDetailContent;	//内容
 	private TextView tvTaskDetailNo;
-	private TextView tvTaskDetailCustomerNo;
-	private TextView tvTaskDetailEmp;
-	private LinearLayout layoutTaskFlag;	//任务领取标识
-	private Button btnTaskFlag;		//领取任务
+	private TextView tvTaskDetailName;
+	private TextView tvTaskDetailSex;
+	private TextView tvTaskDetailPhoneNo;
+	private TextView tvTaskDetailDate;	//时间
+	private TextView tvTaskDetailPeriod;
+	private TextView tvTaskDetailAddress;
+	private TextView tvTaskDetailComplete;
+	private Button btnTaskDetailCancel;
+	private Button btnTaskDetailOk;
 	private RequestQueue mQueue = null;
 	private JSONObject json = null;
 
-	public static void startTaskDetail(Context context, String taskNo, String taskTitle,
-			String taskContent, String taskCustomerNo, String taskFlag, 
-			String taskEmpNo, String taskDate){
+	/**
+	 * 
+	 * @param context
+	 * @param roomerNo	客户编号
+	 * @param roomerName	客户姓名
+	 * @param roometSex	客户性别
+	 * @param roomerPhoneNo	客户联系方式
+	 * @param roomerHouseNo	房源编号
+	 * @param roomerDate	看房日期
+	 * @param roomerPeriod	看房时间段
+	 * @param roomerRent	出租或出售
+	 * @param roomerComplete 交易是否完成
+	 * @param roomerEmpNo	跟进人
+	 * @param roomerHouseCity	房子所在城市
+	 * @param roomerHouseAddress	房子详细地址
+	 */
+	public static void startTaskDetail(Context context, String roomerNo, String roomerName,
+			String roometSex, String roomerPhoneNo, String roomerHouseNo, 
+			String roomerDate, String roomerPeriod, String roomerRent, String roomerComplete, 
+			String roomerEmpNo, String roomerHouseCity, String roomerHouseAddress){
 		Intent intent = new Intent(context, TaskDetail.class);
-		intent.putExtra("task_no", taskNo);
-		intent.putExtra("task_title", taskTitle);
-		intent.putExtra("task_content", taskContent);
-		intent.putExtra("task_customer_no", taskCustomerNo);
-		intent.putExtra("task_flag", taskFlag);
-		intent.putExtra("task_emp_no", taskEmpNo);
-		intent.putExtra("task_date", taskDate);
+		intent.putExtra("roomerNo", roomerNo);
+		intent.putExtra("roomerName", roomerName);
+		intent.putExtra("roometSex", roometSex);
+		intent.putExtra("roomerPhoneNo", roomerPhoneNo);
+		intent.putExtra("roomerHouseNo", roomerHouseNo);
+		intent.putExtra("roomerDate", roomerDate);
+		intent.putExtra("roomerPeriod", roomerPeriod);
+		intent.putExtra("roomerRent", roomerRent);
+		intent.putExtra("roomerComplete", roomerComplete);
+		intent.putExtra("roomerEmpNo", roomerEmpNo);
+		intent.putExtra("roomerHouseCity", roomerHouseCity);
+		intent.putExtra("roomerHouseAddress", roomerHouseAddress);
 		context.startActivity(intent);
 	}
 
@@ -58,66 +82,133 @@ public class TaskDetail extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.task_detail);
-		
 		mQueue = Volley.newRequestQueue(getApplicationContext());
+		init();
 
-		tvTaskDetailTitle = (TextView) findViewById(R.id.tv_task_detail_title);
-		tvTaskDetailDate = (TextView) findViewById(R.id.tv_task_detail_date);
-		tvTaskDetailContent = (TextView) findViewById(R.id.tv_task_detail_content);
+	}
+
+	private void init() {
 		tvTaskDetailNo = (TextView) findViewById(R.id.tv_task_detail_no);
-		tvTaskDetailCustomerNo = (TextView) findViewById(R.id.tv_task_detail_customer_no);
-		tvTaskDetailEmp = (TextView) findViewById(R.id.tv_task_detail_emp);
-		layoutTaskFlag = (LinearLayout) findViewById(R.id.layout_task_detail_flag);
-		btnTaskFlag = (Button) findViewById(R.id.btn_task_detail_flag);
+		tvTaskDetailName = (TextView) findViewById(R.id.tv_task_detail_name);
+		tvTaskDetailSex = (TextView) findViewById(R.id.tv_task_detail_sex);
+		tvTaskDetailPhoneNo = (TextView) findViewById(R.id.tv_task_detail_phone_no);
+		tvTaskDetailDate = (TextView) findViewById(R.id.tv_task_detail_date);
+		tvTaskDetailPeriod = (TextView) findViewById(R.id.tv_task_detail_period);
+		tvTaskDetailAddress = (TextView) findViewById(R.id.tv_task_detail_address);
+		tvTaskDetailComplete = (TextView) findViewById(R.id.tv_task_detail_complete);
+		btnTaskDetailCancel = (Button) findViewById(R.id.btn_task_detail_cancel);
+		btnTaskDetailOk = (Button) findViewById(R.id.btn_task_detail_ok);
 
-		layoutTaskFlag.setOnClickListener(this);
-		btnTaskFlag.setOnClickListener(this);
 		Intent intent = getIntent();
 		Log.e("intent", intent.toString());
-		tvTaskDetailTitle.setText(intent.getStringExtra("task_title"));
-		tvTaskDetailDate.setText("任务发布日期：" + intent.getStringExtra("task_date"));
-		tvTaskDetailContent.setText(intent.getStringExtra("task_content"));
-		tvTaskDetailNo.setText("任务编号：" + intent.getStringExtra("task_no"));
-		tvTaskDetailCustomerNo.setText("客户编号:" + intent.getStringExtra("task_customer_no"));
-		tvTaskDetailEmp.setText("任务领取人：" + intent.getStringExtra("task_emp_no"));
+		tvTaskDetailNo.setText("客户编号：" + intent.getStringExtra("roomerNo"));
+		tvTaskDetailName.setText("客户姓名：" + intent.getStringExtra("roomerName"));
+		tvTaskDetailSex.setText("客户性别：" + intent.getStringExtra("roometSex"));
+		tvTaskDetailPhoneNo.setText("联系方式：" + intent.getStringExtra("roomerPhoneNo"));
+		tvTaskDetailDate.setText("看房日期：" + intent.getStringExtra("roomerDate"));
+		switch (Integer.parseInt(intent.getStringExtra("roomerPeriod"))) {
+		case 1:
+			tvTaskDetailPeriod.setText("看房时间：9:30~11:30");
+			break;
 
-		if("0".equals(intent.getStringExtra("task_flag"))){
-			layoutTaskFlag.setVisibility(View.GONE);
+		case 2:
+			tvTaskDetailPeriod.setText("看房时间：13:30~15:30");
+			break;
+
+		case 3:
+			tvTaskDetailPeriod.setText("看房时间：15:30~17:30");
+			break;
+
+		case 4:
+			tvTaskDetailPeriod.setText("看房时间：18:30~20:30");
+			break;
+
+		default:
+			break;
+		}
+		tvTaskDetailAddress.setText("详细地址：" + intent.getStringExtra("roomerHouseAddress"));
+		
+		tvTaskDetailAddress.setOnClickListener(this);
+		btnTaskDetailCancel.setOnClickListener(this);
+		btnTaskDetailOk.setOnClickListener(this);
+		if("".equals(intent.getStringExtra("roomerEmpNo"))){
+			btnTaskDetailCancel.setVisibility(View.GONE);
 		} else {
-			btnTaskFlag.setVisibility(View.GONE);
+			tvTaskDetailComplete.setVisibility(View.VISIBLE);
+			if (Integer.parseInt(intent.getStringExtra("roomerComplete").toString()) == 0) {
+				tvTaskDetailComplete.setText("正在跟进中…");
+			} else {
+				tvTaskDetailComplete.setText("交易已完成！");
+				btnTaskDetailCancel.setVisibility(View.GONE);
+				btnTaskDetailOk.setVisibility(View.GONE);
+			}
+			btnTaskDetailOk.setVisibility(View.GONE);
 		}
 		try {
 			json = new JSONObject();
-			SharedPreferences sp = getSharedPreferences("myProjectForSMU", 0);
-			json.put("taskNo", intent.getStringExtra("task_no"));
-			json.put("userName", sp.getString("userName", null));
+			SharedPreferences sp =getSharedPreferences("myProjectForSMU", MODE_PRIVATE);
+			json.put("userName", sp.getString("userName", ""));
+			json.put("roomerNo", intent.getStringExtra("roomerNo"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.layout_task_detail_flag:
-			Toast.makeText(TaskDetail.this, "显示详细信息", 0).show();
+		case R.id.tv_task_detail_address:
+			Toast.makeText(TaskDetail.this, "地图功能", Toast.LENGTH_SHORT).show();
+			break;
+		
+		case R.id.btn_task_detail_cancel:
+			JsonObjectRequest jsonObjectRequestCancel = new JsonObjectRequest(CANCEL_TASK_URL, json, 
+					new Listener<JSONObject>() {
+
+						@Override
+						public void onResponse(JSONObject response) {
+							try {
+								if (Integer.parseInt(response.getString("success")) == 1) {
+									Toast.makeText(TaskDetail.this, "任务已取消", Toast.LENGTH_SHORT).show();
+									tvTaskDetailComplete.setVisibility(View.GONE);
+									btnTaskDetailOk.setVisibility(View.VISIBLE);
+									btnTaskDetailCancel.setVisibility(View.GONE);
+								} else {
+									
+								}
+							} catch (NumberFormatException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}, new ErrorListener() {
+
+						@Override
+						public void onErrorResponse(VolleyError error) {
+							Toast.makeText(TaskDetail.this, "任务取消失败，请耐心等待5秒后再试！", Toast.LENGTH_SHORT).show();
+						}
+					});
+			mQueue.add(jsonObjectRequestCancel);
 			break;
 
-		case R.id.btn_task_detail_flag:
-			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(TASK_DETAIL_URL, 
+		case R.id.btn_task_detail_ok:
+			JsonObjectRequest jsonObjectRequestOk = new JsonObjectRequest(TASK_DETAIL_URL, 
 					json, new Listener<JSONObject>() {
 
 				@Override
 				public void onResponse(JSONObject response) {
 					try {
 						if (Integer.parseInt(response.getString("success")) == 1) {
-							Toast.makeText(TaskDetail.this, "你已成功领取任务", 0).show();
-							btnTaskFlag.setVisibility(View.GONE);
-							layoutTaskFlag.setVisibility(View.VISIBLE);
-							tvTaskDetailEmp.setText("任务领取人：" + response.getString("emp_no"));
+							Toast.makeText(TaskDetail.this, "你已成功领取任务", Toast.LENGTH_SHORT).show();
+							tvTaskDetailComplete.setVisibility(View.VISIBLE);
+							tvTaskDetailComplete.setText("正在跟进中…");
+							btnTaskDetailOk.setVisibility(View.GONE);
+							btnTaskDetailCancel.setVisibility(View.VISIBLE);
 						} else {
-							Toast.makeText(TaskDetail.this, "领取任务失败，请耐心等待5秒后再尝试！", 0).show();
+							Toast.makeText(TaskDetail.this, "领取任务失败，请耐心等待5秒后再尝试！", Toast.LENGTH_SHORT).show();
 						}
 					} catch (NumberFormatException e) {
 						e.printStackTrace();
@@ -129,10 +220,10 @@ public class TaskDetail extends Activity implements OnClickListener {
 
 				@Override
 				public void onErrorResponse(VolleyError error) {
-					Toast.makeText(TaskDetail.this, "网络连接失败", 0).show();
+					Toast.makeText(TaskDetail.this, "网络连接失败", Toast.LENGTH_SHORT).show();
 				}
 			});
-			mQueue.add(jsonObjectRequest);
+			mQueue.add(jsonObjectRequestOk);
 			break;
 
 		default:
