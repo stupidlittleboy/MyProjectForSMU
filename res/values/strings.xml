@@ -6,22 +6,28 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_customer_detail_fragment">CustomerDetailFragment</string>
     <string name="title_activity_customer_detail">CustomerDetailActivity</string>
-    
-    <string-array name="dapartmentArray">  
+
+    <string-array name="dapartmentArray">
         <item>人事部</item>
         <item>销售部</item>
-        <item>策划部</item>
-        <item>生产部</item>
+        <item>行政部</item>
+        <item>财务部</item>
         <item>技术部</item>
-    </string-array> 
-    
-    <string-array name="positionArray">  
+        <item>培训部</item>
+    </string-array>
+    <string-array name="positionArray">
         <item>普通员工</item>
         <item>公司职员</item>
         <item>部门主管</item>
         <item>部门经理</item>
         <item>总经理</item>
         <item>区域总裁</item>
-    </string-array> 
+    </string-array>
+    <string-array name="reginoNumber">
+        <item>中国+86</item>
+        <item>中国香港特别行政区+852</item>
+        <item>中国澳门特别行政区+853</item>
+        <item>台湾+886</item>
+    </string-array>
 
 </resources>

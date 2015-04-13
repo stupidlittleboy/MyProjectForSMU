@@ -138,7 +138,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			//注册点击事件
 		case R.id.tv_newuser:
-			Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+			Intent intent = new Intent(LoginActivity.this, SMSRegisterActivity.class);
 			startActivity(intent);
 			break;
 		}

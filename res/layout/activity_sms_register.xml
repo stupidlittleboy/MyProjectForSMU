@@ -1,7 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -10,69 +11,47 @@
     <LinearLayout
         android:id="@+id/layout_spinner"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="22dp" >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="5" >
-
-            <Spinner
-                android:id="@+id/tv_country_num"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:background="@drawable/smssdk_input_bg_focus"
-                android:entries="@array/dapartmentArray"
-                android:gravity="center"
-                android:textColor="#ff353535"
-                android:textSize="15sp" />
-        </LinearLayout>
+        <Spinner
+            android:id="@+id/sp_department"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:entries="@array/reginoNumber"
+            android:gravity="center"
+            android:textColor="#ff353535"
+            android:textSize="25sp" />
 
         <View
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layout_phone"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_below="@id/layout_spinner"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="22dp" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:orientation="horizontal" >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:background="@drawable/smssdk_input_bg_focus" >
-
-            <EditText
-                android:id="@+id/et_write_phone"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="@string/smssdk_write_mobile_phone"
-                android:inputType="phone"
-                android:text="18017385655"
-                android:textColor="#ff353535"
-                android:textSize="15sp" />
-        </LinearLayout>
+        <com.shmtu.myprojectforsmu.ui.ClearEditText
+            android:id="@+id/et_phone_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="请输入用户名"
+            android:inputType="phone"
+            android:singleLine="true"
+            android:text="18017385655"
+            android:textColor="#ff353535"
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/btn_getcode"
-            android:layout_width="180dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
@@ -83,67 +62,36 @@
     <LinearLayout
         android:id="@+id/layout_verify"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_below="@id/layout_phone"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="22dp" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp" >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:background="@drawable/smssdk_input_bg_focus" >
-
-            <EditText
-                android:id="@+id/et_verifycode"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:ems="10"
-                android:hint="验证码"
-                android:inputType="number"
-                android:singleLine="true"
-                android:textColor="#ff353535"
-                android:textSize="15sp" />
-        </LinearLayout>
+        <com.shmtu.myprojectforsmu.ui.ClearEditText
+            android:id="@+id/et_verifycode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
+            android:ems="10"
+            android:hint="请输入验证码"
+            android:inputType="number"
+            android:singleLine="true"
+            android:textColor="#ff353535"
+            android:textSize="25sp" />
 
         <View
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
             android:layout_marginLeft="10dp"
             android:layout_weight="1" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_verify_btn"
+    <Button
+        android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_verify"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="22dp"
-        android:gravity="center" >
+        android:background="@drawable/smssdk_btn_disenable"
+        android:gravity="center"
+        android:text="下一步" />
 
-        <Button
-            android:id="@+id/btn_verify"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/smssdk_btn_disenable"
-            android:gravity="center"
-            android:text="下一步" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_verify_btn"
-        android:layout_marginTop="25dp"
-        android:hint="发送验证码" />
-
-</RelativeLayout>
+</LinearLayout>
