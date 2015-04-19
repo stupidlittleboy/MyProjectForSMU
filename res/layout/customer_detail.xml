@@ -19,6 +19,14 @@
             android:layout_height="wrap_content"
             android:text="客户编号："
             android:textSize="25sp" />
+        
+        <TextView
+            android:id="@+id/tv_customer_detail_need"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="客户需求："
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/tv_customer_detail_name"
@@ -26,6 +34,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="客户名称："
+            android:textSize="22sp" />
+        
+        <TextView
+            android:id="@+id/tv_customer_detail_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/listview_bg"
+            android:text="客户性别："
             android:textSize="22sp" />
 
         <TextView
@@ -45,6 +62,22 @@
             android:background="@drawable/listview_bg"
             android:text="电子邮件："
             android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tv_customer_detail_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="预约日期："
+            android:textSize="22sp" />
+        
+        <TextView
+            android:id="@+id/tv_customer_detail_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="预约时间："
+            android:textSize="22sp" />
         
         <TextView
             android:id="@+id/tv_customer_detail_city"
@@ -60,15 +93,88 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/listview_bg"
-            android:text="详细地址："
+            android:text="看房地址："
             android:textSize="22sp" />
-
+        
         <TextView
-            android:id="@+id/tv_customer_detail_date"
+            android:id="@+id/tv_customer_detail_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="日期："
+            android:background="@drawable/listview_bg"
+            android:text="房子类型："
+            android:textSize="22sp" />
+        
+        <TextView
+            android:id="@+id/tv_customer_detail_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/listview_bg"
+            android:text="房子面积："
+            android:textSize="22sp" />
+        
+        <TextView
+            android:id="@+id/tv_customer_detail_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/listview_bg"
+            android:text="房子价格："
+            android:textSize="22sp" />
+        
+        <TextView
+            android:id="@+id/tv_customer_detail_green_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/listview_bg"
+            android:text="绿化面积："
+            android:textSize="22sp" />
+        
+        <TextView
+            android:id="@+id/tv_customer_detail_property"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/listview_bg"
+            android:text="所属物业："
+            android:textSize="22sp" />
+        
+        <TextView
+            android:id="@+id/tv_customer_detail_owner_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/listview_bg"
+            android:text="房东姓名："
+            android:textSize="22sp" />
+        
+        <TextView
+            android:id="@+id/tv_customer_detail_owner_phone_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/listview_bg"
+            android:text="房东电话："
+            android:textSize="22sp" />
+        
+        <TextView
+            android:id="@+id/tv_customer_detail_is_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/listview_bg"
+            android:text="是否空闲："
+            android:textSize="22sp" />
+        
+        <TextView
+            android:id="@+id/tv_customer_detail_is_completed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/listview_bg"
+            android:text="是否完成："
             android:textSize="22sp" />
 
         <LinearLayout

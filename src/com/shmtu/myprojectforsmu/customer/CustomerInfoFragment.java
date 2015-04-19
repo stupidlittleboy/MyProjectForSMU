@@ -76,20 +76,15 @@ public class CustomerInfoFragment extends Fragment {
 					try {
 						JSONObject json = response.getJSONObject(i);
 						HashMap<String, Object> map = new HashMap<String, Object>();
-						map.put("customer_no", json.get("customer_no"));
-						map.put("customer_name", json.get("customer_name"));
-						map.put("customer_phone_no", json.get("customer_phone_no"));
-						map.put("customer_email", json.get("customer_email"));
-						map.put("customer_date", json.get("customer_date"));
-						map.put("customer_level", json.get("customer_level"));
-						map.put("customer_city", json.get("customer_city"));
-						map.put("customer_address", json.get("customer_address"));
+						map.put("roomer_no", json.get("roomer_no"));
+						map.put("roomer_name", json.get("roomer_name"));
+						map.put("roomer_phone_no", json.get("roomer_phone_no"));
+						map.put("roomer_date", json.get("roomer_date"));
 						listCustomerInfo.add(map);
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
 				}
-				Log.e("list", listCustomerInfo.toString());
 				//将list集合中的数据传入到自定义的adapter中
 				customerInfoAdapter.setItemList(listCustomerInfo);
 				lvCustomerInfo.setAdapter(customerInfoAdapter);
@@ -151,27 +146,17 @@ public class CustomerInfoFragment extends Fragment {
 				viewHolder = (ViewHolder) convertView.getTag();
 			}
 			if (listCustomerInfo.size() > 0){
-				viewHolder.tvCustomerName.setText(listCustomerInfo.get(position).get("customer_name").toString());
-				viewHolder.tvCustomerPhoneNo.setText(listCustomerInfo.get(position).get("customer_phone_no").toString());
-				viewHolder.tvCustomerDate.setText(listCustomerInfo.get(position).get("customer_date").toString());
+				viewHolder.tvCustomerName.setText(listCustomerInfo.get(position).get("roomer_name").toString());
+				viewHolder.tvCustomerPhoneNo.setText(listCustomerInfo.get(position).get("roomer_phone_no").toString());
+				viewHolder.tvCustomerDate.setText(listCustomerInfo.get(position).get("roomer_date").toString());
 
 				convertView.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
-//						Toast.makeText(getActivity(), "点击查看明细", 0).show();
-						String customerNo = listCustomerInfo.get(position).get("customer_no").toString();
-						String customerName = listCustomerInfo.get(position).get("customer_name").toString();
-						String customerPhoneNo = listCustomerInfo.get(position).get("customer_phone_no").toString();
-						String customerEmail = listCustomerInfo.get(position).get("customer_email").toString();
-						String customerDate = listCustomerInfo.get(position).get("customer_date").toString();
-						String customerCity = listCustomerInfo.get(position).get("customer_city").toString();
-						String customerAddress = listCustomerInfo.get(position).get("customer_address").toString();
-						int customerLevel = Integer.parseInt(listCustomerInfo.get(position).get("customer_level").toString());
-						
-						CustomerDetailActivity.startCustomerDetailActivity(getActivity(), 
-								customerNo, customerName, customerPhoneNo, customerEmail, 
-								customerDate, customerLevel, customerCity, customerAddress);
+						Toast.makeText(getActivity(), "点击查看明细", 0).show();
+						String roomerNo = listCustomerInfo.get(position).get("roomer_no").toString();
+						CustomerDetailActivity.startCustomerDetailActivity(getActivity(), roomerNo);
 					}
 				});
 			} else {

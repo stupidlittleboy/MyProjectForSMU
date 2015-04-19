@@ -149,6 +149,7 @@ public class TaskDetail extends Activity implements OnClickListener {
 			SharedPreferences sp =getSharedPreferences("myProjectForSMU", MODE_PRIVATE);
 			json.put("userName", sp.getString("userName", ""));
 			json.put("roomerNo", intent.getStringExtra("roomerNo"));
+			json.put("roomerHouseNo", intent.getStringExtra("roomerHouseNo"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -174,13 +175,11 @@ public class TaskDetail extends Activity implements OnClickListener {
 									btnTaskDetailOk.setVisibility(View.VISIBLE);
 									btnTaskDetailCancel.setVisibility(View.GONE);
 								} else {
-									
+									Toast.makeText(TaskDetail.this, "取消任务失败，请稍后再试…", Toast.LENGTH_SHORT).show();
 								}
 							} catch (NumberFormatException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							} catch (JSONException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
