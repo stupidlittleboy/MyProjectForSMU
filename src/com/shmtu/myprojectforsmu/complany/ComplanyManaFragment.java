@@ -48,6 +48,8 @@ public class ComplanyManaFragment extends Fragment implements OnClickListener {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		init();
+		getFatherArrry();
+		Log.e("father", father_array.toString());
 		
 	}
 	
@@ -64,8 +66,9 @@ public class ComplanyManaFragment extends Fragment implements OnClickListener {
 
 	
 	//获取父节点的值
-		private void getFatherArrry(){
+		private ArrayList<HashMap<String,Object>> getFatherArrry(){
 //			father_array = new ArrayList<HashMap<String,Object>>();
+			final ArrayList<HashMap<String,Object>> father_array = new ArrayList<HashMap<String,Object>>();
 
 			//创建一个RequestQueue队列
 			mQueueFather = Volley.newRequestQueue(getActivity().getApplicationContext());
@@ -85,17 +88,19 @@ public class ComplanyManaFragment extends Fragment implements OnClickListener {
 							e.printStackTrace();
 						}
 					}
+					Log.e("father1", father_array.toString());
 				}
 			},  
 			new Response.ErrorListener() {  
 				@Override  
 				public void onErrorResponse(VolleyError error) {  
-					Log.e("TAG111", error.getMessage(), error);  
+					Log.e("TAG", error.getMessage(), error);  
 					//				Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
 				}  
 			});  
 			mQueueFather.add(jsonArrayRequestFather);
 			Log.e("father", father_array.toString());
+			return father_array;
 		}
 	
 	@Override
@@ -105,6 +110,7 @@ public class ComplanyManaFragment extends Fragment implements OnClickListener {
 			ComplanyMeeting.startComplanyMeeting(getActivity());
 //			TaskDetail.startTaskDetail(getActivity());
 			Toast.makeText(getActivity(), "会议信息", Toast.LENGTH_SHORT).show();
+			Log.e("father", father_array.toString());
 			break;
 			
 		case R.id.layout_complany_contacts:
