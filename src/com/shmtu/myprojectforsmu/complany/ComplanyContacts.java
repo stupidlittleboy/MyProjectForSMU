@@ -26,12 +26,11 @@ import com.shmtu.myprojectforsmu.commons.Constant;
 
 public class ComplanyContacts extends Activity {
 
-	private final static String DEPARTMENT_URL = Constant.URL + "get_department.php";
+	
 	private final static String CONTACTS_URL = Constant.URL + "get_contacts.php";
 
 	//	private final static String CONTACTS_URL = Constant.URL + "company_contacts.php"; 
 	private ExpandableListView elvCompanyContacts;
-	private RequestQueue mQueueFather = null;
 	private RequestQueue mQueueSon = null;
 	private CompanyContactsAdapter companyContactsAdapter;
 	private ArrayList<HashMap<String,Object>> father_array = new ArrayList<HashMap<String,Object>>();
@@ -62,46 +61,11 @@ public class ComplanyContacts extends Activity {
 		elvCompanyContacts.setAdapter(companyContactsAdapter);
 	}
 
-	/*//获取父节点的值
-	private void getFatherArrry(){
-//		father_array = new ArrayList<HashMap<String,Object>>();
-
-		//创建一个RequestQueue队列
-		mQueueFather = Volley.newRequestQueue(getApplicationContext());
-		//向服务端发送请求
-		JsonArrayRequest jsonArrayRequestFather = new JsonArrayRequest(DEPARTMENT_URL, 
-				new Listener<JSONArray>() {
-
-			@Override
-			public void onResponse(JSONArray response) {
-				for (int i = 0; i < response.length(); i++) {
-					try {
-						JSONObject jsonObj = response.getJSONObject(i);
-						HashMap<String, Object> map = new HashMap<String, Object>();
-						map.put("contactsDepartment", jsonObj.getString("emp_department"));
-						father_array.add(map);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				companyContactsAdapter.setItemFatherArray(father_array);
-			}
-		},  
-		new Response.ErrorListener() {  
-			@Override  
-			public void onErrorResponse(VolleyError error) {  
-				Log.e("TAG111", error.getMessage(), error);  
-				//				Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
-			}  
-		});  
-		mQueueFather.add(jsonArrayRequestFather);
-		Log.e("father", father_array.toString());
-	}*/
 
 	private void getCompanyContacts(){
 		//		son_array = new ArrayList<HashMap<String,Object>>();
 
-		//father
+		/*//father
 		//创建一个RequestQueue队列
 		mQueueFather = Volley.newRequestQueue(getApplicationContext());
 		//向服务端发送请求
@@ -130,7 +94,7 @@ public class ComplanyContacts extends Activity {
 				//				Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
 			}  
 		});  
-		mQueueFather.add(jsonArrayRequestFather);
+		mQueueFather.add(jsonArrayRequestFather);*/
 
 		//son
 		//创建一个RequestQueue队列
