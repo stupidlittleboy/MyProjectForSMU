@@ -85,7 +85,7 @@ public class TaskManaFragment extends Fragment {
 				/**
 				 * 设置数据
 				 */
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < response.length(); i++) {
 					HashMap<String, Object> map = new HashMap<String, Object>();
 					try {
 						JSONObject jObj = (JSONObject) response.get(i);

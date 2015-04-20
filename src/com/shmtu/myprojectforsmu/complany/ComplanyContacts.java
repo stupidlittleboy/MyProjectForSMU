@@ -36,7 +36,7 @@ public class ComplanyContacts extends Activity {
 	private CompanyContactsAdapter companyContactsAdapter;
 	private ArrayList<HashMap<String,Object>> father_array = new ArrayList<HashMap<String,Object>>();
 	private ArrayList<HashMap<String,Object>> son_array = new ArrayList<HashMap<String,Object>>();
-	
+
 	public static void startComplanyContacts(Context context){
 		Intent intent = new Intent(context, ComplanyContacts.class);
 		context.startActivity(intent);
@@ -57,12 +57,12 @@ public class ComplanyContacts extends Activity {
 	protected void onResume() {
 		super.onResume();
 		companyContactsAdapter = new CompanyContactsAdapter(this, father_array, son_array, elvCompanyContacts);
-		getFatherArrry();
+		//		getFatherArrry();
 		getCompanyContacts();
 		elvCompanyContacts.setAdapter(companyContactsAdapter);
 	}
-	
-	//获取父节点的值
+
+	/*//获取父节点的值
 	private void getFatherArrry(){
 //		father_array = new ArrayList<HashMap<String,Object>>();
 
@@ -96,10 +96,45 @@ public class ComplanyContacts extends Activity {
 		});  
 		mQueueFather.add(jsonArrayRequestFather);
 		Log.e("father", father_array.toString());
-	}
+	}*/
 
 	private void getCompanyContacts(){
-//		son_array = new ArrayList<HashMap<String,Object>>();
+		//		son_array = new ArrayList<HashMap<String,Object>>();
+
+		//father
+		//创建一个RequestQueue队列
+		mQueueFather = Volley.newRequestQueue(getApplicationContext());
+		//向服务端发送请求
+		JsonArrayRequest jsonArrayRequestFather = new JsonArrayRequest(DEPARTMENT_URL, 
+				new Listener<JSONArray>() {
+
+			@Override
+			public void onResponse(JSONArray response) {
+				for (int i = 0; i < response.length(); i++) {
+					try {
+						JSONObject jsonObj = response.getJSONObject(i);
+						HashMap<String, Object> map = new HashMap<String, Object>();
+						map.put("contactsDepartment", jsonObj.getString("emp_department"));
+						father_array.add(map);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				companyContactsAdapter.setItemFatherArray(father_array);
+			}
+		},  
+		new Response.ErrorListener() {  
+			@Override  
+			public void onErrorResponse(VolleyError error) {  
+				Log.e("TAG111", error.getMessage(), error);  
+				//				Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
+			}  
+		});  
+		mQueueFather.add(jsonArrayRequestFather);
+		Log.e("father", father_array.toString());
+
+
+		//son
 		mQueueSon = Volley.newRequestQueue(getApplicationContext());
 		JsonArrayRequest jsonArrayRequestSon = new JsonArrayRequest(CONTACTS_URL, 
 				new Listener<JSONArray>() {
@@ -131,5 +166,5 @@ public class ComplanyContacts extends Activity {
 		mQueueSon.add(jsonArrayRequestSon);
 		Log.e("son", son_array.toString());
 	}
-	
+
 }
