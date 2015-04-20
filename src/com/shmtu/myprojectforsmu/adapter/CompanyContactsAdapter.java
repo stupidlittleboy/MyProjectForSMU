@@ -24,12 +24,12 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 	private ArrayList<HashMap<String, Object>> son_array;//子层
 	private ExpandableListView elvCompanyContacts;
 
-	public CompanyContactsAdapter(Context context, ArrayList<HashMap<String, Object>> father_array,
-			ArrayList<HashMap<String, Object>> son_array, ExpandableListView elvCompanyContacts){
+	public CompanyContactsAdapter(Context context/*, ArrayList<HashMap<String, Object>> father_array,
+			ArrayList<HashMap<String, Object>> son_array*/, ExpandableListView elvCompanyContacts){
 		father_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		son_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.father_array = father_array;
-		this.son_array = son_array;
+		/*this.father_array = father_array;
+		this.son_array = son_array;*/
 		this.elvCompanyContacts = elvCompanyContacts;
 	}
 
@@ -72,12 +72,12 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 	//获取父层中的一项，返回的是父层的字符串类型
 	@Override
 	public Object getGroup(int groupPosition) {
-		return father_array.get(groupPosition);
+		return null;
 	}
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		return son_array.get(groupPosition).get(childPosition);
+		return null;
 	}
 
 	//获取父层的位置

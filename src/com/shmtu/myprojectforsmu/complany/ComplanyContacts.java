@@ -56,7 +56,7 @@ public class ComplanyContacts extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		companyContactsAdapter = new CompanyContactsAdapter(this, father_array, son_array, elvCompanyContacts);
+		companyContactsAdapter = new CompanyContactsAdapter(this/*, father_array, son_array*/, elvCompanyContacts);
 		//		getFatherArrry();
 		getCompanyContacts();
 		elvCompanyContacts.setAdapter(companyContactsAdapter);
@@ -126,16 +126,15 @@ public class ComplanyContacts extends Activity {
 		new Response.ErrorListener() {  
 			@Override  
 			public void onErrorResponse(VolleyError error) {  
-				Log.e("TAG111", error.getMessage(), error);  
+				Log.e("TAG", error.getMessage(), error);  
 				//				Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
 			}  
 		});  
 		mQueueFather.add(jsonArrayRequestFather);
-		Log.e("father", father_array.toString());
-
 
 		//son
-		mQueueSon = Volley.newRequestQueue(getApplicationContext());
+		//创建一个RequestQueue队列
+		mQueueSon= Volley.newRequestQueue(getApplicationContext());
 		JsonArrayRequest jsonArrayRequestSon = new JsonArrayRequest(CONTACTS_URL, 
 				new Listener<JSONArray>() {
 
@@ -164,7 +163,6 @@ public class ComplanyContacts extends Activity {
 			}
 		});
 		mQueueSon.add(jsonArrayRequestSon);
-		Log.e("son", son_array.toString());
 	}
 
 }
