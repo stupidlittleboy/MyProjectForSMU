@@ -91,6 +91,7 @@ public class ComplanyNotices extends Activity {
 					}
 				}
 				noticeAdapter.setItemList(listNotice);
+				noticeAdapter.notifyDataSetChanged();
 				lvNoticesInfo.setAdapter(noticeAdapter);
 				Log.e("TAG", response.toString());
 			}

@@ -1,7 +1,6 @@
 package com.shmtu.myprojectforsmu.login_resgester;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,7 +12,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import cn.smssdk.SMSSDK;
 
@@ -102,8 +100,9 @@ public class SMSRegisterActivity extends Activity implements OnClickListener {
 				//短信注册成功后，返回MainActivity,然后提示新好友
 				if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {//提交验证码成功
 					Toast.makeText(getApplicationContext(), "提交验证码成功", Toast.LENGTH_SHORT).show();
-					Intent intent = new Intent(SMSRegisterActivity.this, RegisterActivity.class);
-					startActivity(intent);
+					/*Intent intent = new Intent(SMSRegisterActivity.this, RegisterActivity.class);
+					startActivity(intent);*/
+					RegisterActivity.startRegisterActivity(SMSRegisterActivity.this, etPhoneNo.getText().toString().trim());
 				} else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
 					Toast.makeText(getApplicationContext(), "验证码已经发送", Toast.LENGTH_SHORT).show();
 				}else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){//返回支持发送验证码的国家列表

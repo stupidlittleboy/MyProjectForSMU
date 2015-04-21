@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -23,6 +22,7 @@ import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
 import com.shmtu.myprojectforsmu.setting.SettingMap;
+import com.shmtu.myprojectforsmu.utils.StringSplitUtil;
 
 public class CustomerDetailActivity extends BaseActivity implements OnClickListener {
 
@@ -47,7 +47,7 @@ public class CustomerDetailActivity extends BaseActivity implements OnClickListe
 	private TextView tvCustomerDetailOwnerPhoneNo;
 	private TextView tvCustomerDetailIsEmpty;
 	private TextView tvCustomerDetailIsCompleted;
-	private RatingBar rbCustomerDetailLevel;
+//	private RatingBar rbCustomerDetailLevel;
 	
 	private RequestQueue mQueue;
 	
@@ -86,11 +86,12 @@ public class CustomerDetailActivity extends BaseActivity implements OnClickListe
 		tvCustomerDetailIsEmpty = (TextView) findViewById(R.id.tv_customer_detail_is_empty);
 		tvCustomerDetailIsCompleted = (TextView) findViewById(R.id.tv_customer_detail_is_completed);
 		
-		rbCustomerDetailLevel = (RatingBar) findViewById(R.id.rb_customer_datail_level);
+//		rbCustomerDetailLevel = (RatingBar) findViewById(R.id.rb_customer_datail_level);
 		
 		tvCustomerDetailPhoneNo.setOnClickListener(this);
 		tvCustomerDetailEmail.setOnClickListener(this);
 		tvCustomerDetailAddress.setOnClickListener(this);
+		tvCustomerDetailOwnerPhoneNo.setOnClickListener(this);
 		
 		Intent intent = getIntent();
 		String roomerNo = intent.getStringExtra("roomerNo");
@@ -161,21 +162,27 @@ public class CustomerDetailActivity extends BaseActivity implements OnClickListe
 		
 		switch (v.getId()) {
 		case R.id.tv_customer_detail_phone_no:
-			Uri uri = Uri.parse("tel:" + tvCustomerDetailPhoneNo.getText().toString().trim());
+			Uri uri = Uri.parse("tel:" + StringSplitUtil.interceptString(tvCustomerDetailPhoneNo.getText().toString().trim()));
 			Intent intent = new Intent(Intent.ACTION_DIAL, uri);
 			startActivity(intent);
 			break;
 
 		case R.id.tv_customer_detail_email:
-			Uri uri1 = Uri.parse("mailto:" + tvCustomerDetailEmail.getText().toString().trim());   
+			Uri uri1 = Uri.parse("mailto:" + StringSplitUtil.interceptString(tvCustomerDetailEmail.getText().toString().trim()));   
 			Intent it = new Intent(Intent.ACTION_SENDTO, uri1);   
 			startActivity(it);
 			break;
 			
 		case R.id.tv_customer_detail_address:
-			String city = tvCustomerDetailCity.getText().toString().trim();
-			String address = tvCustomerDetailAddress.getText().toString().trim();
+			String city = StringSplitUtil.interceptString(tvCustomerDetailCity.getText().toString().trim());
+			String address = StringSplitUtil.interceptString(tvCustomerDetailAddress.getText().toString().trim());
 			SettingMap.startSettingMapSearch(CustomerDetailActivity.this, city, address);
+			break;
+			
+		case R.id.tv_customer_detail_owner_phone_no:
+			Uri uri2 = Uri.parse("tel:" + StringSplitUtil.interceptString(tvCustomerDetailOwnerPhoneNo.getText().toString().trim()));
+			Intent intent1 = new Intent(Intent.ACTION_DIAL, uri2);
+			startActivity(intent1);
 			break;
 			
 		default:

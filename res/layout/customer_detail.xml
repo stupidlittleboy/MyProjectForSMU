@@ -41,7 +41,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/listview_bg"
             android:text="客户性别："
             android:textSize="22sp" />
 
@@ -101,7 +100,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/listview_bg"
             android:text="房子类型："
             android:textSize="22sp" />
         
@@ -110,7 +108,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/listview_bg"
             android:text="房子面积："
             android:textSize="22sp" />
         
@@ -119,7 +116,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/listview_bg"
             android:text="房子价格："
             android:textSize="22sp" />
         
@@ -128,7 +124,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/listview_bg"
             android:text="绿化面积："
             android:textSize="22sp" />
         
@@ -137,7 +132,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/listview_bg"
             android:text="所属物业："
             android:textSize="22sp" />
         
@@ -146,7 +140,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/listview_bg"
             android:text="房东姓名："
             android:textSize="22sp" />
         
@@ -177,7 +170,7 @@
             android:text="是否完成："
             android:textSize="22sp" />
 
-        <LinearLayout
+       <!--  <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -195,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:numStars="5" 
                 style="?android:attr/ratingBarStyleIndicator"/>
-        </LinearLayout>
+        </LinearLayout> -->
     </LinearLayout>
 
 </ScrollView>

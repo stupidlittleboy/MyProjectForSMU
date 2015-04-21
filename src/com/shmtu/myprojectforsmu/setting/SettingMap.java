@@ -41,8 +41,8 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.shmtu.myprojectforsmu.R;
 
-public class SettingMap extends Activity /*implements
-OnGetGeoCoderResultListener*/{
+public class SettingMap extends Activity implements
+OnGetGeoCoderResultListener{
 
 	private MapView mMapView = null;
 	private BaiduMap mBaiduMap = null;
@@ -53,17 +53,17 @@ OnGetGeoCoderResultListener*/{
 	private RelativeLayout mMarkerInfo;
 	private LatLng ll = null;
 	GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
-	private boolean flag;
-//	private MyLocationListenner myListener = new MyLocationListenner();
-	private String city;
-	private String address;
+	private boolean flag = false;
+	private MyLocationListenner myListener = new MyLocationListenner();
 
-	public static void startSettingMapLocation(Context context){
+	public static void startSettingMapLocation(Context context) {
 		Intent intent = new Intent(context, SettingMap.class);
 		context.startActivity(intent);
 	}
-
-	public static void startSettingMapSearch(Context context, String city, String address){
+	
+	public static void startSettingMapSearch(
+			Context context, String city,
+			String address) {
 		Intent intent = new Intent(context, SettingMap.class);
 		intent.putExtra("city", city);
 		intent.putExtra("address", address);
@@ -77,19 +77,10 @@ OnGetGeoCoderResultListener*/{
 		//注意该方法要再setContentView方法之前实现  
 		SDKInitializer.initialize(getApplicationContext());
 		setContentView(R.layout.setting_map);
-		/*//获取地图控件引用  
+		//获取地图控件引用  
 		mMapView = (MapView) findViewById(R.id.setting_mapview);
 		mMarkerInfo = (RelativeLayout) findViewById(R.id.id_marker_info);
 		mBaiduMap = mMapView.getMap();
-
-		Intent intent = getIntent();
-		if (intent.getStringExtra("city") == null || intent.getStringExtra("address") == null) {
-			flag = false;
-		} else {
-			flag = true;
-			city = intent.getStringExtra("city");
-			address = intent.getStringExtra("address");
-		}
 
 		//定义Maker坐标点  
 		// 北京天安门的经纬度：39.915, 116.404 * 1E6
@@ -100,16 +91,43 @@ OnGetGeoCoderResultListener*/{
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(new MapStatus.Builder().target(point).zoom(15).build()));
 		//构建Marker图标  
 		bitmap = BitmapDescriptorFactory  
-				.fromResource(R.drawable.icon_marka);
+				.fromResource(R.drawable.icon_gcoding);
 		// 初始化搜索模块，注册事件监听
 		mSearch = GeoCoder.newInstance();
 		mSearch.setOnGetGeoCodeResultListener(this);
 
-		//flag为false时--定位；flag为true是--标注
-		if (flag) {
+		Intent intent = getIntent();
+		String city = intent.getStringExtra("city");
+		String address = intent.getStringExtra("address");
+		if (city == null || address == null || "".equals(city) 
+				|| "".equals(address)) {
+			//定位初始化
+			mLocClient = new LocationClient(this);
+			//开启定位图层
+			mBaiduMap.setMyLocationEnabled(true);
+			//定位初始化
+			mLocClient = new LocationClient(this);
+			// 初始化搜索模块，注册事件监听
+			mSearch = GeoCoder.newInstance();
+			mSearch.setOnGetGeoCodeResultListener(this);
+			mLocClient.registerLocationListener(myListener);
+			LocationClientOption option = new LocationClientOption();
+			option.setOpenGps(true);// 打开gps
+			option.setCoorType("bd09ll"); // 设置坐标类型
+			option.setScanSpan(1000);
+			mLocClient.setLocOption(option);
+			mLocClient.start();
+		} else {
 			mSearch.geocode(new GeoCodeOption()
 			.city(city)
 			.address(address));
+		}
+		
+		/*//flag为false时--定位；flag为true是--标注
+		if (flag) {
+			mSearch.geocode(new GeoCodeOption()
+			.city("上海")
+			.address("浦东新区浦建路725弄2号"));
 		} else {
 
 			//定位初始化
@@ -139,17 +157,19 @@ OnGetGeoCoderResultListener*/{
 			marker = (Marker) (mBaiduMap.addOverlay(options));
 			//在地图上添加Marker，并显示  
 			mBaiduMap.addOverlay(options);
-		}
+		}*/
 
 		mBaiduMap.setOnMapClickListener(new OnMapClickListener() {
 
 			@Override
 			public boolean onMapPoiClick(MapPoi arg0) {
+				// TODO Auto-generated method stub
 				return false;
 			}
 
 			@Override
 			public void onMapClick(LatLng arg0) {
+				// TODO Auto-generated method stub
 				mMarkerInfo.setVisibility(View.GONE);
 				mBaiduMap.hideInfoWindow();
 			}
@@ -160,6 +180,8 @@ OnGetGeoCoderResultListener*/{
 
 			@Override
 			public boolean onMarkerClick(Marker marker) {
+				// TODO Auto-generated method stub
+
 				position = marker.getPosition();
 				// 反Geo搜索
 				mSearch.reverseGeoCode(new ReverseGeoCodeOption()
@@ -167,11 +189,11 @@ OnGetGeoCoderResultListener*/{
 
 				return false;
 			}
-		});*/
+		});
 
 	}
 
-	/*@Override  
+	@Override  
 	protected void onDestroy() {  
 		super.onDestroy();  
 		//在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理  
@@ -242,6 +264,7 @@ OnGetGeoCoderResultListener*/{
 
 	private void popupInfo(RelativeLayout layout,
 			ReverseGeoCodeResult result) {
+		// TODO Auto-generated method stub
 
 		ViewHolder viewHolder = null;
 		if(layout.getTag() == null){
@@ -261,6 +284,7 @@ OnGetGeoCoderResultListener*/{
 
 			@Override
 			public void onClick(View v) {
+				// TODO Auto-generated method stub
 				Toast.makeText(SettingMap.this, "OK", Toast.LENGTH_LONG).show();
 			}
 		});
@@ -268,6 +292,7 @@ OnGetGeoCoderResultListener*/{
 
 			@Override
 			public void onClick(View v) {
+				// TODO Auto-generated method stub
 				Toast.makeText(SettingMap.this, "CANCEL", Toast.LENGTH_LONG).show();
 			}
 		});
@@ -281,9 +306,9 @@ OnGetGeoCoderResultListener*/{
 		Button btnCancel;
 	}
 
-	*//**
+	/**
 	 * 定位SDK监听函数
-	 *//*
+	 */
 	private class MyLocationListenner implements BDLocationListener {
 
 		@Override
@@ -307,15 +332,15 @@ OnGetGeoCoderResultListener*/{
 
 				mBaiduMap.addOverlay(new MarkerOptions().position(ll)
 						.icon(BitmapDescriptorFactory
-								.fromResource(R.drawable.icon_marka)));
+								.fromResource(R.drawable.icon_gcoding)));
 				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ll));
-				// 反Geo搜索
+				/*// 反Geo搜索
 				mSearch.reverseGeoCode(new ReverseGeoCodeOption()
-				.location(ll));
-				mSearch.geocode(new GeoCodeOption()
+				.location(ll));*/
+				/*mSearch.geocode(new GeoCodeOption()
 					.city("上海")
-					.address("浦东新区浦建路725弄2号"));
+					.address("浦东新区浦建路725弄2号"));*/
 			}
 		}
-	}*/
+	}
 }

@@ -26,16 +26,21 @@ import com.shmtu.myprojectforsmu.commons.Constant;
 
 public class ComplanyContacts extends Activity {
 
-	
-	private final static String CONTACTS_URL = Constant.URL + "get_contacts.php";
 
-	//	private final static String CONTACTS_URL = Constant.URL + "company_contacts.php"; 
+	private final static String CONTACTS_URL = Constant.URL + "get_contacts.php";
+	private final static String DEPARTMENT_URL = Constant.URL + "get_department.php";
+	
 	private ExpandableListView elvCompanyContacts;
 	private RequestQueue mQueueSon = null;
+	private RequestQueue mQueueFather = null;
 	private CompanyContactsAdapter companyContactsAdapter;
 	private ArrayList<HashMap<String,Object>> father_array = new ArrayList<HashMap<String,Object>>();
 	private ArrayList<HashMap<String,Object>> son_array = new ArrayList<HashMap<String,Object>>();
 
+	/**
+	 * 启动Activity
+	 * @param context
+	 */
 	public static void startComplanyContacts(Context context){
 		Intent intent = new Intent(context, ComplanyContacts.class);
 		context.startActivity(intent);
@@ -55,17 +60,17 @@ public class ComplanyContacts extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		companyContactsAdapter = new CompanyContactsAdapter(this/*, father_array, son_array*/, elvCompanyContacts);
-		//		getFatherArrry();
+		companyContactsAdapter = new CompanyContactsAdapter(this, father_array, son_array, elvCompanyContacts);
+		getFatherArrry();
 		getCompanyContacts();
 		elvCompanyContacts.setAdapter(companyContactsAdapter);
 	}
 
 
-	private void getCompanyContacts(){
-		//		son_array = new ArrayList<HashMap<String,Object>>();
+	//获取父节点的值
+	private void getFatherArrry(){
+		//				father_array = new ArrayList<HashMap<String,Object>>();
 
-		/*//father
 		//创建一个RequestQueue队列
 		mQueueFather = Volley.newRequestQueue(getApplicationContext());
 		//向服务端发送请求
@@ -85,6 +90,8 @@ public class ComplanyContacts extends Activity {
 					}
 				}
 				companyContactsAdapter.setItemFatherArray(father_array);
+				companyContactsAdapter.notifyDataSetChanged();
+				Log.e("father1", father_array.toString());
 			}
 		},  
 		new Response.ErrorListener() {  
@@ -94,8 +101,13 @@ public class ComplanyContacts extends Activity {
 				//				Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
 			}  
 		});  
-		mQueueFather.add(jsonArrayRequestFather);*/
+		mQueueFather.add(jsonArrayRequestFather);
+		Log.e("father2", father_array.toString());
+	}
 
+	//获取子节点的值
+	private void getCompanyContacts(){
+		//		son_array = new ArrayList<HashMap<String,Object>>();
 		//son
 		//创建一个RequestQueue队列
 		mQueueSon= Volley.newRequestQueue(getApplicationContext());
@@ -118,6 +130,8 @@ public class ComplanyContacts extends Activity {
 					}
 				}
 				companyContactsAdapter.setItemSonArray(son_array);
+				companyContactsAdapter.notifyDataSetChanged();
+				Log.e("son", son_array.toString());
 			}
 		}, new ErrorListener() {
 

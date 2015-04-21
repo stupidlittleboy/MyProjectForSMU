@@ -85,6 +85,7 @@ public class ComplanyMeeting extends Activity {
 					}
 				}
 				companyMeetingAdapter.setItemList(listCompanyMeeting);
+				companyMeetingAdapter.notifyDataSetChanged();
 				lvCompanyMeeting.setAdapter(companyMeetingAdapter);
 			}
 		}, new ErrorListener() {

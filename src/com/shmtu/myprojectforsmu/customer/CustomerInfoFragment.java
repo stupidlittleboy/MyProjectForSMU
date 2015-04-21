@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -87,6 +88,7 @@ public class CustomerInfoFragment extends Fragment {
 				}
 				//将list集合中的数据传入到自定义的adapter中
 				customerInfoAdapter.setItemList(listCustomerInfo);
+				customerInfoAdapter.notifyDataSetChanged();
 				lvCustomerInfo.setAdapter(customerInfoAdapter);
 			}
 		}, new ErrorListener() {
@@ -100,6 +102,7 @@ public class CustomerInfoFragment extends Fragment {
 	}
 
 	//自定义adapter，优化ListView
+	@SuppressLint("InflateParams")
 	class CustomerInfoAdapter extends BaseAdapter{
 
 		private LayoutInflater mLayoutInflater;
@@ -154,13 +157,13 @@ public class CustomerInfoFragment extends Fragment {
 
 					@Override
 					public void onClick(View v) {
-						Toast.makeText(getActivity(), "点击查看明细", 0).show();
+						Toast.makeText(getActivity(), "点击查看明细", Toast.LENGTH_SHORT).show();
 						String roomerNo = listCustomerInfo.get(position).get("roomer_no").toString();
 						CustomerDetailActivity.startCustomerDetailActivity(getActivity(), roomerNo);
 					}
 				});
 			} else {
-				Toast.makeText(getActivity(), "暂时没有客户信息", 0).show();
+				Toast.makeText(getActivity(), "暂时没有客户信息", Toast.LENGTH_SHORT).show();
 			}
 			return convertView;
 		}
