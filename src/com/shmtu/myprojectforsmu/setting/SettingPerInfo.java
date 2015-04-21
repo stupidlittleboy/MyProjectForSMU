@@ -10,9 +10,13 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
@@ -152,5 +156,26 @@ public class SettingPerInfo extends Activity implements OnClickListener {
 			break;
 		}
 	}
+	
+	//ActionBar
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.per_info, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
 
+	//ActionBar点击事件
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.per_info_edit:
+			Toast.makeText(SettingPerInfo.this, "修改个人信息", Toast.LENGTH_SHORT).show();
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }
