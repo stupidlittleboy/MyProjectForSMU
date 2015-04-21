@@ -47,14 +47,11 @@
             </LinearLayout>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
         <LinearLayout
             android:id="@+id/layout_taskinfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:background="@drawable/listview_bg"
             android:orientation="horizontal" >
 
@@ -76,14 +73,11 @@
                 android:textSize="25sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
         <LinearLayout
             android:id="@+id/layout_map"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:background="@drawable/listview_bg"
             android:orientation="horizontal" >
 
@@ -105,14 +99,11 @@
                 android:textSize="25sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
         <LinearLayout
             android:id="@+id/layout_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:background="@drawable/listview_bg"
             android:orientation="horizontal" >
 
@@ -134,14 +125,11 @@
                 android:textSize="25sp" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp" />
-
         <LinearLayout
             android:id="@+id/layout_exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="@drawable/listview_bg"
             android:orientation="horizontal" >
 
@@ -159,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:text="退出"
+                android:text="退出登陆"
                 android:textSize="25sp" />
         </LinearLayout>
     </LinearLayout>

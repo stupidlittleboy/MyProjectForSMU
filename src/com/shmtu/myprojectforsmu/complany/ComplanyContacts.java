@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -109,13 +110,15 @@ public class ComplanyContacts extends Activity {
 	private void getCompanyContacts(){
 		//		son_array = new ArrayList<HashMap<String,Object>>();
 		//son
+		
 		//创建一个RequestQueue队列
 		mQueueSon= Volley.newRequestQueue(getApplicationContext());
-		JsonArrayRequest jsonArrayRequestSon = new JsonArrayRequest(CONTACTS_URL, 
+		JsonArrayRequest jsonArrayRequestSon = new JsonArrayRequest(CONTACTS_URL,
 				new Listener<JSONArray>() {
 
 			@Override
 			public void onResponse(JSONArray response) {
+				Log.e("sonson", response.toString());
 				for (int i = 0; i < response.length(); i++) {
 					try {
 						JSONObject jsonObj = response.getJSONObject(i);

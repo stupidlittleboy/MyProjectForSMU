@@ -34,16 +34,12 @@
                 android:textSize="25sp" />
         </LinearLayout>
         
-        <View 
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            />
-        
         <LinearLayout
             android:id="@+id/layout_complany_contacts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_marginTop="20dp"
             android:background="@drawable/listview_bg"
             android:orientation="horizontal" >
 
@@ -63,16 +59,12 @@
                 android:textSize="25sp" />
         </LinearLayout>
         
-        <View 
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            />
-        
         <LinearLayout
             android:id="@+id/layout_complany_noticts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:background="@drawable/listview_bg"
             android:orientation="horizontal" >
 
