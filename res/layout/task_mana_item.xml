@@ -16,19 +16,6 @@
             android:text="租售标志"
             android:textSize="20sp" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/tv_task_flag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="#59f8eb"
-                android:text="可领取"
-                android:textSize="20sp" />
-        </RelativeLayout>
     </LinearLayout>
 
     <RelativeLayout
@@ -42,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:hint="2015-03-31"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
         
         <TextView
             android:id="@+id/tv_task_period"
@@ -50,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:hint="时间段"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <TextView

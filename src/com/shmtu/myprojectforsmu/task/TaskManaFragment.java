@@ -33,7 +33,7 @@ import com.shmtu.myprojectforsmu.commons.Constant;
 
 public class TaskManaFragment extends Fragment {
 
-	private final static String NOTICE_URL = Constant.URL + "task_info.php";
+	private final static String TASK_INFO_URL = Constant.URL + "task_info.php";
 
 	private ListView lvTaskInfo;
 
@@ -77,7 +77,7 @@ public class TaskManaFragment extends Fragment {
 		 */
 		//创建一个RequestQueue队列
 		mQueue = Volley.newRequestQueue(context);
-		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(NOTICE_URL, 
+		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(TASK_INFO_URL, 
 				new Listener<JSONArray>() {
 
 			@Override
@@ -107,6 +107,7 @@ public class TaskManaFragment extends Fragment {
 					}
 				}
 				taskManaAdapter.setItemList(listTask);
+				taskManaAdapter.notifyDataSetChanged();
 				lvTaskInfo.setAdapter(taskManaAdapter);
 				//				Toast.makeText(ComplanyNotices.this, response.toString(), Toast.LENGTH_SHORT).show();
 				Log.e("TAG", response.toString());
@@ -162,7 +163,6 @@ public class TaskManaFragment extends Fragment {
 				viewHolder.tvTaskDate = (TextView) convertView.findViewById(R.id.tv_task_date);
 				viewHolder.tvTaskPeriod = (TextView) convertView.findViewById(R.id.tv_task_period);
 				viewHolder.tvTaskAddress = (TextView) convertView.findViewById(R.id.tv_task_address);
-				viewHolder.tvTaskFlag = (TextView) convertView.findViewById(R.id.tv_task_flag);
 				convertView.setTag(viewHolder);
 			} else {
 				viewHolder = (ViewHolder) convertView.getTag();
@@ -196,12 +196,12 @@ public class TaskManaFragment extends Fragment {
 				break;
 			}
 			viewHolder.tvTaskAddress.setText(listTask.get(position).get("house_address").toString());
-			if ("".equals(listTask.get(position).get("roomer_emp_no"))){
+			/*if ("".equals(listTask.get(position).get("roomer_emp_no"))){
 				viewHolder.tvTaskFlag.setText("可领取");
 			} else {
 				viewHolder.tvTaskFlag.setText("任务已被" + listTask.get(position).get("roomer_emp_no").toString().trim() + "领取，点击查看详情");
 				//				viewHolder.tvTaskFlag.setBackgroundColor(R.color.gray_bg);
-			}
+			}*/
 
 			//给ListView的Item点击事件
 			convertView.setOnClickListener(new OnClickListener() {

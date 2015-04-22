@@ -35,6 +35,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 	private LinearLayout settingChange;
 	private TextView tvPerdetail;
 	private RequestQueue mQueue = null;
+	private String empNo;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,6 +78,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 			public void onResponse(JSONObject response) {
 				try {
 					tvPerdetail.setText(response.getString("emp_nickname").toString().trim());
+					empNo = response.getString("emp_no").toString().trim();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -109,7 +111,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 			break;
 
 		case R.id.layout_taskinfo:
-			SettingTaskInfo.startSettingTaskInfo(getActivity());
+			SettingTaskInfo.startSettingTaskInfo(getActivity(), empNo);
 			Toast.makeText(getActivity(), "已领取任务", Toast.LENGTH_SHORT).show();
 			break;
 

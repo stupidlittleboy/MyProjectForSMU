@@ -27,7 +27,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="姓名"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/tv_task_detail_sex"
@@ -36,7 +36,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="性别"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/tv_task_detail_phone_no"
@@ -45,7 +45,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="联系方式"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/tv_task_detail_date"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="看房日期"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/tv_task_detail_period"
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="看房时间段"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/tv_task_detail_address"
@@ -70,7 +70,7 @@
             android:layout_marginTop="10dp"
             android:text="看房地址"
             android:background="@drawable/listview_bg"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/tv_task_detail_complete"
@@ -79,7 +79,7 @@
             android:layout_marginTop="10dp"
             android:text="交易是否完成"
             android:visibility="gone"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btn_task_detail_cancel"
