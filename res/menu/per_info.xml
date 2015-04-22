@@ -3,7 +3,7 @@
     
     <item  
         android:id="@+id/per_info_edit"  
-        android:icon="@drawable/ic_launcher"  
+        android:icon="@drawable/user_edit"  
         android:showAsAction="always"  
         android:title="编辑"/>  
 

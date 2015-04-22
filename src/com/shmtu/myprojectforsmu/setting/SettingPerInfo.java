@@ -170,7 +170,8 @@ public class SettingPerInfo extends Activity implements OnClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.per_info_edit:
-			Toast.makeText(SettingPerInfo.this, "修改个人信息", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(SettingPerInfo.this, "修改个人信息", Toast.LENGTH_SHORT).show();
+			EditPerInfo.startEditPerInfo(SettingPerInfo.this);
 			break;
 
 		default:

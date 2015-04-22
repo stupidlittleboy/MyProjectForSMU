@@ -141,6 +141,10 @@
             android:name=".setting.SettingChangePass"
             android:label="修改密码" >
         </activity>
+        <activity
+            android:name=".setting.EditPerInfo"
+            android:label="个人信息" >
+        </activity>
     </application>
 
 </manifest>
