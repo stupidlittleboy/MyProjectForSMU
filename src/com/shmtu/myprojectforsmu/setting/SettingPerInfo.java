@@ -3,7 +3,6 @@ package com.shmtu.myprojectforsmu.setting;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
@@ -24,10 +22,11 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
 
-public class SettingPerInfo extends Activity implements OnClickListener {
+public class SettingPerInfo extends BaseActivity implements OnClickListener {
 
 	private final static String PER_INFO_URL = Constant.URL + "per_info.php";
 

@@ -1,14 +1,14 @@
 package com.shmtu.myprojectforsmu.complany;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 
-public class ComplanyMeetingDetail extends Activity {
+public class ComplanyMeetingDetail extends BaseActivity {
 	
 	private TextView tvMeetingDetailTheme;
 	private TextView tvMeetingDetailStarttime;

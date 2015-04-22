@@ -3,7 +3,6 @@ package com.shmtu.myprojectforsmu.task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,10 +20,11 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
 
-public class TaskDetail extends Activity implements OnClickListener {
+public class TaskDetail extends BaseActivity implements OnClickListener {
 
 	private final static String TASK_DETAIL_URL = Constant.URL + "get_task.php";
 	private final static String CANCEL_TASK_URL = Constant.URL + "cancel_task.php";

@@ -1,6 +1,5 @@
 package com.shmtu.myprojectforsmu.login_resgester;
 
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,10 +14,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import cn.smssdk.SMSSDK;
 
+import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.utils.SMSVerifyUtil;
 
-public class SMSRegisterActivity extends Activity implements OnClickListener {
+public class SMSRegisterActivity extends BaseActivity implements OnClickListener {
 
 	private Spinner spDepartment;
 	private EditText etPhoneNo;

@@ -1,6 +1,5 @@
 package com.shmtu.myprojectforsmu.setting;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -39,9 +38,10 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 
-public class SettingMap extends Activity implements
+public class SettingMap extends BaseActivity implements
 OnGetGeoCoderResultListener{
 
 	private MapView mMapView = null;

@@ -1,6 +1,5 @@
 package com.shmtu.myprojectforsmu.setting;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -13,9 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 
-public class SettingAbout extends Activity implements OnClickListener {
+public class SettingAbout extends BaseActivity implements OnClickListener {
 
 	private RelativeLayout layoutSettingVersion;
 	private RelativeLayout layoutSettingTeam;

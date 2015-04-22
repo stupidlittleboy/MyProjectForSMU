@@ -10,9 +10,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 
-public class ComplanyNoticesDetial extends Activity implements OnClickListener{
+public class ComplanyNoticesDetial extends BaseActivity implements OnClickListener{
 	
 	private TextView tvNoticesDetailTitle;
 	private TextView tvNoticesDetailDate;

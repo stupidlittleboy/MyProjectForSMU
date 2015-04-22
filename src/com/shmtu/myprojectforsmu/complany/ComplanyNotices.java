@@ -27,10 +27,11 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
 
-public class ComplanyNotices extends Activity {
+public class ComplanyNotices extends BaseActivity {
 
 	private final static String NOTICE_URL = Constant.URL + "company_notice.php";
 	private ListView lvNoticesInfo;

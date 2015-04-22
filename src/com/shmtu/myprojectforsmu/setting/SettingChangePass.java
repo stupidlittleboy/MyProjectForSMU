@@ -3,7 +3,6 @@ package com.shmtu.myprojectforsmu.setting;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -24,11 +23,12 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
 import com.shmtu.myprojectforsmu.login_resgester.LoginActivity;
 
-public class SettingChangePass extends Activity implements
+public class SettingChangePass extends BaseActivity implements
 OnClickListener{
 
 	private final static String CHANGE_PASS_URL = Constant.URL + "change_pass.php";
