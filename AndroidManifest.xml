@@ -137,6 +137,10 @@
             android:name=".setting.SettingAboutRecommend"
             android:label="应用介绍" >
         </activity>
+        <activity
+            android:name=".setting.SettingChangePass"
+            android:label="修改密码" >
+        </activity>
     </application>
 
 </manifest>

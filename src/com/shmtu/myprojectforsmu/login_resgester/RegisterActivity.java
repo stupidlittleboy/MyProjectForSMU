@@ -148,7 +148,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener{
 			public void onResponse(JSONObject response) {
 				try {
 					int	success = Integer.parseInt(response.getString("success"));
-					if (success == 0) {
+					if (success == 1) {
 						String empNickname = json.getString("empNickname");
 						String pass = json.getString("pass");
 						LoginActivity.startLoginActivity(RegisterActivity.this, empNickname, pass);

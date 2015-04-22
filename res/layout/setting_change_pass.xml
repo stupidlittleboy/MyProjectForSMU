@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="用户名："
+                android:textSize="@dimen/activity_text_size" />
+
+            <com.shmtu.myprojectforsmu.ui.ClearEditText
+                android:id="@+id/et_chang_pass_username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:hint="员工号/邮箱/手机号"
+                android:textSize="@dimen/activity_text_size" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="旧密码："
+                android:textSize="@dimen/activity_text_size" />
+
+            <com.shmtu.myprojectforsmu.ui.ClearEditText
+                android:id="@+id/et_chang_pass_old_pass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:inputType="textPassword"
+                android:hint="请输入旧密码"
+                android:textSize="@dimen/activity_text_size" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="新密码："
+                android:textSize="@dimen/activity_text_size" />
+
+            <com.shmtu.myprojectforsmu.ui.ClearEditText
+                android:id="@+id/et_chang_pass_new_pass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:inputType="textPassword"
+                android:hint="请输入新密码"
+                android:textSize="@dimen/activity_text_size" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="确认密码："
+                android:textSize="@dimen/activity_text_size" />
+
+            <com.shmtu.myprojectforsmu.ui.ClearEditText
+                android:id="@+id/et_chang_pass_confirm_pass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:singleLine="true"
+                android:inputType="textPassword"
+                android:hint="请再输入一次新密码"
+                android:textSize="@dimen/activity_text_size" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_change_pass_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_click"
+                android:text="提交"
+                android:textSize="@dimen/activity_text_size" />
+
+            <Button
+                android:id="@+id/btn_change_pass_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/btn_cancel_click"
+                android:text="重置"
+                android:textSize="@dimen/activity_text_size" />
+
+        </LinearLayout>
+        
+    </LinearLayout>
+
+</ScrollView>

@@ -120,7 +120,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 //						Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
 						try {
 							int success = Integer.parseInt(response.getString("success"));
-							if(success == 0){
+							if(success == 1){
 								Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 								startActivity(intent);
 							}else{

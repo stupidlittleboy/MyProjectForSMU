@@ -32,6 +32,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 	private LinearLayout settingMap;
 	private LinearLayout settingAbout;
 	private LinearLayout settingExit;
+	private LinearLayout settingChange;
 	private TextView tvPerdetail;
 	private RequestQueue mQueue = null;
 
@@ -55,6 +56,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 		settingTaskinfo = (LinearLayout) getActivity().findViewById(R.id.layout_taskinfo);
 		settingMap = (LinearLayout) getActivity().findViewById(R.id.layout_map);
 		settingAbout = (LinearLayout) getActivity().findViewById(R.id.layout_about);
+		settingChange = (LinearLayout) getActivity().findViewById(R.id.layout_change);
 		settingExit = (LinearLayout) getActivity().findViewById(R.id.layout_exit);
 		tvPerdetail = (TextView) getActivity().findViewById(R.id.tv_perdetail);
 
@@ -94,6 +96,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 		settingTaskinfo.setOnClickListener(this);
 		settingMap.setOnClickListener(this);
 		settingAbout.setOnClickListener(this);
+		settingChange.setOnClickListener(this);
 		settingExit.setOnClickListener(this);
 	}
 
@@ -118,6 +121,10 @@ public class SettingFragment extends Fragment implements OnClickListener{
 		case R.id.layout_about:
 			SettingAbout.startSettingAbout(getActivity());
 			Toast.makeText(getActivity(), "关于", Toast.LENGTH_SHORT).show();
+			break;
+			
+		case R.id.layout_change:
+			SettingChangePass.startSettingChangePass(getActivity());
 			break;
 
 		case R.id.layout_exit:
