@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.MainActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
+import com.shmtu.myprojectforsmu.utils.ActivityCollector;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -175,5 +177,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			//监听返回键
+			ActivityCollector.finishAll();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }
