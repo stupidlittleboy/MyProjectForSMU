@@ -59,6 +59,12 @@ public class SettingPerInfo extends BaseActivity implements OnClickListener {
 
 		init();
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getPerInfo();
+	}
 
 	private void init(){
 
@@ -82,6 +88,9 @@ public class SettingPerInfo extends BaseActivity implements OnClickListener {
 		tvPerInfoPhoneNum.setOnClickListener(this);
 		tvPerInfoEmail.setOnClickListener(this);
 
+	}
+
+	private void getPerInfo() {
 		SharedPreferences sp = getSharedPreferences("myProjectForSMU", 0);
 		String userName = sp.getString("userName", null);
 		Log.e("userName", userName);
@@ -131,7 +140,6 @@ public class SettingPerInfo extends BaseActivity implements OnClickListener {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	@Override

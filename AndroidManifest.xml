@@ -55,7 +55,7 @@
         <!-- 登陆注册 -->
         <activity
             android:name=".login_resgester.LoginActivity"
-            android:label="登陆" >
+            android:label="SMU移动办公" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
