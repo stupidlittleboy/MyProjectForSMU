@@ -1,8 +1,12 @@
 package com.shmtu.myprojectforsmu.login_resgester;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +32,7 @@ import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.MainActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
+import com.shmtu.myprojectforsmu.setting.EditPerInfo;
 import com.shmtu.myprojectforsmu.utils.ActivityCollector;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
@@ -40,7 +45,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private TextView tvBackpass;
 	private TextView tvNewuser;
 	private RequestQueue mQueue = null;
-	private JSONObject json = new JSONObject();
+	private SharedPreferences sp;
 
 	public static void startLoginActivity (Context context, 
 			String username, String password) {
@@ -55,6 +60,29 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
+		init();
+		
+		//将用户名，密码信息保存
+		sp = getSharedPreferences("myProjectForSMU", MODE_PRIVATE);
+		if (sp != null) {
+			String username = sp.getString("userName", null);
+			String password = sp.getString("passWord", null);
+			JSONObject json = new JSONObject();
+			try {
+				json.put("UserName", username);
+				json.put("PassWord", password);
+				tvUsername.setText(username);
+				tvPassword.setText(password);
+				checkLogin(json);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+	}
+
+	private void init() {
 		tvUsername = (EditText) findViewById(R.id.username);
 		tvPassword = (EditText) findViewById(R.id.password);
 		tvBackpass = (TextView) findViewById(R.id.tv_backpass);
@@ -68,7 +96,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		Intent intent = getIntent();
 		String username = intent.getStringExtra("username");
 		String password = intent.getStringExtra("password");
-
 		if(username != null && password != null){
 			tvUsername.setText(username);
 			tvPassword.setText(password);
@@ -93,6 +120,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			} else {
 				String userName = tvUsername.getText().toString().trim();
 				String passWord = tvPassword.getText().toString().trim();
+				JSONObject json = new JSONObject();
 				try {
 					json.put("UserName", userName);
 					json.put("PassWord", passWord);
@@ -104,45 +132,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 //				spu.saveSharedPreferences("userName", userName);
 //				spu.saveSharedPreferences("passWord", passWord);
 				
-				//将用户名，密码信息保存
-				SharedPreferences sp = getSharedPreferences("myProjectForSMU", MODE_PRIVATE);
 				SharedPreferences.Editor editor = sp.edit();
 				editor.putString("userName", userName);
 				editor.putString("passWord", passWord);
 				editor.commit();
 				
-				//创建一个RequestQueue队列
-				mQueue = Volley.newRequestQueue(getApplicationContext());
-				//向服务端发送请求
-				JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, LOGIN_URL, json,  
-						new Response.Listener<JSONObject>() {  
-					@Override  
-					public void onResponse(JSONObject response) {  
-						Log.d("TAG", response.toString());  
-//						Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
-						try {
-							int success = Integer.parseInt(response.getString("success"));
-							if(success == 1){
-								Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-								startActivity(intent);
-							}else{
-								Toast.makeText(LoginActivity.this, "输入的用户名或密码有错", Toast.LENGTH_LONG).show();
-							}
-						} catch (NumberFormatException e) {
-							e.printStackTrace();
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-					}  
-				}, new Response.ErrorListener() {  
-					@Override  
-					public void onErrorResponse(VolleyError error) {  
-						Log.e("TAG", error.getMessage(), error);  
-						Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
-					}  
-				});  
-
-				mQueue.add(jsonObjectRequest);
+				checkLogin(json);
 			}
 			
 			break;
@@ -158,6 +153,40 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			startActivity(intent);
 			break;
 		}
+	}
+
+	private void checkLogin(JSONObject json) {
+		//创建一个RequestQueue队列
+		mQueue = Volley.newRequestQueue(getApplicationContext());
+		//向服务端发送请求
+		JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, LOGIN_URL, json,  
+				new Response.Listener<JSONObject>() {  
+			@Override  
+			public void onResponse(JSONObject response) {  
+				Log.d("TAG", response.toString());  
+//						Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+				try {
+					int success = Integer.parseInt(response.getString("success"));
+					if(success == 1){
+						progressDialog();
+					}else{
+						Toast.makeText(LoginActivity.this, "输入的用户名或密码有错", Toast.LENGTH_LONG).show();
+					}
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}  
+		}, new Response.ErrorListener() {  
+			@Override  
+			public void onErrorResponse(VolleyError error) {  
+				Log.e("TAG", error.getMessage(), error);  
+				Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
+			}  
+		});  
+
+		mQueue.add(jsonObjectRequest);
 	}
 
 	@Override
@@ -186,5 +215,26 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			ActivityCollector.finishAll();
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	private void progressDialog () {
+		final ProgressDialog proDialog = new ProgressDialog(this);
+		proDialog.setTitle("验证中");
+		proDialog.setMessage("正在登陆，请稍后…");
+		proDialog.setIndeterminate(true);
+		proDialog.setCancelable(false);
+		proDialog.show();
+		
+		final Timer t = new Timer();
+		t.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				proDialog.dismiss();
+				t.cancel();
+				Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+				startActivity(intent);
+			}
+		}, 3000);
 	}
 }
