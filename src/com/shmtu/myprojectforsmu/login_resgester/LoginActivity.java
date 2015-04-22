@@ -82,58 +82,67 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
 			startActivity(intent1);*/
 			//将数据封装成json格式
-			String userName = tvUsername.getText().toString().trim();
-			String passWord = tvPassword.getText().toString().trim();
-			try {
-				json.put("UserName", userName);
-				json.put("PassWord", passWord);
-			} catch (JSONException e) {
-				e.printStackTrace();
+			if (tvUsername.getText() == null || "".equals(tvUsername.getText().toString().trim())) {
+				Toast.makeText(LoginActivity.this, "用户名不能为空！", Toast.LENGTH_SHORT).show();
+				break;
+			} else if (tvPassword.getText() == null || "".equals(tvPassword.getText().toString().trim())) {
+				Toast.makeText(LoginActivity.this, "密码不能为空！", Toast.LENGTH_SHORT).show();
+				break;
+			} else {
+				String userName = tvUsername.getText().toString().trim();
+				String passWord = tvPassword.getText().toString().trim();
+				try {
+					json.put("UserName", userName);
+					json.put("PassWord", passWord);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+//				SharePreferenceUtil spu = new SharePreferenceUtil(this, "login");
+//				spu.saveSharedPreferences("userName", userName);
+//				spu.saveSharedPreferences("passWord", passWord);
+				
+				//将用户名，密码信息保存
+				SharedPreferences sp = getSharedPreferences("myProjectForSMU", MODE_PRIVATE);
+				SharedPreferences.Editor editor = sp.edit();
+				editor.putString("userName", userName);
+				editor.putString("passWord", passWord);
+				editor.commit();
+				
+				//创建一个RequestQueue队列
+				mQueue = Volley.newRequestQueue(getApplicationContext());
+				//向服务端发送请求
+				JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, LOGIN_URL, json,  
+						new Response.Listener<JSONObject>() {  
+					@Override  
+					public void onResponse(JSONObject response) {  
+						Log.d("TAG", response.toString());  
+//						Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+						try {
+							int success = Integer.parseInt(response.getString("success"));
+							if(success == 0){
+								Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+								startActivity(intent);
+							}else{
+								Toast.makeText(LoginActivity.this, "输入的用户名或密码有错", Toast.LENGTH_LONG).show();
+							}
+						} catch (NumberFormatException e) {
+							e.printStackTrace();
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}  
+				}, new Response.ErrorListener() {  
+					@Override  
+					public void onErrorResponse(VolleyError error) {  
+						Log.e("TAG", error.getMessage(), error);  
+						Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
+					}  
+				});  
+
+				mQueue.add(jsonObjectRequest);
 			}
 			
-//			SharePreferenceUtil spu = new SharePreferenceUtil(this, "login");
-//			spu.saveSharedPreferences("userName", userName);
-//			spu.saveSharedPreferences("passWord", passWord);
-			
-			//将用户名，密码信息保存
-			SharedPreferences sp = getSharedPreferences("myProjectForSMU", MODE_PRIVATE);
-			SharedPreferences.Editor editor = sp.edit();
-			editor.putString("userName", userName);
-			editor.putString("passWord", passWord);
-			editor.commit();
-			
-			//创建一个RequestQueue队列
-			mQueue = Volley.newRequestQueue(getApplicationContext());
-			//向服务端发送请求
-			JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Method.POST, LOGIN_URL, json,  
-					new Response.Listener<JSONObject>() {  
-				@Override  
-				public void onResponse(JSONObject response) {  
-					Log.d("TAG", response.toString());  
-//					Toast.makeText(LoginActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
-					try {
-						int success = Integer.parseInt(response.getString("success"));
-						if(success == 0){
-							Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-							startActivity(intent);
-						}else{
-							Toast.makeText(LoginActivity.this, "输入的用户名或密码有错", Toast.LENGTH_LONG).show();
-						}
-					} catch (NumberFormatException e) {
-						e.printStackTrace();
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}  
-			}, new Response.ErrorListener() {  
-				@Override  
-				public void onErrorResponse(VolleyError error) {  
-					Log.e("TAG", error.getMessage(), error);  
-					Toast.makeText(LoginActivity.this, "网络连接出错，请检查网络状况！", Toast.LENGTH_LONG).show();
-				}  
-			});  
-
-			mQueue.add(jsonObjectRequest);
 			break;
 
 			//找回密码
