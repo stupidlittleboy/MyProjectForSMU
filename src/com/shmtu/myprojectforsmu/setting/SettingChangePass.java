@@ -143,6 +143,11 @@ OnClickListener{
 		}
 	}
 
+	/**
+	 * 弹出对话框
+	 * @param username	用户名
+	 * @param password	密码
+	 */
 	protected void dialog(final String username, final String password) {
 		AlertDialog.Builder builder = new Builder(SettingChangePass.this);
 		builder.setMessage("密码已修改成功，请重新登录！");
