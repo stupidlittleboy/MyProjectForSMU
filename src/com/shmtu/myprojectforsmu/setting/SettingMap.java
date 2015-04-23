@@ -56,11 +56,21 @@ OnGetGeoCoderResultListener{
 	private boolean flag = false;
 	private MyLocationListenner myListener = new MyLocationListenner();
 
+	/**
+	 * 定位设备当前位置
+	 * @param context
+	 */
 	public static void startSettingMapLocation(Context context) {
 		Intent intent = new Intent(context, SettingMap.class);
 		context.startActivity(intent);
 	}
 	
+	/**
+	 * 在地图上标注出房子所在位置
+	 * @param context
+	 * @param city	所在城市
+	 * @param address	详细地址
+	 */
 	public static void startSettingMapSearch(
 			Context context, String city,
 			String address) {
@@ -99,6 +109,7 @@ OnGetGeoCoderResultListener{
 		Intent intent = getIntent();
 		String city = intent.getStringExtra("city");
 		String address = intent.getStringExtra("address");
+		//如果city和address为空，则定位当前位置，否则定位到address所在位置
 		if (city == null || address == null || "".equals(city) 
 				|| "".equals(address)) {
 			//定位初始化

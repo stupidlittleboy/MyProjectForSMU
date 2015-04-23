@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
+import com.shmtu.myprojectforsmu.setting.SettingMap;
 
 public class TaskDetail extends BaseActivity implements OnClickListener {
 
@@ -41,6 +42,9 @@ public class TaskDetail extends BaseActivity implements OnClickListener {
 	private Button btnTaskDetailOk;
 	private RequestQueue mQueue = null;
 	private JSONObject json = null;
+	
+	private String city;
+	private String address;
 
 	/**
 	 * 
@@ -101,6 +105,8 @@ public class TaskDetail extends BaseActivity implements OnClickListener {
 
 		Intent intent = getIntent();
 		Log.e("intent", intent.toString());
+		city = intent.getStringExtra("roomerHouseCity");
+		address = intent.getStringExtra("roomerHouseAddress");
 		tvTaskDetailNo.setText("客户编号：" + intent.getStringExtra("roomerNo"));
 		tvTaskDetailName.setText("客户姓名：" + intent.getStringExtra("roomerName"));
 		tvTaskDetailSex.setText("客户性别：" + intent.getStringExtra("roometSex"));
@@ -160,6 +166,7 @@ public class TaskDetail extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.tv_task_detail_address:
 			Toast.makeText(TaskDetail.this, "地图功能", Toast.LENGTH_SHORT).show();
+			SettingMap.startSettingMapSearch(this, city, address);
 			break;
 		
 		case R.id.btn_task_detail_cancel:

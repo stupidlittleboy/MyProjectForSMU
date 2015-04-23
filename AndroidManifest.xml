@@ -50,7 +50,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="7jaa2Ri5OQLYvyflSri0Cu2a" />
+            android:value="kOlUbmhIbl26SlLkwa3yzC0D" />
 
         <!-- 登陆注册 -->
         <activity
