@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.jpush.android.api.JPushInterface;
+
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -59,6 +61,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		/*JPushInterface.setDebugMode(true);
+		JPushInterface.init(getApplicationContext());*/
 
 		init();
 		

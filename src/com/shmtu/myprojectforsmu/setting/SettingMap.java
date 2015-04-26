@@ -109,6 +109,7 @@ OnGetGeoCoderResultListener{
 		Intent intent = getIntent();
 		String city = intent.getStringExtra("city");
 		String address = intent.getStringExtra("address");
+		Toast.makeText(this, city + "::" + address, Toast.LENGTH_SHORT).show();
 		//如果city和address为空，则定位当前位置，否则定位到address所在位置
 		if (city == null || address == null || "".equals(city) 
 				|| "".equals(address)) {
