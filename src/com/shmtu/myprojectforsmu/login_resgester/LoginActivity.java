@@ -22,8 +22,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cn.jpush.android.api.JPushInterface;
-
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,7 +32,6 @@ import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.MainActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
-import com.shmtu.myprojectforsmu.setting.EditPerInfo;
 import com.shmtu.myprojectforsmu.utils.ActivityCollector;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
@@ -62,9 +59,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		/*JPushInterface.setDebugMode(true);
-		JPushInterface.init(getApplicationContext());*/
-
 		init();
 		
 		//将用户名，密码信息保存
