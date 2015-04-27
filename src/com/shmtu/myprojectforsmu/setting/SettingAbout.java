@@ -20,6 +20,7 @@ public class SettingAbout extends BaseActivity implements OnClickListener {
 	private RelativeLayout layoutSettingVersion;
 	private RelativeLayout layoutSettingTeam;
 	private RelativeLayout layoutSettingRecommend;
+	private RelativeLayout layoutSettingTest;
 	private TextView tvSettingVersion;
 	private TextView tvSettingAboutVersion;
 	private String version;
@@ -41,6 +42,7 @@ public class SettingAbout extends BaseActivity implements OnClickListener {
 		layoutSettingVersion = (RelativeLayout) findViewById(R.id.layout_setting_version);
 		layoutSettingTeam = (RelativeLayout) findViewById(R.id.layout_setting_team);
 		layoutSettingRecommend = (RelativeLayout) findViewById(R.id.layout_setting_recommend);
+		layoutSettingTest = (RelativeLayout) findViewById(R.id.layout_setting_test);
 		tvSettingVersion = (TextView) findViewById(R.id.tv_setting_version);
 		tvSettingAboutVersion = (TextView) findViewById(R.id.tv_setting_about_version);
 		
@@ -51,6 +53,7 @@ public class SettingAbout extends BaseActivity implements OnClickListener {
 		layoutSettingVersion.setOnClickListener(this);
 		layoutSettingTeam.setOnClickListener(this);
 		layoutSettingRecommend.setOnClickListener(this);
+		layoutSettingTest.setOnClickListener(this);
 	}
 
 	@Override
@@ -69,6 +72,12 @@ public class SettingAbout extends BaseActivity implements OnClickListener {
 		case R.id.layout_setting_recommend:
 //			Toast.makeText(SettingAbout.this, "点击介绍" + version, Toast.LENGTH_SHORT).show();
 			SettingAboutRecommend.startSettingAboutRecommend(SettingAbout.this);
+			break;
+			
+		case R.id.layout_setting_test:
+			String city = "上海";
+			String address = "上海市浦东新区浦建路725弄2号";
+			SettingMap.startSettingMapSearch(this, city, address);
 			break;
 
 		default:

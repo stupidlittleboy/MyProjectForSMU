@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.jpush.android.api.JPushInterface;
+
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -80,6 +82,18 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		}
 
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		JPushInterface.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		JPushInterface.onPause(this);
+	}
 
 	private void init() {
 		tvUsername = (EditText) findViewById(R.id.username);
@@ -106,10 +120,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		switch(id){
 		//登陆按钮点击事件
 		case R.id.btn_login:
-			/*//test
+			//test
 			Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-			startActivity(intent1);*/
-			//将数据封装成json格式
+			startActivity(intent1);
+			/*//将数据封装成json格式
 			if (tvUsername.getText() == null || "".equals(tvUsername.getText().toString().trim())) {
 				Toast.makeText(LoginActivity.this, "用户名不能为空！", Toast.LENGTH_SHORT).show();
 				break;
@@ -137,7 +151,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				editor.commit();
 				
 				checkLogin(json);
-			}
+			}*/
 			
 			break;
 

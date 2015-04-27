@@ -98,6 +98,26 @@
                 android:layout_alignParentRight="true"
                 android:src="@drawable/pointing_right" />
         </RelativeLayout>
+        
+        <RelativeLayout
+            android:id="@+id/layout_setting_test"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/listview_bg" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试地图"
+                android:textSize="25sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/pointing_right" />
+        </RelativeLayout>
     </LinearLayout>
 
 </ScrollView>
