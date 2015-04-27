@@ -34,6 +34,7 @@ import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.MainActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
+import com.shmtu.myprojectforsmu.setting.EditPerInfo;
 import com.shmtu.myprojectforsmu.utils.ActivityCollector;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
@@ -61,6 +62,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+		/*JPushInterface.setDebugMode(true);
+		JPushInterface.init(getApplicationContext());*/
+
 		init();
 		
 		//将用户名，密码信息保存
@@ -120,10 +124,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		switch(id){
 		//登陆按钮点击事件
 		case R.id.btn_login:
-			//test
+			/*//test
 			Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-			startActivity(intent1);
-			/*//将数据封装成json格式
+			startActivity(intent1);*/
+			//将数据封装成json格式
 			if (tvUsername.getText() == null || "".equals(tvUsername.getText().toString().trim())) {
 				Toast.makeText(LoginActivity.this, "用户名不能为空！", Toast.LENGTH_SHORT).show();
 				break;
@@ -151,7 +155,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				editor.commit();
 				
 				checkLogin(json);
-			}*/
+			}
 			
 			break;
 
