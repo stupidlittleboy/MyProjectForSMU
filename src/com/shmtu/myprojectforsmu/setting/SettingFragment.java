@@ -130,6 +130,8 @@ public class SettingFragment extends Fragment implements OnClickListener{
 			break;
 
 		case R.id.layout_exit:
+			SharedPreferences sp = getActivity().getSharedPreferences("myProjectForSMU", getActivity().MODE_PRIVATE);
+			sp.edit().clear().commit();
 			getActivity().finish();
 			Toast.makeText(getActivity(), "退出", Toast.LENGTH_SHORT).show();
 			break;
