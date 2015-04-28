@@ -5,9 +5,12 @@ import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -22,6 +25,8 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 
 	private LayoutInflater father_Inflater=null;
 	private LayoutInflater son_Inflater=null;
+	
+	private Context context;
 
 	private ArrayList<HashMap<String, Object>> father_array;//父层
 	private ArrayList<HashMap<String, Object>> son_array;//子层
@@ -31,6 +36,7 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 			ArrayList<HashMap<String, Object>> son_array, ExpandableListView elvCompanyContacts){
 		father_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		son_Inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.context = context;
 		this.father_array = father_array;
 		this.son_array = son_array;
 		this.elvCompanyContacts = elvCompanyContacts;
@@ -130,7 +136,7 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		ChildViewHolder childViewHolder;
+		final ChildViewHolder childViewHolder;
 		if (convertView == null) {
 			convertView = son_Inflater.inflate(R.layout.contacts_child_item, null);
 			childViewHolder = new ChildViewHolder();
@@ -145,6 +151,15 @@ public class CompanyContactsAdapter extends BaseExpandableListAdapter {
 		childViewHolder.tvContactsChildName.setText(list.get(groupPosition).get(childPosition).get("contactsChildName").toString().trim());
 		childViewHolder.tvContactsChildEmpNo.setText(list.get(groupPosition).get(childPosition).get("contactsChildEmpNo").toString().trim());
 		childViewHolder.tvContactsChildPhoneNo.setText(list.get(groupPosition).get(childPosition).get("contactsChildPhoneNo").toString().trim());
+		convertView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Uri uri = Uri.parse("tel:" + childViewHolder.tvContactsChildPhoneNo.getText().toString().trim());
+				Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+				context.startActivity(intent);
+			}
+		});
 		return convertView;
 	}
 
