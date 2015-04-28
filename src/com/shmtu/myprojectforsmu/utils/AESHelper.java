@@ -39,6 +39,7 @@
  */
 package com.shmtu.myprojectforsmu.utils;
 import java.io.UnsupportedEncodingException;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 /**

@@ -1,8 +1,8 @@
 package com.shmtu.myprojectforsmu.ui;
 
-import android.content.Context;  
-import android.util.AttributeSet;  
-import android.widget.ExpandableListView;  
+import android.content.Context;
+import android.util.AttributeSet;
+import android.widget.ExpandableListView;
   
 /** 
  * 重写ExpandableListView以解决ScrollView嵌套ExpandableListView 

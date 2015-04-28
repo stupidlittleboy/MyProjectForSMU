@@ -28,8 +28,6 @@ import android.widget.Toast;
 import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.login_resgester.LoginActivity;
-import com.shmtu.myprojectforsmu.utils.DateUtil;
-import com.shmtu.myprojectforsmu.utils.HttpUtils;
 
 public class Temp extends BaseActivity implements
 OnClickListener, OnCheckedChangeListener{

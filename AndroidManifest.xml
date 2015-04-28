@@ -152,6 +152,10 @@
             android:name=".login_resgester.SMSRegisterActivity"
             android:label="短信验证" >
         </activity>
+        <activity
+            android:name=".login_resgester.BackPassword"
+            android:label="找回密码" >
+        </activity>
 
         <!-- 主界面 -->
         <activity

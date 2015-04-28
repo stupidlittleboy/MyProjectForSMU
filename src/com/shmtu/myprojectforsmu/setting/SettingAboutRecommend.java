@@ -1,12 +1,11 @@
 package com.shmtu.myprojectforsmu.setting;
 
-import com.shmtu.myprojectforsmu.BaseActivity;
-import com.shmtu.myprojectforsmu.R;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.shmtu.myprojectforsmu.BaseActivity;
+import com.shmtu.myprojectforsmu.R;
 
 public class SettingAboutRecommend extends BaseActivity {
 	

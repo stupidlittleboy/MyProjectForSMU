@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import cn.jpush.android.api.JPushInterface;
 
 import com.android.volley.Request.Method;
@@ -34,7 +33,6 @@ import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.MainActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
-import com.shmtu.myprojectforsmu.setting.EditPerInfo;
 import com.shmtu.myprojectforsmu.utils.ActivityCollector;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
@@ -161,13 +159,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			//找回密码
 		case R.id.tv_backpass:
+			Intent intent = new Intent(LoginActivity.this, BackPassword.class);
+			startActivity(intent);
 			break;
 
 			//注册点击事件
 		case R.id.tv_newuser:
-			Intent intent = new Intent(LoginActivity.this, SMSRegisterActivity.class);
+			Intent intent1 = new Intent(LoginActivity.this, SMSRegisterActivity.class);
 //			Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-			startActivity(intent);
+			startActivity(intent1);
 			break;
 		}
 	}

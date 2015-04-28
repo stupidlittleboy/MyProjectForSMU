@@ -1,9 +1,7 @@
 package com.shmtu.myprojectforsmu;
 
-import com.baidu.mapapi.SDKInitializer;
-
-import cn.jpush.android.api.JPushInterface;
 import android.app.Application;
+import cn.jpush.android.api.JPushInterface;
 
 public class MainApplication extends Application {
 
