@@ -42,10 +42,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:hint="请输入用户名"
+            android:hint="请输入手机号码"
             android:inputType="phone"
             android:singleLine="true"
-            android:text="18017385655"
             android:textColor="#ff353535"
             android:textSize="25sp" />
 
