@@ -3,7 +3,6 @@ package com.shmtu.myprojectforsmu.login_resgester;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -21,10 +20,11 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.shmtu.myprojectforsmu.BaseActivity;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
 
-public class BackPassword extends Activity implements OnClickListener {
+public class BackPassword extends BaseActivity implements OnClickListener {
 
 	private final static String BACK_PASSWORD_URL = Constant.URL + "back_password.php";
 	
@@ -60,8 +60,9 @@ public class BackPassword extends Activity implements OnClickListener {
 
 		switch (v.getId()) {
 		case R.id.btn_back_submit:
+			JSONObject json = null;
 			if (chkEdit()) {
-				JSONObject json = new JSONObject();
+				json = new JSONObject();
 				try {
 					json.put("empNo", etBackEmpNo.getText().toString());
 					json.put("phoneNo", etBackPhoneNo.getText().toString());
@@ -95,7 +96,9 @@ public class BackPassword extends Activity implements OnClickListener {
 			break;
 			
 		case R.id.btn_back_reset:
-			
+			etBackEmpNo.getText().clear();
+			etBackPhoneNo.getText().clear();
+			etBackIdentify.getText().clear();
 			break;
 
 		default:
