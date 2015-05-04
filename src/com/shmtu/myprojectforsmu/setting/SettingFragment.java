@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.shmtu.myprojectforsmu.R;
 import com.shmtu.myprojectforsmu.commons.Constant;
+import com.shmtu.myprojectforsmu.login_resgester.LoginActivity;
 
 public class SettingFragment extends Fragment implements OnClickListener{
 
@@ -132,7 +133,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 		case R.id.layout_exit:
 			SharedPreferences sp = getActivity().getSharedPreferences("myProjectForSMU", getActivity().MODE_PRIVATE);
 			sp.edit().clear().commit();
-			getActivity().finish();
+			LoginActivity.startLoginActivity(getActivity(), "", "");
 			Toast.makeText(getActivity(), "退出", Toast.LENGTH_SHORT).show();
 			break;
 
